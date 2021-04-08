@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 15:45:28 by jji               #+#    #+#             */
-/*   Updated: 2021/03/29 18:48:32 by jji              ###   ########.fr       */
+/*   Updated: 2021/04/08 17:03:28 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <fcntl.h> //open
 #include <stdio.h> //printf
 #include <string.h>
+
 #include "../libft/libft.h"
-#include "parse_line.h"
-#include "make_struct.h"
+#include "get_next_line.h"
 
 typedef struct 	s_sp
 {

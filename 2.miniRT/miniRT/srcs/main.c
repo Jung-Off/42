@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/03/29 18:42:30 by jji              ###   ########.fr       */
+/*   Updated: 2021/04/08 18:20:14 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int main()
 
 
 	fd = open("text.rt", O_RDONLY);
-	while((parse_line(fd, &line)) > 0)
+	while((get_next_line(fd, &line)) > 0)
 	{
-		printf("%s", line);
-
-		make_struct(&line, &shape);
+		printf("%s\n", line);
 		free(line);
+		line = NULL;
 	}
-
+	printf("%s\n", line);
+	free(line);// need
 	return (0);
 }
