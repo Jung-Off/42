@@ -1,0 +1,5 @@
+Credentials cache: API:E4CC1048-CA81-42D9-9464-E57F228217E4
+        Principal: jji@42SEOUL.KR
+
+  Issued                Expires             Flags    Principal
+Nov 18 11:28:55 2020  Nov 18 21:28:40 2020  FPIA   krbtgt/42SEOUL.KR@42SEOUL.KR
