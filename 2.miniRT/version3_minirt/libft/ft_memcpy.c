@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/23 16:33:04 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 19:18:23 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	size_t			i;
+	unsigned char	*s;
+	unsigned char	*d;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
+	if (!dst && !src)
+		return (NULL);
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	i = 0;
+	while (n > 0)
+	{
+		d[i] = s[i];
+		--n;
+		++i;
 	}
-	free(line);// need
-	return (0);
+	return (d);
 }

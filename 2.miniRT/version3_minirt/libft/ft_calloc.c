@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 00:00:54 by jji               #+#    #+#             */
+/*   Updated: 2020/12/26 19:47:25 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+void	*ft_calloc(size_t count, size_t size)
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	char	*c;
+	size_t	i;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
+	i = 0;
+	if (!(c = (char*)malloc(count * size)))
+		return (0);
+	while (i < count * size)
+	{
+		c[i] = 0;
+		++i;
 	}
-	free(line);// need
-	return (0);
+	return (c);
 }

@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 12:41:32 by jji               #+#    #+#             */
+/*   Updated: 2021/01/04 21:48:22 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	unsigned char	*new_s1;
+	unsigned char	*new_s2;
+	size_t			i;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
+	i = 0;
+	new_s1 = (unsigned char*)s1;
+	new_s2 = (unsigned char*)s2;
+	while (i < n)
+	{
+		if (new_s1[i] != new_s2[i])
+			return (new_s1[i] - new_s2[i]);
+		++i;
 	}
-	free(line);// need
 	return (0);
 }

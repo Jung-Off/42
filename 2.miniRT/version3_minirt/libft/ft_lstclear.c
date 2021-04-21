@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/27 17:43:10 by jji               #+#    #+#             */
+/*   Updated: 2020/12/27 20:52:11 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	t_list *tmp;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
+	tmp = *lst;
+	if (lst != 0 && del != 0)
+	{
+		while (*lst)
+		{
+			tmp = (*lst)->next;
+			ft_lstdelone(*lst, del);
+			*lst = tmp;
+		}
 	}
-	free(line);// need
-	return (0);
 }

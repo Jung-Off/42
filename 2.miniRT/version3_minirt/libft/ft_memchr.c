@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 12:21:09 by jji               #+#    #+#             */
+/*   Updated: 2021/01/04 18:54:22 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	unsigned char	new_t;
+	unsigned char	*new_s;
+	size_t			i;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
+	new_s = (unsigned char*)s;
+	new_t = (unsigned char)c;
+	i = 0;
+	while (i < n)
+	{
+		if (new_s[i] == new_t)
+			return (new_s + i);
+		++i;
 	}
-	free(line);// need
 	return (0);
 }

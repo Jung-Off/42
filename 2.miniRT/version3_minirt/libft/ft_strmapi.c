@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 23:29:39 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 22:48:39 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	char	*new_s;
+	size_t	i;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
+	i = 0;
+	if (s == 0 || f == 0)
+		return (0);
+	if (!(new_s = (char*)malloc(sizeof(char) * ft_strlen(s) + 1)))
+		return (0);
+	while (s[i])
+	{
+		new_s[i] = f(i, s[i]);
+		i++;
 	}
-	free(line);// need
-	return (0);
+	new_s[i] = '\0';
+	return (new_s);
 }

@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 00:26:01 by jji               #+#    #+#             */
+/*   Updated: 2020/12/27 23:46:17 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+char	*ft_strdup(const char *s1)
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	int		i;
+	char	*s;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
+	i = 0;
+	if (!(s = (char*)malloc(ft_strlen(s1) * sizeof(char) + 1)))
+		return (NULL);
+	while (s1[i])
+	{
+		s[i] = s1[i];
+		++i;
 	}
-	free(line);// need
-	return (0);
+	s[i] = '\0';
+	return (s);
 }

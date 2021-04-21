@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 13:18:14 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 19:37:36 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	unsigned char	*s;
+	unsigned char	*d;
+	size_t			i;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
-	}
-	free(line);// need
-	return (0);
+	if (src == dst || len == 0)
+		return (dst);
+	s = (unsigned char*)src;
+	d = dst;
+	i = 0;
+	if (src > dst)
+		while (i < len)
+		{
+			d[i] = s[i];
+			++i;
+		}
+	else
+		while (0 < len)
+		{
+			d[len - 1] = s[len - 1];
+			len--;
+		}
+	return (dst);
 }

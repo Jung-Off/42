@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/22 15:38:30 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 20:28:56 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
-
-int main()
+char	*ft_strchr(const char *s, int c)
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	int i;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
-	}
-	free(line);// need
-	return (0);
+	i = 0;
+	while (s[i] && s[i] != c)
+		++i;
+	if (s[i] != c)
+		return (0);
+	else
+		return ((char*)s + i);
 }

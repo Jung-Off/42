@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 00:39:49 by jji               #+#    #+#             */
+/*   Updated: 2020/12/28 22:57:08 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	char	*temp;
+	size_t	i;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
+	i = 0;
+	if (s == 0)
+		return (0);
+	if (ft_strlen(s) < start)
+		return (ft_strdup(""));
+	if (!(temp = (char*)malloc(len * sizeof(char) + 1)))
+		return (0);
+	while (len > 0 && s[start + i])
+	{
+		temp[i] = s[start + i];
+		++i;
+		--len;
 	}
-	free(line);// need
-	return (0);
+	temp[i] = '\0';
+	return (temp);
 }

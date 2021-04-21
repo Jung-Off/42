@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/23 21:25:48 by jji               #+#    #+#             */
+/*   Updated: 2020/12/25 13:30:56 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+char	*ft_strnstr(const char *big, const char *small, size_t len)
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	size_t i;
+	size_t j;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
+	i = 0;
+	if (*small == 0)
+		return ((char*)big);
+	while (big[i] && i < len)
+	{
+		j = 0;
+		if (big[i] == small[j])
+		{
+			while (small[j])
+			{
+				if (big[i + j] != small[j] || i + j >= len)
+					break ;
+				++j;
+			}
+			if (small[j] == 0)
+				return ((char*)big + i);
+		}
+		++i;
 	}
-	free(line);// need
 	return (0);
 }

@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2021/03/28 15:45:28 by jji               #+#    #+#             */
+/*   Updated: 2021/04/08 17:03:28 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#ifndef MAIN_H
+# define MAIN_H
 
-int main()
+#include <fcntl.h> //open
+#include <stdio.h> //printf
+#include <string.h>
+
+#include "../libft/libft.h"
+#include "get_next_line.h"
+
+typedef struct 	s_sp
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	double x;
+	double y;
+	double z;
+	double r;
+	double red;
+	double green;
+	double blue;
+}				t_sp;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
-	}
-	free(line);// need
-	return (0);
-}
+
+typedef struct 	s_shape
+{
+	t_sp cycle;
+}				t_shape;
+
+
+#endif

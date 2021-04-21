@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:43:22 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 15:58:01 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 01:33:01 by jji               #+#    #+#             */
+/*   Updated: 2020/12/25 13:32:40 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "libft.h"
 
-int main()
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int fd;
-	char *line;
-	t_shape *lst;
+	char	*sum;
+	int		i;
+	int		j;
 
-	fd = open("text.rt", O_RDONLY);
-	while((get_next_line(fd, &line)) > 0)
-	{		
-		make_shape(&lst, line);
-		free(line);
-		line = NULL;
+	i = 0;
+	j = 0;
+	if (!(s1) || !(s2))
+		return (NULL);
+	if (!(sum = (char*)malloc(ft_strlen(s1) + ft_strlen(s2) + 1)))
+		return (0);
+	while (s1[i])
+	{
+		sum[i] = s1[i];
+		++i;
 	}
-	free(line);// need
-	return (0);
+	while (s2[j])
+	{
+		sum[i + j] = s2[j];
+		++j;
+	}
+	sum[i + j] = 0;
+	return (sum);
 }
