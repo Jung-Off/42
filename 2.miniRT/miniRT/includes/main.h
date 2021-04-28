@@ -1,43 +1,56 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/28 15:45:28 by jji               #+#    #+#             */
-/*   Updated: 2021/04/21 13:09:59 by jji              ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MAIN_H
 # define MAIN_H
 
-#include <fcntl.h> //open
-#include <stdio.h> //printf
-#include <string.h>
-
-#include "../libft/libft.h"
 #include "get_next_line.h"
-#include "shape.h"
 
-typedef struct 	s_sp
+#include <fcntl.h> //open
+#include <stdlib.h> //malloc, free
+
+typedef struct	s_mlx
 {
-	double x;
-	double y;
-	double z;
+	void *mlx_ptr;
+	void *win_ptr;
+	void *img_ptr;
+	int	*data;
+	int bpp;
+	int size_l;
+	int endianl;
+}				t_mlx;
+//기본 mlx형태
+
+typedef struct	s_scene
+{
+	int x_size;
+	int y_size;
+	//...etc
+}				t_scene;
+//장면 구조체
+
+typedef struct s_fig
+{
+	int				flag;
+	union	u_fig 	fig;
+	struct	s_fig 	*next;
+	//..+a
+}				t_fig;
+//도형 구조체
+
+union	u_fig
+{
+	t_sp sp;
+	//. pl, sp
+}
+//union으로서 하나의 도형만 받도록~
+
+# define SP 0
+
+typedef struct	s_sp //sphere
+{
+	t_p3 c;
 	double r;
-	double red;
-	double green;
-	double blue;
+	int inside;
 }				t_sp;
 
-
-typedef struct 	s_shape
-{
-	union u_shape shape;
-
-}				t_shape;
-
+void parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av)
 
 #endif
