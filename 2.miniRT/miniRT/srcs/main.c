@@ -9,7 +9,7 @@ void pass_comma(char **str)
 
 int ft_isspace(int c)
 {
-	if(c > 9 && c < 13 || c == 32)
+	if(c >= 9 && c <= 13 || c == 32)
 		return (1);
 	else
 		return (0);
@@ -32,7 +32,7 @@ double ft_atod(char **str)
 		d =  d * 10 + (*((*str)++) - '0');//(*str)++;
 	if ((**str) == '.' && (*str)++)
 		while(ft_isdigit(**str))
-			d += pow(0.1, i++) * (*((*str)++) - '0');//(*str)++;
+			d += pow(0.1, i++) * (*((*str)++) - '0');//(*str)++;	
 	return (d * minus);
 }
 
@@ -46,11 +46,10 @@ t_p3 parse_xyz(char **str)
 	pass_comma(str);
 	p.z = ft_atod(str);
 
-	//printf("%lf %lf %lf", p.x, p.y ,p.z);
 	return (p);
 }
 
-void ft_newadd(t_fig **lst)
+void ft_newlstadd(t_fig **lst)
 {
 	t_fig *new;
 	t_fig *head;
@@ -69,17 +68,53 @@ void ft_newadd(t_fig **lst)
 		*lst = new;
 }
 
+int rt_atoi(char **str)
+{
+	int res;
+	int minus;
+
+	res = 0;
+	minus = 1;
+
+	while(ft_isspace(**str))
+		(*str)++;
+	if(**str == '-' && (*str)++)
+		minus = -1;
+	while (ft_isdigit(**str))
+		res = res * 10 + (*((*str)++) - '0');
+	return (res * minus);
+}
+
+int parse_color(char **str)
+{
+	int r;
+	int g;
+	int b;
+
+	r = rt_atoi(str);
+	pass_comma(str);
+	g = rt_atoi(str);
+	pass_comma(str);
+	b = rt_atoi(str);
+	return (r * pow(256,2) + g * pow(256, 1) + b);
+}
+
+
 void split_sphere(t_fig **lst, char *str)
 {
 	t_fig *new_list;
 
-	ft_newadd(lst);
+	ft_newlstadd(lst);
 	new_list = *lst;
 	while (new_list->next)
 		new_list = new_list->next;
 	
 	new_list->flag = SP;
 	new_list->fig.sp.c = parse_xyz(&str);
+	new_list->fig.sp.r = ft_atod(&str) / 2;
+
+	new_list->color = parse_color(&str);
+
 }
 
 void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
@@ -122,4 +157,7 @@ int main(int argc, char **argv)
 	t_fig	*lst;
 
 	parse(&mlx, &data, &lst, argv);
+
+	printf("x :%lf, y :%lf, z :%lf, r :%lf , color :%x", lst->fig.sp.c.x, lst->fig.sp.c.y, lst->fig.sp.c.z,
+			lst->fig.sp.r, lst->color);
 }

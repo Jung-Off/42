@@ -54,6 +54,7 @@ typedef struct s_fig
 {
 	int				flag;
 	union	u_fig 	fig;
+	int 			color;
 	struct	s_fig 	*next;
 	//..+a
 }				t_fig;
