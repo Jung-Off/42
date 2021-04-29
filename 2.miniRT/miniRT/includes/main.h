@@ -19,12 +19,17 @@ typedef struct	s_mlx
 	int size_l;
 	int endianl;
 }				t_mlx;
-//기본 mlx형태
+//기본 mlx형태 >>추후에 수정에 들어갈 수 있음
 
 typedef struct	s_scene
 {
-	int x_size;
-	int y_size;
+	int res_x;
+	int res_y;
+	int res_ex;
+	
+	double amb_ratio;
+	int amb_color;
+	int amb_ex;
 	//...etc
 }				t_scene;
 //장면 구조체

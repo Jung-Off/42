@@ -99,7 +99,6 @@ int parse_color(char **str)
 	return (r * pow(256,2) + g * pow(256, 1) + b);
 }
 
-
 void split_sphere(t_fig **lst, char *str)
 {
 	t_fig *new_list;
@@ -114,14 +113,48 @@ void split_sphere(t_fig **lst, char *str)
 	new_list->fig.sp.r = ft_atod(&str) / 2;
 
 	new_list->color = parse_color(&str);
-
 }
+
+void split_resolution(t_scene *data, char *str)
+{
+	/*
+	 if(data->res_existence > 0)
+		return ; //after >> error
+	data->res_ex += 1;
+	*/
+	data->res_x = rt_atoi(&str);	
+	data->res_y = rt_atoi(&str);
+}
+
+void split_ambient(t_scene *data, char *str)
+{
+	/*
+	if(data->amb_ex > 0)
+		return ; //after >> error
+	data->amb_ex += 1;
+	*/
+	data->amb_ratio = ft_atod(&str);
+	
+	//ratio 가 0,1사이에 들어와야 된다는 조건	
+	data->amb_color = parse_color(&str);
+}
+
 
 void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
 {
 	if (*str == 's' && *(str + 1) == 'p')
 		split_sphere(lst, str + 2);
-	//..etc
+	else if(*str == 'R')
+		split_resolution(data, str + 1);
+	else if(*str == 'A')
+		split_ambient(data, str + 1);
+/*
+	else if(*str == 'c')
+		split_camera(data, str + 1);
+	else if(*str == 'l')
+		split_light(data, str + 1);
+*/
+	//..etc pl, sq, cy ,tr
 }
 
 void before_parsing(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
@@ -139,10 +172,12 @@ void parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av)
 	int		fd;
 
 	*lst = NULL;
+//	data->res_ex = 0;
+//	data->amb_ex = 0;
 
 	if ((fd = open(av[1], 0)) == -1)
 		exit(1);
-
+//readonly == 0
 	while (get_next_line(fd, &str))
 		before_parsing(mlx, data, lst, str);
 	
@@ -158,6 +193,19 @@ int main(int argc, char **argv)
 
 	parse(&mlx, &data, &lst, argv);
 
+	printf("x :%d y :%d ex :%d \n", data.res_x, data.res_y, data.res_ex);
+	printf("ratio :%lf color :%d ex :%d", data.amb_ratio, data.amb_color, data.amb_ex);
+	
+}
+/*
+* sp
+*
+	int i = 0;
+	while(lst)
+	{
 	printf("x :%lf, y :%lf, z :%lf, r :%lf , color :%x", lst->fig.sp.c.x, lst->fig.sp.c.y, lst->fig.sp.c.z,
 			lst->fig.sp.r, lst->color);
-}
+	lst = lst->next;
+	printf(" %d \n", ++i);
+	}		
+*/
