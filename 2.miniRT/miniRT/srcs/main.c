@@ -139,6 +139,35 @@ void split_ambient(t_scene *data, char *str)
 	data->amb_color = parse_color(&str);
 }
 
+void split_light(t_scene *data, char *str)
+{
+	t_light *light;
+	t_light *move_light;
+
+	move_light = data->l;
+
+	if (!(light = malloc(sizeof(t_light))))
+		return ;
+	if(data->l)
+	{	
+		while (move_light->next)
+			move_light = move_light->next;
+		move_light->next = light;
+	}
+	else
+		data->l = light;
+
+	light->position = parse_xyz(&str);
+	light->br = ft_atod(&str);
+	light->color = parse_color(&str);
+	light->next = NULL;
+}
+
+/*
+	position
+	br
+	color;
+*/
 
 void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
 {
@@ -148,11 +177,11 @@ void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
 		split_resolution(data, str + 1);
 	else if(*str == 'A')
 		split_ambient(data, str + 1);
-/*
-	else if(*str == 'c')
-		split_camera(data, str + 1);
 	else if(*str == 'l')
 		split_light(data, str + 1);
+/*
+	else if(*str == 'c')
+		split_camera(mlx, data, str + 1);
 */
 	//..etc pl, sq, cy ,tr
 }
@@ -172,6 +201,7 @@ void parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av)
 	int		fd;
 
 	*lst = NULL;
+	data->l = NULL;
 //	data->res_ex = 0;
 //	data->amb_ex = 0;
 
@@ -193,10 +223,19 @@ int main(int argc, char **argv)
 
 	parse(&mlx, &data, &lst, argv);
 
+	printf("--------R--------\n");
 	printf("x :%d y :%d ex :%d \n", data.res_x, data.res_y, data.res_ex);
-	printf("ratio :%lf color :%d ex :%d", data.amb_ratio, data.amb_color, data.amb_ex);
 	
+	printf("--------ammb---------\n");
+	printf("ratio :%lf color :%d ex :%d\n", data.amb_ratio, data.amb_color, data.amb_ex);
+	printf("---------l----------\n");
+	while(data.l)
+	{
+		printf("x :%lf y :%lf z :%lf  br : %lf color : %d\n", data.l->position.x, data.l->position.y, data.l->position.z,  data.l->br, data.l->color);
+	data.l = data.l->next;	
+	}
 }
+
 /*
 * sp
 *

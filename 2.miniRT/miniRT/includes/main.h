@@ -21,19 +21,6 @@ typedef struct	s_mlx
 }				t_mlx;
 //기본 mlx형태 >>추후에 수정에 들어갈 수 있음
 
-typedef struct	s_scene
-{
-	int res_x;
-	int res_y;
-	int res_ex;
-	
-	double amb_ratio;
-	int amb_color;
-	int amb_ex;
-	//...etc
-}				t_scene;
-//장면 구조체
-
 typedef struct	s_p3
 {
 	double x;
@@ -41,6 +28,31 @@ typedef struct	s_p3
 	double z;
 }				t_p3;
 
+
+
+typedef struct 	s_light
+{
+	t_p3 position;
+	double br;
+	int color;
+	struct s_light *next;
+}				t_light;
+
+typedef struct	s_scene
+{
+	int res_x;
+	int res_y;
+	int res_ex;
+
+	double amb_ratio;
+	int amb_color;
+	int amb_ex;
+
+	t_light *l;
+	//...etc
+}				t_scene;
+
+//장면 구조체
 typedef struct	s_sp //sphere
 {
 	t_p3 c;
