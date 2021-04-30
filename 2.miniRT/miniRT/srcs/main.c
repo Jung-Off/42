@@ -57,6 +57,7 @@ void ft_newlstadd(t_fig **lst)
 	head = *lst;
 	if (!(new = malloc(sizeof(t_fig))))
 		return ;
+	//free
 	new->next = NULL;
 	if (head)
 	{
@@ -148,6 +149,7 @@ void split_light(t_scene *data, char *str)
 
 	if (!(light = malloc(sizeof(t_light))))
 		return ;
+	//free
 	if(data->l)
 	{	
 		while (move_light->next)
@@ -163,11 +165,29 @@ void split_light(t_scene *data, char *str)
 	light->next = NULL;
 }
 
-/*
-	position
-	br
-	color;
-*/
+void split_camera(t_mlx *mlx, t_scene *data, char *str)
+{
+	t_cam *cam;
+	t_cam *move_cam;
+
+	move_cam = mlx->cam;
+	if(!(cam = malloc(sizeof(t_cam))))
+		return ;
+	if(mlx->cam)
+	{
+		while(move_cam->next)
+			move_cam = move_cam->next;
+		move_cam->next = cam;
+	}
+	else
+		mlx->cam = cam;
+	//t_scene data를 들고오는 이유 data에다가 camera 갯수가 들어있어서
+	//수정가능?
+	cam->position = parse_xyz(&str);
+	cam->dir_vec = parse_xyz(&str);
+	cam->fov = rt_atoi(&str);
+	cam->next = NULL;
+}
 
 void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
 {
@@ -179,10 +199,9 @@ void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
 		split_ambient(data, str + 1);
 	else if(*str == 'l')
 		split_light(data, str + 1);
-/*
 	else if(*str == 'c')
 		split_camera(mlx, data, str + 1);
-*/
+
 	//..etc pl, sq, cy ,tr
 }
 
@@ -202,6 +221,7 @@ void parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av)
 
 	*lst = NULL;
 	data->l = NULL;
+	mlx->cam = NULL;
 //	data->res_ex = 0;
 //	data->amb_ex = 0;
 
@@ -221,30 +241,32 @@ int main(int argc, char **argv)
 	t_scene data;
 	t_fig	*lst;
 
+
 	parse(&mlx, &data, &lst, argv);
 
+	//////
 	printf("--------R--------\n");
-	printf("x :%d y :%d ex :%d \n", data.res_x, data.res_y, data.res_ex);
+	printf("[x :%d y :%d] ex :%d \n", data.res_x, data.res_y, data.res_ex);
 	
 	printf("--------ammb---------\n");
 	printf("ratio :%lf color :%d ex :%d\n", data.amb_ratio, data.amb_color, data.amb_ex);
 	printf("---------l----------\n");
 	while(data.l)
 	{
-		printf("x :%lf y :%lf z :%lf  br : %lf color : %d\n", data.l->position.x, data.l->position.y, data.l->position.z,  data.l->br, data.l->color);
+		printf("[x :%lf y :%lf z :%lf]  br : %lf color : %d\n", data.l->position.x, data.l->position.y, data.l->position.z,  data.l->br, data.l->color);
 	data.l = data.l->next;	
 	}
-}
-
-/*
-* sp
-*
-	int i = 0;
+	printf("----------cam-------\n");
+	while(mlx.cam)
+	{
+		printf("position[%lf, %lf, %lf], dir_vec[%lf, %lf, %lf], color %d\n", mlx.cam->position.x, mlx.cam->position.y, mlx.cam->position.z, mlx.cam->dir_vec.x, mlx.cam->dir_vec.y, mlx.cam->dir_vec.z, mlx.cam->fov);
+		mlx.cam = mlx.cam->next;
+	}
+	printf("------------sp---------\n");
 	while(lst)
 	{
-	printf("x :%lf, y :%lf, z :%lf, r :%lf , color :%x", lst->fig.sp.c.x, lst->fig.sp.c.y, lst->fig.sp.c.z,
+	printf("[x :%lf, y :%lf, z :%lf, r :%lf] , color :%x\n", lst->fig.sp.c.x, lst->fig.sp.c.y, lst->fig.sp.c.z,
 			lst->fig.sp.r, lst->color);
 	lst = lst->next;
-	printf(" %d \n", ++i);
 	}		
-*/
+}

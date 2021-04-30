@@ -8,27 +8,12 @@
 #include <math.h> //pow
 #include <fcntl.h> //open
 #include <stdlib.h> //malloc, free
-
-typedef struct	s_mlx
-{
-	void *mlx_ptr;
-	void *win_ptr;
-	void *img_ptr;
-	int	*data;
-	int bpp;
-	int size_l;
-	int endianl;
-}				t_mlx;
-//기본 mlx형태 >>추후에 수정에 들어갈 수 있음
-
 typedef struct	s_p3
 {
 	double x;
 	double y;
 	double z;
 }				t_p3;
-
-
 
 typedef struct 	s_light
 {
@@ -37,6 +22,16 @@ typedef struct 	s_light
 	int color;
 	struct s_light *next;
 }				t_light;
+
+typedef struct 	s_cam
+{
+	t_p3 position;
+	t_p3 dir_vec;
+	int fov;
+
+	struct s_cam *next;
+	//etc
+}				t_cam;
 
 typedef struct	s_scene
 {
@@ -76,6 +71,22 @@ typedef struct s_fig
 	//..+a
 }				t_fig;
 //도형 구조체
+
+typedef struct	s_mlx
+{
+	void *mlx_ptr;
+	void *win_ptr;
+	void *img_ptr;
+	int	*data;
+	int bpp;
+	int size_l;
+	int endianl;
+
+	t_cam	*cam; 
+}				t_mlx;
+//기본 mlx형태 >>추후에 수정에 들어갈 수 있음
+
+
 
 # define SP 0
 
