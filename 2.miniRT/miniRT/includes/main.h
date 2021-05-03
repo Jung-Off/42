@@ -8,6 +8,7 @@
 #include <math.h> //pow
 #include <fcntl.h> //open
 #include <stdlib.h> //malloc, free
+
 typedef struct	s_p3
 {
 	double x;
@@ -22,6 +23,8 @@ typedef struct 	s_light
 	int color;
 	struct s_light *next;
 }				t_light;
+
+///////////**********
 
 typedef struct 	s_cam
 {
@@ -47,6 +50,8 @@ typedef struct	s_scene
 	//...etc
 }				t_scene;
 
+//////////////*************
+
 //장면 구조체
 typedef struct	s_sp //sphere
 {
@@ -55,12 +60,51 @@ typedef struct	s_sp //sphere
 	int inside;
 }				t_sp;
 
+typedef struct 	s_pl
+{
+	t_p3 position;
+	t_p3 normal;
+	int color;
+}				t_pl;
+
+typedef struct	s_sq
+{
+	t_p3 sq_c;
+	t_p3 normal;
+	double length;
+	int color;
+}				t_sq;
+
+typedef struct	s_cy
+{
+	t_p3 c;
+	t_p3 normal;
+	double r;
+	double h;
+	int color;
+}				t_cy;
+
+typedef struct	s_tr
+{
+	t_p3 first;
+	t_p3 second;
+	t_p3 third;
+	int color;
+}				t_tr;
+
 union	u_fig
 {
-	t_sp sp;
-	//. pl, sp
+	t_sp	sp;
+	t_pl	pl;
+	t_sq	sq;
+	t_cy	cy;
+	t_tr	tr;
+
 };
 //union으로서 하나의 도형만 받도록~
+
+
+///////////*************
 
 typedef struct s_fig
 {
@@ -84,11 +128,16 @@ typedef struct	s_mlx
 
 	t_cam	*cam; 
 }				t_mlx;
+
+////////////////*************
+
 //기본 mlx형태 >>추후에 수정에 들어갈 수 있음
 
-
-
 # define SP 0
+# define PL 1
+# define SQ 2
+# define TR 3
+# define CY 4
 
 void parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av);
 
