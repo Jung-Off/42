@@ -4,10 +4,16 @@
 #include "get_next_line.h"
 #include "../libft/libft.h"
 #include <stdio.h> //printf
-
 #include <math.h> //pow
 #include <fcntl.h> //open
 #include <stdlib.h> //malloc, free
+
+# define SP 0
+# define PL 1
+# define SQ 2
+# define TR 3
+# define CY 4
+
 
 typedef struct	s_p3
 {
@@ -23,8 +29,6 @@ typedef struct 	s_light
 	int color;
 	struct s_light *next;
 }				t_light;
-
-///////////**********
 
 typedef struct 	s_cam
 {
@@ -49,8 +53,6 @@ typedef struct	s_scene
 	t_light *l;
 	//...etc
 }				t_scene;
-
-//////////////*************
 
 //장면 구조체
 typedef struct	s_sp //sphere
@@ -103,9 +105,6 @@ union	u_fig
 };
 //union으로서 하나의 도형만 받도록~
 
-
-///////////*************
-
 typedef struct s_fig
 {
 	int				flag;
@@ -129,15 +128,10 @@ typedef struct	s_mlx
 	t_cam	*cam; 
 }				t_mlx;
 
-////////////////*************
-
-//기본 mlx형태 >>추후에 수정에 들어갈 수 있음
-
-# define SP 0
-# define PL 1
-# define SQ 2
-# define TR 3
-# define CY 4
+#include "parse_utils.h"
+#include "parse.h"
+#include "split_etc.h"
+#include "split_figure.h"
 
 void parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av);
 
