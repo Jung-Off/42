@@ -7,6 +7,7 @@
 #include <math.h> //pow
 #include <fcntl.h> //open
 #include <stdlib.h> //malloc, free
+#include "mlx.h"
 
 # define SP 0
 # define PL 1
@@ -120,10 +121,11 @@ typedef struct	s_mlx
 	void *mlx_ptr;
 	void *win_ptr;
 	void *img_ptr;
-	int	*data;
+	
+	char	*data;
 	int bpp;
 	int size_l;
-	int endianl;
+	int endian;
 
 	t_cam	*cam; 
 }				t_mlx;
