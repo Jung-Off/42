@@ -34,6 +34,5 @@ int main(int argc, char **argv)
 	mlx_put_image_to_window(mlx.mlx_ptr, mlx.win_ptr, mlx.img_ptr, 0, 0);
 	mlx_hook(mlx.win_ptr, 02, 1L<<0, key_press, 0);
 	mlx_loop(mlx.mlx_ptr);
-
 	return (0);
 }

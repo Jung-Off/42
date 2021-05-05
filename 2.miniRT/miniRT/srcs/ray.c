@@ -37,15 +37,40 @@ t_ray       ray_primary(t_cam *cam, double u, double v)
     return (ray);
 }
 
-t_p3 ray_color(t_ray *r)
+int hit_sphere(t_ray *r, t_fig *lst)
+{
+    t_p3 oc;
+    double a;
+    double b;
+    double c;
+    double discriminant;
+
+    oc = vsubstract(r->orig, lst->fig.sp.c);
+    a = vdot(r->dir, r->dir);
+    b = 2.0 * vdot(oc, r->dir);
+    c = vdot(oc, oc) - pow(lst->fig.sp.r, 2);
+
+    discriminant = b * b - 4 * a * c;
+
+    if(discriminant > 0)
+        return (1);
+    else
+        return (0);
+}
+
+
+t_p3 ray_color(t_ray *r, t_fig *lst)
 {
     //ray = vdefine(255, 0, 0);
     double t;
-
     t = 0.5 * (r->dir.y + 1.0);
 
-    //return(ray);
-    return (vadd(vscalarmul(vdefine(1,1,1), 1.0 - t) , vscalarmul(vdefine(0.5, 0.7, 1.0), t)));
+    
+    if(hit_sphere(r, lst))
+        return(vdefine(1,0,0));
+    
+    else
+        return (vadd(vscalarmul(vdefine(1,1,1), 1.0 - t) , vscalarmul(vdefine(0.5, 0.7, 1.0), t)));
 }
 
 void make_picture(t_mlx *mlx, t_scene data, t_fig *lst)
@@ -64,7 +89,7 @@ void make_picture(t_mlx *mlx, t_scene data, t_fig *lst)
             u = (double)x / (data.res_x - 1);
             v = (data.res_y - (double)y - 1) / (data.res_y - 1);
             ray = ray_primary(mlx->cam, u, v);
-            color = ray_color(&ray);
+            color = ray_color(&ray, lst);
 
             color.x = (int)(color.x * 255);
             color.y = (int)(color.y * 255);
