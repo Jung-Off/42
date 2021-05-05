@@ -37,9 +37,25 @@ typedef struct 	s_cam
 	t_p3 dir_vec;
 	int fov;
 
+	double viewport_h;
+	double viewport_w;
+	double focal_length;
+
+	t_p3 origin;
+	t_p3 horizontal;
+	t_p3 vertical;
+	
+	t_p3 l_l_corner;
+
 	struct s_cam *next;
 	//etc
 }				t_cam;
+
+typedef struct  s_ray
+{
+    t_p3     orig;
+    t_p3       dir;
+}               t_ray;
 
 typedef struct	s_scene
 {
@@ -122,7 +138,7 @@ typedef struct	s_mlx
 	void *win_ptr;
 	void *img_ptr;
 	
-	char	*data;
+	int	*data;
 	int bpp;
 	int size_l;
 	int endian;
@@ -134,6 +150,8 @@ typedef struct	s_mlx
 #include "parse.h"
 #include "split_etc.h"
 #include "split_figure.h"
+#include "vec_operation.h"
+#include "ray.h"
 
 void parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av);
 
