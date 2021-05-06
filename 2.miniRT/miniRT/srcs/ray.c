@@ -51,7 +51,7 @@ void set_face_normal(t_ray *r, t_hit_record *rec)
     rec->normal = (rec->front_face) ? rec->normal : vscalarmul(rec->normal, -1);
 }
 
-t_bool hit_sphere(t_ray *r, t_fig *lst, t_hit_record *rec)
+t_bool hit_sphere(t_fig *lst, t_ray *r, t_hit_record *rec)
 {
     t_p3 oc;
     double a;
@@ -77,13 +77,43 @@ t_bool hit_sphere(t_ray *r, t_fig *lst, t_hit_record *rec)
         if (root < rec->tmin || rec->tmax < root)
             return (FALSE); 
     }
-    rec->d_rorig_meet = root;
+    rec->oc_r = root;
     rec->p_meet = ray_at(r, root);
     rec->normal = vscalardiv(vsubstract(rec->p_meet, lst->fig.sp.c), lst->fig.sp.r);
     set_face_normal(r, rec);
     return (TRUE);
 }
 
+t_bool	hit_obj(t_fig *lst, t_ray *r, t_hit_record *rec)
+{
+	t_bool		hit_result;
+
+	hit_result = FALSE;
+	if (lst->flag == SP)
+		hit_result = hit_sphere(lst, r, rec);
+	return (hit_result);
+}
+
+t_bool	hit(t_fig *lst, t_ray *r, t_hit_record *rec)
+{
+	t_bool			hit_fig;
+	t_hit_record	temp_rec;
+
+	temp_rec = *rec;
+	hit_fig = FALSE;
+	while (lst)
+	{
+		if (hit_obj(lst, r, &temp_rec))
+		{
+			//
+			hit_fig = TRUE;
+			temp_rec.tmax = temp_rec.oc_r;
+			*rec = temp_rec;
+		}
+		lst = lst->next;
+	}
+	return (hit_fig);
+}
 
 t_p3 ray_color(t_ray *r, t_fig *lst)
 {
@@ -103,7 +133,8 @@ t_p3 ray_color(t_ray *r, t_fig *lst)
         return (vscalarmul(vdefine(n.x + 1, n.y + 1, n.z + 1), 0.5));
     }
     */
-    if(hit_sphere(r, lst, &rec))
+    //if(hit_sphere(r, lst, &rec))
+	if (hit(lst, r, &rec))
         return(vscalarmul(vadd(rec.normal, vdefine(1,1,1)), 0.5));
     else
     {

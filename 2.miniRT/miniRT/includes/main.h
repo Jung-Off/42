@@ -61,7 +61,7 @@ typedef struct s_hit_record
 	t_p3 normal;
 	double tmin;
 	double tmax;
-	double d_rorig_meet;
+	double oc_r;
 	t_bool front_face;
 }				t_hit_record;
 
