@@ -51,10 +51,25 @@ typedef struct 	s_cam
 	//etc
 }				t_cam;
 
+typedef int t_bool;
+#define FALSE 0
+#define TRUE 1
+
+typedef struct s_hit_record
+{
+	t_p3 p_meet;
+	t_p3 normal;
+	double tmin;
+	double tmax;
+	double d_rorig_meet;
+	t_bool front_face;
+}				t_hit_record;
+
 typedef struct  s_ray
 {
     t_p3     orig;
     t_p3       dir;
+	float t;
 }               t_ray;
 
 typedef struct	s_scene

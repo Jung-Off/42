@@ -23,9 +23,8 @@ int main(int argc, char **argv)
 	
 	camera_create(mlx.cam, &data);
 
-
 	mlx.mlx_ptr = mlx_init();
-	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, data.res_x, data.res_y, "minirt_test");	
+	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr,data.res_x, data.res_y, "minirt_test");	
 	mlx.img_ptr = mlx_new_image(mlx.mlx_ptr, data.res_x, data.res_y);
 	mlx.data = (int *)mlx_get_data_addr(mlx.img_ptr, &mlx.bpp, &mlx.size_l, &mlx.endian);
 	
