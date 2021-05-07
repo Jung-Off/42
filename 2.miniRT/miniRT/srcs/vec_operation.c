@@ -87,3 +87,14 @@ t_p3	vmul(t_p3 a, t_p3 b)
 	v.z = a.z * b.z;
 	return (v);
 }
+
+t_p3	vmin(t_p3 a, t_p3 b)
+{
+	if (a.x > b.x)
+		a.x = b.x;
+	if (a.y > b.y)
+		a.y = b.y;
+	if (a.z > b.z)
+		a.z = b.z;
+	return (a);
+}

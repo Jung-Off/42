@@ -15,7 +15,7 @@
 # define TR 3
 # define CY 4
 
-
+# define LUMEN 3
 typedef struct	s_p3
 {
 	double x;
@@ -54,7 +54,7 @@ typedef struct 	s_cam
 typedef int t_bool;
 #define FALSE 0
 #define TRUE 1
-#define LIGHT_POINT 1
+#define EPSILION 1e-6
 
 typedef struct s_hit_record
 {

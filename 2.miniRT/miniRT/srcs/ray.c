@@ -112,15 +112,16 @@ t_bool hit(t_fig *lst, t_ray *r, t_hit_record *rec)
 	return (hit_fig);
 }
 
-double	diffuse(t_light *light, t_hit_record *rec)
+t_p3	diffuse(t_light *light, t_hit_record *rec)
 {
 	t_p3	diffuse;
 	t_p3	light_dir;
-	double	kd;
+	double	d_weight;
 
 	light_dir = vunit(vsubstract(light->position, rec->p_meet));
-	kd = fmax(vdot(rec->normal, light_dir), 0.0);
-	return(kd);
+	d_weight = fmax(vdot(rec->normal, light_dir), 0.0);
+	diffuse = vscalarmul(rec->albedo, d_weight);
+	return(diffuse);
 }
 
 t_p3	reflect(t_p3 v, t_p3 n)
@@ -128,23 +129,24 @@ t_p3	reflect(t_p3 v, t_p3 n)
 	return (vsubstract(v, vscalarmul(n, vdot(v, n) * 2)));
 }
 
-double	specular(t_light *light, t_ray *r, t_hit_record *rec)
+t_p3	specular(t_light *light, t_ray *r, t_hit_record *rec)
 {
 	t_p3	specular;
 	t_p3	light_dir;
 	t_p3	view_dir;
 	t_p3	reflect_dir;
-	double	ks;
-	double	ksn;
+	double	s_weight;
+	double	shine;
 	double	spec;
 
 	light_dir = vunit(vsubstract(light->position, rec->p_meet));
 	view_dir = vunit(vscalarmul(r->dir, -1));
 	reflect_dir = reflect(vscalarmul(light_dir, -1), rec->normal);
-	ksn = 64;
-	ks = 0.5;
-	spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), ksn);
-	return(spec);
+	shine = 64;
+	s_weight = 0.5;
+	spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), shine);
+	specular = vscalarmul(vscalarmul(rec->albedo, s_weight), spec);
+	return (specular);
 }
 
 t_p3 ray_color(t_scene data, t_ray *r, t_fig *lst)
@@ -153,14 +155,16 @@ t_p3 ray_color(t_scene data, t_ray *r, t_fig *lst)
 	t_p3 n;
 	t_hit_record rec;
 
-	rec.tmin = 0;
+	rec.tmin = EPSILION;
 	rec.tmax = INFINITY;
 
 	double	light_ratio;
 	if (hit(lst, r, &rec))
 	{
-		light_ratio =  data.amb_ratio + diffuse(data.l, &rec) + specular(data.l, r, &rec);
-        return (vscalarmul(rec.albedo, light_ratio)); // ambient
+		//data.l->br *= LUMEN;
+		return (vmin(vscalarmul(vadd(vadd(data.amb_color, diffuse(data.l, &rec)), specular(data.l, r, &rec)), data.l->br * LUMEN), vdefine(1, 1, 1)));
+		//light_ratio =  data.amb_ratio + diffuse(data.l, &rec) + specular(data.l, r, &rec);
+        //return (vscalarmul(vscalarmul(rec.albedo, light_ratio), data.l->br)); // ambient
 	}
 	else
 	{
