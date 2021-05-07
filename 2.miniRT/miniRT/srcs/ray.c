@@ -112,7 +112,7 @@ t_bool hit(t_fig *lst, t_ray *r, t_hit_record *rec)
 	return (hit_fig);
 }
 
-t_p3	diffuse(t_light *light, t_hit_record *rec)
+double	diffuse(t_light *light, t_hit_record *rec)
 {
 	t_p3	diffuse;
 	t_p3	light_dir;
@@ -120,8 +120,7 @@ t_p3	diffuse(t_light *light, t_hit_record *rec)
 
 	light_dir = vunit(vsubstract(light->position, rec->p_meet));
 	kd = fmax(vdot(rec->normal, light_dir), 0.0);
-	diffuse = vscalarmul(light->color, kd);
-	return (diffuse);
+	return(kd);
 }
 
 t_p3	reflect(t_p3 v, t_p3 n)
@@ -129,7 +128,7 @@ t_p3	reflect(t_p3 v, t_p3 n)
 	return (vsubstract(v, vscalarmul(n, vdot(v, n) * 2)));
 }
 
-t_p3	specular(t_light *light, t_ray *r, t_hit_record *rec)
+double	specular(t_light *light, t_ray *r, t_hit_record *rec)
 {
 	t_p3	specular;
 	t_p3	light_dir;
@@ -145,13 +144,11 @@ t_p3	specular(t_light *light, t_ray *r, t_hit_record *rec)
 	ksn = 64;
 	ks = 0.5;
 	spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), ksn);
-	specular = vscalarmul(vscalarmul(light->color, ks), spec);
-	return (specular);
+	return(spec);
 }
 
 t_p3 ray_color(t_scene data, t_ray *r, t_fig *lst)
 {
-	//ray = vdefine(255, 0, 0);
 	double t;
 	t_p3 n;
 	t_hit_record rec;
@@ -159,23 +156,12 @@ t_p3 ray_color(t_scene data, t_ray *r, t_fig *lst)
 	rec.tmin = 0;
 	rec.tmax = INFINITY;
 
-	/*
-    t = hit_sphere(r, lst);
-    if (t > 0.0)
-    {
-        n = vunit(vsubstract(ray_at(r,t), lst->fig.sp.c));
-        return (vscalarmul(vdefine(n.x + 1, n.y + 1, n.z + 1), 0.5));
-    }
-    */
-	//if(hit_sphere(r, lst, &rec))
-	t_p3	light_ratio;
+	double	light_ratio;
 	if (hit(lst, r, &rec))
 	{
-		//light_ratio = color_add(data.amb_color, diffuse(data.l, &rec));
-		light_ratio = color_add(data.amb_color, specular(data.l, r, &rec));
-        return (vmul(rec.albedo, light_ratio)); // ambient
+		light_ratio =  data.amb_ratio + diffuse(data.l, &rec) + specular(data.l, r, &rec);
+        return (vscalarmul(rec.albedo, light_ratio)); // ambient
 	}
-//        return(vscalarmul(vadd(rec.normal, rec.albedo), 0.5));
 	else
 	{
 		t = 0.5 * (r->dir.y + 1.0);
