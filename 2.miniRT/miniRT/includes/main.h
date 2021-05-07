@@ -27,7 +27,7 @@ typedef struct 	s_light
 {
 	t_p3 position;
 	double br;
-	int color;
+	t_p3 color;
 	struct s_light *next;
 }				t_light;
 
@@ -54,6 +54,7 @@ typedef struct 	s_cam
 typedef int t_bool;
 #define FALSE 0
 #define TRUE 1
+#define LIGHT_POINT 1
 
 typedef struct s_hit_record
 {
@@ -63,6 +64,7 @@ typedef struct s_hit_record
 	double tmax;
 	double oc_r;
 	t_bool front_face;
+	t_p3 albedo;
 }				t_hit_record;
 
 typedef struct  s_ray
@@ -79,7 +81,7 @@ typedef struct	s_scene
 	int res_ex;
 
 	double amb_ratio;
-	int amb_color;
+	t_p3 amb_color;
 	int amb_ex;
 
 	t_light *l;
@@ -98,7 +100,6 @@ typedef struct 	s_pl
 {
 	t_p3 position;
 	t_p3 normal;
-	int color;
 }				t_pl;
 
 typedef struct	s_sq
@@ -106,7 +107,6 @@ typedef struct	s_sq
 	t_p3 sq_c;
 	t_p3 normal;
 	double length;
-	int color;
 }				t_sq;
 
 typedef struct	s_cy
@@ -115,7 +115,6 @@ typedef struct	s_cy
 	t_p3 normal;
 	double r;
 	double h;
-	int color;
 }				t_cy;
 
 typedef struct	s_tr
@@ -123,7 +122,6 @@ typedef struct	s_tr
 	t_p3 first;
 	t_p3 second;
 	t_p3 third;
-	int color;
 }				t_tr;
 
 union	u_fig
@@ -141,7 +139,8 @@ typedef struct s_fig
 {
 	int				flag;
 	union	u_fig 	fig;
-	int 			color;
+	t_p3 			albedo;
+
 	struct	s_fig 	*next;
 	//..+a
 }				t_fig;

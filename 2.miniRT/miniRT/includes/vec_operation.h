@@ -13,6 +13,8 @@ t_p3	vscalarmul(t_p3 a, double t);
 t_p3	vscalardiv(t_p3 a, double t);
 double	vlen(t_p3 a);
 t_p3	vunit(t_p3 a);
+t_p3	vmul(t_p3 a, t_p3 b);
+t_p3	color_add(t_p3 a, t_p3 b);
 
 
 #endif

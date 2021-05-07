@@ -21,7 +21,7 @@ void split_ambient(t_scene *data, char *str)
 	data->amb_ratio = ft_atod(&str);
 	
 	//ratio 가 0,1사이에 들어와야 된다는 조건	
-	data->amb_color = parse_color(&str);
+	data->amb_color = parse_albedo(&str);
 }
 
 void split_light(t_scene *data, char *str)
@@ -45,7 +45,7 @@ void split_light(t_scene *data, char *str)
 
 	light->position = parse_xyz(&str);
 	light->br = ft_atod(&str);
-	light->color = parse_color(&str);
+	light->color = parse_albedo(&str);
 	light->next = NULL;
 }
 

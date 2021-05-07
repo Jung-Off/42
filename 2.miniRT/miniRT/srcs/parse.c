@@ -13,6 +13,19 @@ t_p3 parse_xyz(char **str)
 	return (p);
 }
 
+t_p3 parse_albedo(char **str)
+{
+	t_p3 p;
+
+	p.x = ft_atod(str) / 255.0; // atod에서 주소를 넘어가도록 하는게 맞지 않나?
+	pass_comma(str);
+	p.y = ft_atod(str) / 255.0;
+	pass_comma(str);
+	p.z = ft_atod(str) / 255.0;
+
+	return (p);
+}
+
 int parse_color(char **str)
 {
 	int r;
