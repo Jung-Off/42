@@ -1,7 +1,7 @@
 
 #include "../includes/main.h"
 
-void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
+void	find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
 {
 	if (*str == 's' && *(str + 1) == 'p')
 		split_sphere(lst, str + 2);
@@ -11,7 +11,7 @@ void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
 		split_ambient(data, str + 1);
 	else if (*str == 'l')
 		split_light(data, str + 1);
-	else if (*str == 'c' && *(str + 1) == 'y') //cy때문에 예외처리
+	else if (*str == 'c' && *(str + 1) == 'y')
 		split_cylinder(lst, str + 2);
 	else if (*str == 'p' && *(str + 1) == 'l')
 		split_plane(lst, str + 2);
@@ -23,37 +23,30 @@ void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
 		split_triangle(lst, str + 2);
 }
 
-int key_press(int key, t_mlx mlx)
+int		key_press(int key, t_mlx mlx)
 {
-	printf("%d\n", key);
 	if (key == 53)
 		exit(0);
 	return (0);
 }
 
-int main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
-	t_mlx 	mlx;
+	t_mlx	mlx;
 	t_scene data;
 	t_fig	*lst;
 
-	//
-	t_fig 	*start;
-	start = lst;
 	parse(&mlx, &data, &lst, argv);
-	
-	
 	camera_create(mlx.cam, &data);
-
 	mlx.mlx_ptr = mlx_init();
-	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr,data.res_x, data.res_y, "minirt_test");	
+	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr,
+			data.res_x, data.res_y, "minirt_test");
 	mlx.img_ptr = mlx_new_image(mlx.mlx_ptr, data.res_x, data.res_y);
-	mlx.data = (int *)mlx_get_data_addr(mlx.img_ptr, &mlx.bpp, &mlx.size_l, &mlx.endian);
-	
+	mlx.data = (int *)mlx_get_data_addr(mlx.img_ptr,
+			&mlx.bpp, &mlx.size_l, &mlx.endian);
 	make_picture(&mlx, data, lst);
-
 	mlx_put_image_to_window(mlx.mlx_ptr, mlx.win_ptr, mlx.img_ptr, 0, 0);
-	mlx_hook(mlx.win_ptr, 02, 1L<<0, key_press, 0);
+	mlx_hook(mlx.win_ptr, 02, 1L << 0, key_press, 0);
 	mlx_loop(mlx.mlx_ptr);
 	return (0);
 }

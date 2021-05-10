@@ -161,6 +161,24 @@ typedef struct	s_mlx
 	t_cam	*cam; 
 }				t_mlx;
 
+typedef struct	s_matrix
+{
+	int x;
+	int y;
+	double u;
+	double v;
+}				t_matrix;
+
+typedef struct	s_discriminant
+{
+	double a;
+	double half_b;
+	double c;
+	double discriminant;
+	double sqrtd;
+	double root;
+}				t_discriminant;
+
 #include "parse_utils.h"
 #include "parse.h"
 #include "split_etc.h"

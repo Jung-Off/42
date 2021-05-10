@@ -3,6 +3,7 @@
 t_p3	vmul(t_p3 a, t_p3 b)
 {
 	t_p3	v;
+
 	v.x = a.x * b.x;
 	v.y = a.y * b.y;
 	v.z = a.z * b.z;
@@ -21,6 +22,7 @@ double	vlen(t_p3 a)
 t_p3	color_add(t_p3 a, t_p3 b)
 {
 	t_p3	v;
+
 	v.x = fmin(a.x + b.x, 1.0);
 	v.y = fmin(a.y + b.y, 1.0);
 	v.z = fmin(a.z + b.z, 1.0);
@@ -42,4 +44,3 @@ t_p3	vmin(t_p3 a, t_p3 b)
 		a.z = b.z;
 	return (a);
 }
-

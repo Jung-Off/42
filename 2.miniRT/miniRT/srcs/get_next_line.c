@@ -2,9 +2,11 @@
 #include "../includes/get_next_line.h"
 #include "../libft/libft.h"
 
-int	ft_space(char *dup)
+int		ft_space(char *dup)
 {
-	int i = 0;
+	int i;
+
+	i = 0;
 	while (dup[i])
 	{
 		if (dup[i] == '\n')
@@ -17,11 +19,13 @@ int	ft_space(char *dup)
 char	*ft_straddchar(char *s1, char *s2)
 {
 	char	*sum;
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	if (!s1)
 		return (ft_strdup(s2));
-	if (!(sum = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1))))
+	if (!(sum = (char *)malloc(sizeof(char)
+					* (ft_strlen(s1) + ft_strlen(s2) + 1))))
 		return (0);
 	while (s1[i])
 	{
