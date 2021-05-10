@@ -14,8 +14,13 @@
 # define SQ 2
 # define TR 3
 # define CY 4
-
 # define LUMEN 3
+# define FALSE 0
+# define TRUE 1
+# define EPSILION 1e-6
+
+typedef int		t_bool;
+
 typedef struct	s_p3
 {
 	double x;
@@ -23,39 +28,25 @@ typedef struct	s_p3
 	double z;
 }				t_p3;
 
-typedef struct 	s_light
-{
-	t_p3 position;
-	double br;
-	t_p3 color;
-	struct s_light *next;
-}				t_light;
-
+//카메라 구조체
 typedef struct 	s_cam
 {
 	t_p3 position;
 	t_p3 dir_vec;
 	int fov;
-
 	double viewport_h;
 	double viewport_w;
 	double focal_length;
-
 	t_p3 origin;
 	t_p3 horizontal;
 	t_p3 vertical;
-	
 	t_p3 l_l_corner;
 
 	struct s_cam *next;
 	//etc
 }				t_cam;
 
-typedef int t_bool;
-#define FALSE 0
-#define TRUE 1
-#define EPSILION 1e-6
-
+//카메라가 보이는 곳
 typedef struct s_hit_record
 {
 	t_p3 p_meet;
@@ -67,6 +58,7 @@ typedef struct s_hit_record
 	t_p3 albedo;
 }				t_hit_record;
 
+//광선 구조체
 typedef struct  s_ray
 {
     t_p3     orig;
@@ -74,6 +66,16 @@ typedef struct  s_ray
 	float t;
 }               t_ray;
 
+//빛 구조체
+typedef struct 	s_light
+{
+	t_p3 position;
+	double br;
+	t_p3 color;
+	struct s_light *next;
+}				t_light;
+
+//장면 구조체
 typedef struct	s_scene
 {
 	int res_x;
@@ -85,11 +87,10 @@ typedef struct	s_scene
 	int amb_ex;
 
 	t_light *l;
-	//...etc
 }				t_scene;
 
-//장면 구조체
-typedef struct	s_sp //sphere
+//fig
+typedef struct	s_sp
 {
 	t_p3 c;
 	double r;
@@ -133,8 +134,8 @@ union	u_fig
 	t_tr	tr;
 
 };
-//union으로서 하나의 도형만 받도록~
 
+//fig
 typedef struct s_fig
 {
 	int				flag;
@@ -144,8 +145,8 @@ typedef struct s_fig
 	struct	s_fig 	*next;
 	//..+a
 }				t_fig;
-//도형 구조체
 
+//mlx
 typedef struct	s_mlx
 {
 	void *mlx_ptr;
@@ -166,8 +167,14 @@ typedef struct	s_mlx
 #include "split_figure.h"
 #include "vec_operation.h"
 #include "ray.h"
-#include "shadow.h"
+#include "vec_mul.h"
+#include "vec_utils.h"
+#include "draw_view.h"
+#include "hit_fig.h"
+
 
 void parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av);
+void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str);
+int key_press(int key, t_mlx mlx);
 
 #endif

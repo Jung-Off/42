@@ -1,6 +1,28 @@
 
 #include "../includes/main.h"
 
+void find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
+{
+	if (*str == 's' && *(str + 1) == 'p')
+		split_sphere(lst, str + 2);
+	else if (*str == 'R')
+		split_resolution(data, str + 1);
+	else if (*str == 'A')
+		split_ambient(data, str + 1);
+	else if (*str == 'l')
+		split_light(data, str + 1);
+	else if (*str == 'c' && *(str + 1) == 'y') //cy때문에 예외처리
+		split_cylinder(lst, str + 2);
+	else if (*str == 'p' && *(str + 1) == 'l')
+		split_plane(lst, str + 2);
+	else if (*str == 's' && *(str + 1) == 'q')
+		split_square(lst, str + 2);
+	else if (*str == 'c')
+		split_camera(mlx, data, str + 1);
+	else if (*str == 't' && *(str + 1) == 'r')
+		split_triangle(lst, str + 2);
+}
+
 int key_press(int key, t_mlx mlx)
 {
 	printf("%d\n", key);
