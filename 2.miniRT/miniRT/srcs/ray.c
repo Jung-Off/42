@@ -112,41 +112,80 @@ t_bool hit(t_fig *lst, t_ray *r, t_hit_record *rec)
 	return (hit_fig);
 }
 
-t_p3	diffuse(t_light *light, t_hit_record *rec)
-{
-	t_p3	diffuse;
-	t_p3	light_dir;
-	double	d_weight;
+// t_p3	diffuse(t_light *light, t_hit_record *rec)
+// {
+// 	t_p3	diffuse;
+// 	t_p3	light_dir;
+// 	double	d_weight;
 
-	light_dir = vunit(vsubstract(light->position, rec->p_meet));
-	d_weight = fmax(vdot(rec->normal, light_dir), 0.0);
-	diffuse = vscalarmul(rec->albedo, d_weight);
-	return(diffuse);
-}
+// 	light_dir = vunit(vsubstract(light->position, rec->p_meet));
+// 	d_weight = fmax(vdot(rec->normal, light_dir), 0.0);
+// 	diffuse = vscalarmul(rec->albedo, d_weight);
+// 	return(diffuse);
+// }
 
 t_p3	reflect(t_p3 v, t_p3 n)
 {
 	return (vsubstract(v, vscalarmul(n, vdot(v, n) * 2)));
 }
 
-t_p3	specular(t_light *light, t_ray *r, t_hit_record *rec)
+// t_p3	specular(t_light *light, t_ray *r, t_hit_record *rec)
+// {
+// 	t_p3	specular;
+// 	t_p3	light_dir;
+// 	t_p3	view_dir;
+// 	t_p3	reflect_dir;
+// 	double	s_weight;
+// 	double	shine;
+// 	double	spec;
+
+// 	light_dir = vunit(vsubstract(light->position, rec->p_meet));
+// 	view_dir = vunit(vscalarmul(r->dir, -1));
+// 	reflect_dir = reflect(vscalarmul(light_dir, -1), rec->normal);
+// 	shine = 64;
+// 	s_weight = 0.5;
+// 	spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), shine);
+// 	specular = vscalarmul(vscalarmul(rec->albedo, s_weight), spec);
+// 	return (specular);
+// }
+
+t_p3	point_light_get(t_scene data, t_ray *r, t_hit_record *rec, t_fig *lst)
 {
-	t_p3	specular;
+	t_p3	diffuse;
 	t_p3	light_dir;
+	double	d_weight;
+
+	double	light_len;
+	t_p3	light_ray;
+
+	t_p3	specular;
 	t_p3	view_dir;
 	t_p3	reflect_dir;
 	double	s_weight;
 	double	shine;
 	double	spec;
 
-	light_dir = vunit(vsubstract(light->position, rec->p_meet));
+	light_dir = vsubstract(data.l->position, rec->p_meet);
+	light_len = vlen(light_dir);
+	light_ray = ray(vadd(rec->p_meet, vscalarmul(rec->normal, EPSILION)), light_dir);
+
+	if (in_shadow(lst, light_ray, light_len))
+		return (vdefine(0, 0, 0));
+
+	light_dir = vunit(light_dir);
+	//light_dir = vunit(vsubstract(data.l->position, rec->p_meet));
+	d_weight = fmax(vdot(rec->normal, light_dir), 0.0);
+	diffuse = vscalarmul(rec->albedo, d_weight);
+
 	view_dir = vunit(vscalarmul(r->dir, -1));
 	reflect_dir = reflect(vscalarmul(light_dir, -1), rec->normal);
 	shine = 64;
 	s_weight = 0.5;
 	spec = pow(fmax(vdot(view_dir, reflect_dir), 0.0), shine);
 	specular = vscalarmul(vscalarmul(rec->albedo, s_weight), spec);
-	return (specular);
+	//return (vadd(diffuse, specular));
+
+	return (vscalarmul(vadd(vadd(data.amb_color, diffuse), specular), data.l->br * LUMEN));
 }
 
 t_p3 ray_color(t_scene data, t_ray *r, t_fig *lst)
@@ -162,9 +201,8 @@ t_p3 ray_color(t_scene data, t_ray *r, t_fig *lst)
 	if (hit(lst, r, &rec))
 	{
 		//data.l->br *= LUMEN;
-		return (vmin(vscalarmul(vadd(vadd(data.amb_color, diffuse(data.l, &rec)), specular(data.l, r, &rec)), data.l->br * LUMEN), vdefine(1, 1, 1)));
-		//light_ratio =  data.amb_ratio + diffuse(data.l, &rec) + specular(data.l, r, &rec);
-        //return (vscalarmul(vscalarmul(rec.albedo, light_ratio), data.l->br)); // ambient
+		//return (vmin(vscalarmul(vadd(vadd(data.amb_color, diffuse(data.l, &rec)), specular(data.l, r, &rec)), data.l->br * LUMEN), vdefine(1, 1, 1)));
+		return (vmin(point_light_get(data, r, &rec, lst), vdefine(1, 1, 1)));
 	}
 	else
 	{
