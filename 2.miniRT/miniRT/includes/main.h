@@ -166,6 +166,7 @@ typedef struct	s_mlx
 #include "split_figure.h"
 #include "vec_operation.h"
 #include "ray.h"
+#include "shadow.h"
 
 void parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av);
 

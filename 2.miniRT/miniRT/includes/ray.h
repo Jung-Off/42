@@ -11,6 +11,7 @@ t_bool      hit_sphere(t_fig *lst, t_ray *r, t_hit_record *rec);
 t_bool		hit_object(t_fig *lst, t_ray *r, t_hit_record *rec);
 t_bool		hit(t_fig *lst, t_ray *r, t_hit_record *rec);
 t_p3        ray_at(t_ray *r, double t);
+t_ray       ray(t_p3, t_p3 dir);
 void        set_face_normal(t_ray *r, t_hit_record *rec);
 
 #endif
