@@ -15,14 +15,16 @@ typedef struct	s_cam
 	t_p3			position;
 	t_p3			dir_vec;
 	int				fov;
-	double			viewport_h;
+	/*
+    double			viewport_h;
 	double			viewport_w;
 	double			focal_length;
 	t_p3			origin;
 	t_p3			horizontal;
 	t_p3			vertical;
 	t_p3			l_l_corner;
-	struct s_cam	*next;
+	*/
+    struct s_cam	*next;
 }				t_cam;
 
 typedef struct	s_hit_record
@@ -56,6 +58,14 @@ typedef struct	s_scene
 	int		res_x;
 	int		res_y;
 	int		res_ex;
+    
+    double  viewport_h;
+	double  viewport_w;
+	double  focal_length;
+	t_p3    origin;
+	t_p3    horizontal;
+	t_p3    vertical;
+	t_p3    l_l_corner;
 
 	double	amb_ratio;
 	t_p3	amb_color;

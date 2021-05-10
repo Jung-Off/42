@@ -6,18 +6,18 @@ void	camera_create(t_cam *cam, t_scene *data)
 	double aspect_ratio;
 
 	aspect_ratio = (double)data->res_x / (double)data->res_y;
-	cam->viewport_h = 2.0;
-	cam->viewport_w = aspect_ratio * cam->viewport_h;
-	cam->focal_length = 1.0;
-	cam->origin = cam->position;
-	cam->horizontal = vdefine(cam->viewport_w, 0.0, 0.0);
-	cam->vertical = vdefine(0.0, cam->viewport_h, 0.0);
-	cam->l_l_corner.x = cam->origin.x
-		- (cam->horizontal.x / 2) - (cam->vertical.x / 2) - 0;
-	cam->l_l_corner.y = cam->origin.y
-		- (cam->horizontal.y / 2) - (cam->vertical.y / 2) - 0;
-	cam->l_l_corner.z = cam->origin.z
-		- (cam->horizontal.z / 2) - (cam->vertical.z / 2) - cam->focal_length;
+	data->viewport_h = 2.0;
+	data->viewport_w = aspect_ratio * data->viewport_h;
+	data->focal_length = 1.0;
+	data->origin = cam->position;
+	data->horizontal = vdefine(data->viewport_w, 0.0, 0.0);
+	data->vertical = vdefine(0.0, data->viewport_h, 0.0);
+	data->l_l_corner.x = data->origin.x
+		- (data->horizontal.x / 2) - (data->vertical.x / 2) - 0;
+	data->l_l_corner.y = data->origin.y
+		- (data->horizontal.y / 2) - (data->vertical.y / 2) - 0;
+	data->l_l_corner.z = data->origin.z
+		- (data->horizontal.z / 2) - (data->vertical.z / 2) - data->focal_length;
 	data->amb_color = vscalarmul(data->amb_color, data->amb_ratio);
 }
 
@@ -76,7 +76,7 @@ void	make_picture(t_mlx *mlx, t_scene data, t_fig *lst)
 		{
 			m.u = (double)m.x / (data.res_x - 1);
 			m.v = (data.res_y - (double)m.y - 1) / (data.res_y - 1);
-			ray = ray_primary(mlx->cam, m.u, m.v);
+			ray = ray_primary(&data, m.u, m.v);
 			color = ray_color(data, &ray, lst);
 			color.x = (int)(color.x * 255);
 			color.y = (int)(color.y * 255);

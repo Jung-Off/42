@@ -1,16 +1,16 @@
 #include "../includes/ray.h"
 
-t_ray	ray_primary(t_cam *cam, double u, double v)
+t_ray	ray_primary(t_scene *data, double u, double v)
 {
 	t_ray ray;
 
-	ray.orig = cam->origin;
-	ray.dir.x = cam->l_l_corner.x + u * cam->horizontal.x
-		+ v * cam->vertical.x - cam->origin.x;
-	ray.dir.y = cam->l_l_corner.y + u * cam->horizontal.y
-		+ v * cam->vertical.y - cam->origin.y;
-	ray.dir.z = cam->l_l_corner.z + u * cam->horizontal.z
-		+ v * cam->vertical.z - cam->origin.z;
+	ray.orig = data->origin;
+	ray.dir.x = data->l_l_corner.x + u * data->horizontal.x
+		+ v * data->vertical.x - data->origin.x;
+	ray.dir.y = data->l_l_corner.y + u * data->horizontal.y
+		+ v * data->vertical.y - data->origin.y;
+	ray.dir.z = data->l_l_corner.z + u * data->horizontal.z
+		+ v * data->vertical.z - data->origin.z;
 	ray.dir = vunit(ray.dir);
 	return (ray);
 }
