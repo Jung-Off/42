@@ -65,8 +65,8 @@ void	split_camera(t_mlx *mlx, t_scene *data, char *str)
 		mlx->cam = cam;
 	//t_scene data를 들고오는 이유 data에다가 camera 갯수가 들어있어서
 	//수정가능?
-	cam->position = parse_xyz(&str);
-	cam->dir_vec = parse_xyz(&str);
+	cam->lookfrom = parse_xyz(&str);
+	cam->lookat = parse_xyz(&str);
 	cam->fov = rt_atoi(&str);
 	cam->next = NULL;
 }
