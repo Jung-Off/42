@@ -12,8 +12,8 @@ typedef struct	s_p3
 
 typedef struct	s_cam
 {
-	t_p3			position;
-	t_p3			dir_vec;
+	t_p3			lookfrom;
+	t_p3			lookat;
 	int				fov;
 	/*
     double			viewport_h;

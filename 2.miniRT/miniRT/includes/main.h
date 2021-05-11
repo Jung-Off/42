@@ -31,9 +31,10 @@
 # include "draw_view.h"
 # include "hit_fig.h"
 # include "phong_light.h"
+# include "to.h"
 
 void	parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av);
 void	find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str);
-int		key_press(int key, t_mlx mlx);
+int		key_press(int key, t_mlx *mlx);
 
 #endif

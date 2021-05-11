@@ -4,33 +4,28 @@
 void	camera_create(t_cam *cam, t_scene *data)
 {
 	double aspect_ratio;
-
 	double theta = degrees_to_radians(cam->fov);
 	double h = tan(theta / 2);
+
 
 	aspect_ratio = (double)data->res_x / (double)data->res_y;
 	data->viewport_h = 2.0 * h;
 	data->viewport_w = aspect_ratio * data->viewport_h;
-	
-	
 	data->focal_length = 1.0;
 	data->origin = cam->lookfrom;
 
 	t_p3 w = vunit(vsubstract(data->origin,cam->lookat));
 	t_p3 u = vunit(vcross(vdefine(0, 1, 0), w)); //예외처리
 	t_p3 v = vcross(w, u);
-	
+
 	data->horizontal = vscalarmul(u, data->viewport_w);
 	data->vertical = vscalarmul(v, data->viewport_h);
-
 	data->l_l_corner.x = data->origin.x
 		- (data->horizontal.x / 2) - (data->vertical.x / 2) - w.x;
 	data->l_l_corner.y = data->origin.y
 		- (data->horizontal.y / 2) - (data->vertical.y / 2) - w.y;
 	data->l_l_corner.z = data->origin.z
 		- (data->horizontal.z / 2) - (data->vertical.z / 2) - w.z;
-
-
 	data->amb_color = vscalarmul(data->amb_color, data->amb_ratio);
 }
 
