@@ -23,44 +23,44 @@ void	find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
 		split_triangle(lst, str + 2);
 }
 
-int		key_press(int key, t_mlx *mlx)
+int		key_press(int key, t_main *s)
 {
 	if (key == 53)
 		exit(0);
 	else if(key == 124)
 	{
-		mlx->cam = mlx->cam->next;
-		printf("%p\n", mlx->cam);
+		s->mlx.cam = s->mlx.cam->next;
+		printf("%p\n", s->mlx.cam);
+		make_picture(s);
+		mlx_put_image_to_window(s->mlx.mlx_ptr, s->mlx.win_ptr, s->mlx.img_ptr, 0, 0);
 	}
 	return (0);
 }
 
 int		main(int argc, char **argv)
 {
-	t_mlx	mlx;
-	t_scene data;
-	t_fig	*lst;
+	t_main	s;
 
-	parse(&mlx, &data, &lst, argv);
-	camera_create(mlx.cam, &data);
-	mlx.mlx_ptr = mlx_init();
-	mlx.win_ptr = mlx_new_window(mlx.mlx_ptr,
-			data.res_x, data.res_y, "minirt_test");	
-	mlx.img_ptr = mlx_new_image(mlx.mlx_ptr, data.res_x, data.res_y);
-	mlx.data = (int *)mlx_get_data_addr(mlx.img_ptr,
-			&mlx.bpp, &mlx.size_l, &mlx.endian);
+	parse(&s.mlx, &s.data, &s.lst, argv);
+	camera_create(s.mlx.cam, &s.data);
+	s.mlx.mlx_ptr = mlx_init();
+	s.mlx.win_ptr = mlx_new_window(s.mlx.mlx_ptr,
+			s.data.res_x, s.data.res_y, "minirt_test");	
+	s.mlx.img_ptr = mlx_new_image(s.mlx.mlx_ptr, s.data.res_x, s.data.res_y);
+	s.mlx.data = (int *)mlx_get_data_addr(s.mlx.img_ptr,
+			&s.mlx.bpp, &s.mlx.size_l, &s.mlx.endian);
 
 	t_cam	*p;
 
-	p = mlx.cam;
+	p = s.mlx.cam;
 	while (p->next)
 		p = p->next;
-	p->next = mlx.cam;
+	p->next = s.mlx.cam;
 
-	make_picture(&mlx, data, lst);
-	mlx_put_image_to_window(mlx.mlx_ptr, mlx.win_ptr, mlx.img_ptr, 0, 0);
-	mlx_hook(mlx.win_ptr, 02, 1L << 0, key_press, &mlx);
-	mlx_loop(mlx.mlx_ptr);
+	make_picture(&s);
+	mlx_put_image_to_window(s.mlx.mlx_ptr, s.mlx.win_ptr, s.mlx.img_ptr, 0, 0);
+	mlx_hook(s.mlx.win_ptr, 02, 1L << 0, key_press, &s);
+	mlx_loop(s.mlx.mlx_ptr);
 
 	return (0);
 }

@@ -70,27 +70,27 @@ t_bool	hit(t_fig *lst, t_ray *r, t_hit_record *rec)
 	return (hit_fig);
 }
 
-void	make_picture(t_mlx *mlx, t_scene data, t_fig *lst)
+void	make_picture(t_main *s)
 {
 	t_ray		ray;
 	t_p3		color;
 	t_matrix	m;
 
 	m.y = 0;
-	while (m.y < data.res_y)
+	while (m.y < s->data.res_y)
 	{
 		m.x = 0;
-		while (m.x < data.res_x)
+		while (m.x < s->data.res_x)
 		{
-			m.u = (double)m.x / (data.res_x - 1);
-			m.v = (data.res_y - (double)m.y - 1) / (data.res_y - 1);
-			ray = ray_primary(&data, m.u, m.v);
-			color = ray_color(data, &ray, lst);
+			m.u = (double)m.x / (s->data.res_x - 1);
+			m.v = (s->data.res_y - (double)m.y - 1) / (s->data.res_y - 1);
+			ray = ray_primary(&s->data, m.u, m.v);
+			color = ray_color(s->data, &ray, s->lst);
 			color.x = (int)(color.x * 255);
 			color.y = (int)(color.y * 255);
 			color.z = (int)(color.z * 255);
-			mlx->data[m.y * data.res_x + m.x] =
-				mlx_get_color_value(mlx->mlx_ptr, color.x * 256 * 256
+			s->mlx.data[m.y * s->data.res_x + m.x] =
+				mlx_get_color_value(s->mlx.mlx_ptr, color.x * 256 * 256
 						+ color.y * 256 + color.z);
 			++m.x;
 		}
