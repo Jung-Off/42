@@ -169,4 +169,11 @@ typedef struct	s_specular
 	double	spec;
 }				t_specular;
 
+typedef struct	s_main
+{
+	t_mlx	mlx;
+	t_scene data;
+	t_fig	*lst;
+}				t_main;
+
 #endif

@@ -76,6 +76,8 @@ void	make_picture(t_main *s)
 	t_p3		color;
 	t_matrix	m;
 
+	printf("%p\n", s->mlx.cam);
+
 	m.y = 0;
 	while (m.y < s->data.res_y)
 	{
@@ -90,8 +92,8 @@ void	make_picture(t_main *s)
 			color.y = (int)(color.y * 255);
 			color.z = (int)(color.z * 255);
 			s->mlx.data[m.y * s->data.res_x + m.x] =
-				mlx_get_color_value(s->mlx.mlx_ptr, color.x * 256 * 256
-						+ color.y * 256 + color.z);
+//				mlx_pixel_put(s->mlx.mlx_ptr, s->mlx.win_ptr, m.x, m.y, color.x * 256 * 256 + color.y * 256 + color.z);
+				mlx_get_color_value(s->mlx.mlx_ptr, color.x * 256 * 256 + color.y * 256 + color.z);
 			++m.x;
 		}
 		++m.y;

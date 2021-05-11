@@ -30,9 +30,9 @@ int		key_press(int key, t_main *s)
 	else if(key == 124)
 	{
 		s->mlx.cam = s->mlx.cam->next;
-		printf("%p\n", s->mlx.cam);
 		make_picture(s);
-		mlx_put_image_to_window(s->mlx.mlx_ptr, s->mlx.win_ptr, s->mlx.img_ptr, 0, 0);
+		mlx_clear_window(s->mlx.mlx_ptr, s->mlx.win_ptr);
+//		mlx_put_image_to_window(s->mlx.mlx_ptr, s->mlx.win_ptr, s->mlx.img_ptr, 0, 0);
 	}
 	return (0);
 }
