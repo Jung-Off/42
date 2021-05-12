@@ -31,8 +31,8 @@ int		key_press(int key, t_main *s)
 	{
 		s->mlx.cam = s->mlx.cam->next;
 		make_picture(s);
-		mlx_clear_window(s->mlx.mlx_ptr, s->mlx.win_ptr);
-//		mlx_put_image_to_window(s->mlx.mlx_ptr, s->mlx.win_ptr, s->mlx.img_ptr, 0, 0);
+//		mlx_clear_window(s->mlx.mlx_ptr, s->mlx.win_ptr);
+		mlx_put_image_to_window(s->mlx.mlx_ptr, s->mlx.win_ptr, s->mlx.img_ptr, 0, 0);
 	}
 	return (0);
 }
@@ -42,7 +42,6 @@ int		main(int argc, char **argv)
 	t_main	s;
 
 	parse(&s.mlx, &s.data, &s.lst, argv);
-	camera_create(s.mlx.cam, &s.data);
 	s.mlx.mlx_ptr = mlx_init();
 	s.mlx.win_ptr = mlx_new_window(s.mlx.mlx_ptr,
 			s.data.res_x, s.data.res_y, "minirt_test");	

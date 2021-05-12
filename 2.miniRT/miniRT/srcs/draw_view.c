@@ -78,6 +78,7 @@ void	make_picture(t_main *s)
 
 	printf("%p\n", s->mlx.cam);
 
+	camera_create(s->mlx.cam, &s->data);
 	m.y = 0;
 	while (m.y < s->data.res_y)
 	{
