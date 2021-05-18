@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 12:25:28 by jji               #+#    #+#             */
-/*   Updated: 2021/05/18 12:25:30 by jji              ###   ########.fr       */
+/*   Updated: 2021/05/18 16:11:48 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	parse_resolution(t_scene *scene, char *str)
 {
-	int		tmp_x;
-	int		tmp_y;
-
 	if (scene->res_ex)
 		error_check(4, "Double declaration Resolution");
 	scene->res_ex = TRUE;

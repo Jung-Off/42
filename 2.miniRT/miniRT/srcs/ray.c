@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 12:26:54 by jji               #+#    #+#             */
-/*   Updated: 2021/05/18 12:26:55 by jji              ###   ########.fr       */
+/*   Updated: 2021/05/18 16:11:58 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ t_p3	ray_at(t_ray *r, double t)
 
 t_p3	ray_color(t_data *data, t_ray *r)
 {
-	double			t;
-	t_p3			n;
 	t_hit_record	rec;
 
 	rec.t_min = EPSILON;
