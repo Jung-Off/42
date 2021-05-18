@@ -6,7 +6,7 @@
 #    By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/23 22:14:46 by jji               #+#    #+#              #
-#    Updated: 2020/12/28 18:24:24 by jji              ###   ########.fr        #
+#    Updated: 2021/05/18 17:22:51 by jji              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,10 +75,10 @@ OBJS_B = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES_B)))
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(NAME) : $(OBJS)
-	$(AR) $@ $^
+	$(AR) $@ $?
 
 bonus : $(OBJS_B)
-	$(AR) $(NAME) $^
+	$(AR) $(NAME) $?
 
 all: $(NAME)
 

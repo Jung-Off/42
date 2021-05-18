@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 12:23:36 by jji               #+#    #+#             */
-/*   Updated: 2021/05/18 12:23:37 by jji              ###   ########.fr       */
+/*   Updated: 2021/05/18 16:59:20 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ double	intersect_check(t_cy_data var, double *t1, double *t2, int flag)
 		if (fabs(vdot(var.v, var.h)) != 1)
 		{
 			*t1 = -var.b / (2 * var.a);
-			*t2 = -(2 * var.a) / var.b;
+			*t2 = -var.b / (2 * var.a);
 		}
 	}
 	return (1);

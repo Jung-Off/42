@@ -6,7 +6,7 @@
 #    By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/18 16:15:16 by jji               #+#    #+#              #
-#    Updated: 2021/05/18 16:15:19 by jji              ###   ########.fr        #
+#    Updated: 2021/05/18 17:17:25 by jji              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,7 @@ CFLAGS		= -Wall -Werror -Wextra
 RM			= rm -f
 
 LIBFT_DIR	= ./libft/
-LIBFT_FILE	= libft.a
-
 MLX_DIR		= ./mlx/
-
 INCS_DIR	= ./includes/
 SRCS_DIR	= ./srcs/
 
@@ -51,12 +48,12 @@ SRCS		= $(addprefix $(SRCS_DIR), $(SRC))
 OBJS		= $(SRCS:.c=.o)
 
 .c.o :
-	$(CC) $(CFLAGS) -I $(INCS_DIR) -o $@ -c $<
+	$(CC) $(CFLAGS) -I $(INCS_DIR) -o $@ -c $?
 
 $(TARGET) : $(OBJS)
 	make -C $(LIBFT_DIR)
 	make -C $(MLX_DIR)
-	$(CC) -o $(TARGET) $(OBJS) -I $(INCS_DIR) -L $(LIBFT_DIR) -lft -L $(MLX_DIR) -lmlx -framework OpenGL -framework Appkit
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) -I $(INCS_DIR) -L $(LIBFT_DIR) -lft -L $(MLX_DIR) -lmlx -framework OpenGL -framework Appkit
 
 all : $(TARGET)
 
