@@ -88,6 +88,8 @@ void	parse_light(t_scene *scene, char *str)
 
 void	parse_(t_data *data, char *str)
 {
+	while (ft_isspace(*str))
+		str += 1;
 	if (*str == '#' || *str == 0)
 		return ;
 	else if (*str == 's' && *(str + 1) == 'p')

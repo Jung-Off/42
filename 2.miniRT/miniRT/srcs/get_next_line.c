@@ -50,7 +50,7 @@ char	*ft_straddchar(char *s1, char *s2)
 	return (sum);
 }
 
-int	input_line(char **line, char **dup, int newline_i)
+int		input_line(char **line, char **dup, int newline_i)
 {
 	(*dup)[newline_i] = '\0';
 	*line = ft_strdup(*dup);
@@ -59,7 +59,7 @@ int	input_line(char **line, char **dup, int newline_i)
 	return (1);
 }
 
-int	last_input(char **line, char **dup, int rd_size)
+int		last_input(char **line, char **dup, int rd_size)
 {
 	if (rd_size < 0)
 		return (-1);
@@ -74,7 +74,7 @@ int	last_input(char **line, char **dup, int rd_size)
 	return (0);
 }
 
-int	get_next_line(int fd, char **line)
+int		get_next_line(int fd, char **line)
 {
 	static char	*dup;
 	char		buf[2];

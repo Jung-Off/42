@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 12:27:17 by jji               #+#    #+#             */
-/*   Updated: 2021/05/18 12:27:18 by jji              ###   ########.fr       */
+/*   Updated: 2021/05/18 12:37:35 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	comma(char **str)
 	(*str)++;
 }
 
-int				ft_isspace(char ch)
+int		ft_isspace(char ch)
 {
 	if (ch == ' ')
 		return (1);
