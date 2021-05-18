@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec_mul.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/18 12:27:28 by jji               #+#    #+#             */
-/*   Updated: 2021/05/18 12:27:29 by jji              ###   ########.fr       */
+/*   Created: 2021/05/18 12:27:17 by jji               #+#    #+#             */
+/*   Updated: 2021/05/18 12:27:18 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-t_p3	vscalarmul(t_p3 a, double t)
+void	comma(char **str)
 {
-	t_p3	v;
-
-	v.x = a.x * t;
-	v.y = a.y * t;
-	v.z = a.z * t;
-	return (v);
+	while (ft_isspace(**str))
+		*str += 1;
+	if (**str != ',')
+		error_check(4, "p3");
+	(*str)++;
 }
 
-t_p3	vscalardiv(t_p3 a, double t)
+int				ft_isspace(char ch)
 {
-	return (vscalarmul(a, (1 / t)));
+	if (ch == ' ')
+		return (1);
+	if (ch == '\f')
+		return (1);
+	if (ch == '\n')
+		return (1);
+	if (ch == '\r')
+		return (1);
+	if (ch == '\t')
+		return (1);
+	if (ch == '\v')
+		return (1);
+	return (0);
 }

@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec_mul.c                                          :+:      :+:    :+:   */
+/*   hit_figures.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/18 12:27:28 by jji               #+#    #+#             */
-/*   Updated: 2021/05/18 12:27:29 by jji              ###   ########.fr       */
+/*   Created: 2021/05/18 12:23:47 by jji               #+#    #+#             */
+/*   Updated: 2021/05/18 12:23:48 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-t_p3	vscalarmul(t_p3 a, double t)
+void	set_face_normal(t_ray *r, t_hit_record *rec)
 {
-	t_p3	v;
-
-	v.x = a.x * t;
-	v.y = a.y * t;
-	v.z = a.z * t;
-	return (v);
-}
-
-t_p3	vscalardiv(t_p3 a, double t)
-{
-	return (vscalarmul(a, (1 / t)));
+	rec->front_face = vdot(r->dir, rec->normal) < 0;
+	rec->normal = (rec->front_face) ? rec->normal : vscalarmul(rec->normal, -1);
 }

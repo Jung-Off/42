@@ -1,4 +1,16 @@
-#include "../includes/vec_utils.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/18 12:27:48 by jji               #+#    #+#             */
+/*   Updated: 2021/05/18 12:27:49 by jji              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/minirt.h"
 
 t_p3	vmul(t_p3 a, t_p3 b)
 {
@@ -33,4 +45,9 @@ t_p3	vmin(t_p3 a, t_p3 b)
 	if (a.z > b.z)
 		a.z = b.z;
 	return (a);
+}
+
+double	ft_vec_dist(t_p3 a, t_p3 b)
+{
+	return (vlen(vsubstract(a, b)));
 }

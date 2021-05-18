@@ -1,65 +1,97 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/18 12:25:10 by jji               #+#    #+#             */
+/*   Updated: 2021/05/18 12:25:13 by jji              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../includes/main.h"
+#include "../includes/minirt.h"
 
-void	find_figure(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
-{
-	if (*str == 's' && *(str + 1) == 'p')
-		split_sphere(lst, str + 2);
-	else if (*str == 'R')
-		split_resolution(data, str + 1);
-	else if (*str == 'A')
-		split_ambient(data, str + 1);
-	else if (*str == 'l')
-		split_light(data, str + 1);
-	else if (*str == 'c' && *(str + 1) == 'y')
-		split_cylinder(lst, str + 2);
-	else if (*str == 'p' && *(str + 1) == 'l')
-		split_plane(lst, str + 2);
-	else if (*str == 's' && *(str + 1) == 'q')
-		split_square(lst, str + 2);
-	else if (*str == 'c')
-		split_camera(mlx, data, str + 1);
-	else if (*str == 't' && *(str + 1) == 'r')
-		split_triangle(lst, str + 2);
-}
-
-int		key_press(int key, t_main *s)
+int		key_press(int key, t_data *data)
 {
 	if (key == 53)
 		exit(0);
-	else if(key == 124)
+	else if (key == 124)
 	{
-		s->mlx.cam = s->mlx.cam->next;
-		make_picture(s);
-//		mlx_clear_window(s->mlx.mlx_ptr, s->mlx.win_ptr);
-		mlx_put_image_to_window(s->mlx.mlx_ptr, s->mlx.win_ptr, s->mlx.img_ptr, 0, 0);
+		if (!data->mlx.cam->next)
+			data->mlx.cam = data->mlx.first_cam;
+		else
+			data->mlx.cam = data->mlx.cam->next;
+		make_picture(data);
+		mlx_put_image_to_window(data->mlx.mlx_ptr,
+				data->mlx.win_ptr, data->mlx.img_ptr, 0, 0);
 	}
 	return (0);
 }
 
+void	parse(t_data *data, char *rt_file)
+{
+	char	*str;
+	int		fd;
+
+	data->lst = NULL;
+	data->scene.light = NULL;
+	data->mlx.cam = NULL;
+	data->scene.res_ex = FALSE;
+	data->scene.amb_ex = FALSE;
+	if ((fd = open(rt_file, O_RDONLY)) == -1)
+		exit(1);
+	while (get_next_line(fd, &str))
+	{
+		parse_(data, str);
+		free(str);
+	}
+	parse_(data, str);
+	free(str);
+	if (!data->scene.res_ex || !data->scene.amb_ex || !data->mlx.cam)
+		error_check(4, "Empty R or A or Camera");
+	data->mlx.first_cam = data->mlx.cam;
+	data->scene.amb_color = vscalarmul(data->scene.amb_color,
+												data->scene.amb_ratio);
+	ft_mlx_init(data);
+}
+
+void	ft_mlx_init(t_data *data)
+{
+	data->mlx.mlx_ptr = mlx_init();
+	data->mlx.win_ptr = mlx_new_window(data->mlx.mlx_ptr,
+			data->scene.res_x, data->scene.res_y, "miniRT");
+	data->mlx.img_ptr = mlx_new_image(data->mlx.mlx_ptr,
+			data->scene.res_x, data->scene.res_y);
+	data->mlx.data = (int *)mlx_get_data_addr(data->mlx.img_ptr,
+			&data->mlx.bpp, &data->mlx.size_l, &data->mlx.endian);
+}
+
 int		main(int argc, char **argv)
 {
-	t_main	s;
+	t_data	data;
 
-	parse(&s.mlx, &s.data, &s.lst, argv);
-	s.mlx.mlx_ptr = mlx_init();
-	s.mlx.win_ptr = mlx_new_window(s.mlx.mlx_ptr,
-			s.data.res_x, s.data.res_y, "minirt_test");	
-	s.mlx.img_ptr = mlx_new_image(s.mlx.mlx_ptr, s.data.res_x, s.data.res_y);
-	s.mlx.data = (int *)mlx_get_data_addr(s.mlx.img_ptr,
-			&s.mlx.bpp, &s.mlx.size_l, &s.mlx.endian);
-
-	t_cam	*p;
-
-	p = s.mlx.cam;
-	while (p->next)
-		p = p->next;
-	p->next = s.mlx.cam;
-
-	make_picture(&s);
-	mlx_put_image_to_window(s.mlx.mlx_ptr, s.mlx.win_ptr, s.mlx.img_ptr, 0, 0);
-	mlx_hook(s.mlx.win_ptr, 02, 1L << 0, key_press, &s);
-	mlx_loop(s.mlx.mlx_ptr);
-
+	if (argc < 2 || argc > 3)
+		error_check(1, "");
+	if (argc == 2 && ft_strncmp(argv[1] + ft_strlen(argv[1]) - 3, ".rt", 3))
+		error_check(2, "");
+	if (argc == 3 && ft_strncmp(argv[2], "--save", 6))
+		error_check(3, "");
+	parse(&data, argv[1]);
+	if (argc == 3)
+	{
+		while (data.mlx.cam)
+		{
+			make_picture(&data);
+			make_bmp(&data);
+			data.mlx.cam = data.mlx.cam->next;
+		}
+		exit(0);
+	}
+	make_picture(&data);
+	mlx_put_image_to_window(data.mlx.mlx_ptr, data.mlx.win_ptr,
+			data.mlx.img_ptr, 0, 0);
+	mlx_hook(data.mlx.win_ptr, 02, 1L << 0, key_press, &data);
+	mlx_loop(data.mlx.mlx_ptr);
 	return (0);
 }

@@ -1,67 +1,111 @@
-#include "../includes/parse.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/18 12:25:28 by jji               #+#    #+#             */
+/*   Updated: 2021/05/18 12:25:30 by jji              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_p3	parse_xyz(char **str)
+#include "../includes/minirt.h"
+
+void	parse_resolution(t_scene *scene, char *str)
 {
-	t_p3 p;
+	int		tmp_x;
+	int		tmp_y;
 
-	p.x = ft_atod(str);
-	pass_comma(str);
-	p.y = ft_atod(str);
-	pass_comma(str);
-	p.z = ft_atod(str);
-	return (p);
+	if (scene->res_ex)
+		error_check(4, "Double declaration Resolution");
+	scene->res_ex = TRUE;
+	scene->res_x = rt_atoi(&str);
+	check_values(scene->res_x, 1, INFINITY, "Resolution x");
+	scene->res_y = rt_atoi(&str);
+	check_values(scene->res_y, 1, INFINITY, "Resolution y");
+	check_null(&str);
 }
 
-t_p3	parse_albedo(char **str)
+void	parse_ambient(t_scene *scene, char *str)
 {
-	t_p3 p;
-
-	p.x = ft_atod(str) / 255.0;
-	pass_comma(str);
-	p.y = ft_atod(str) / 255.0;
-	pass_comma(str);
-	p.z = ft_atod(str) / 255.0;
-	return (p);
+	if (scene->amb_ex)
+		error_check(4, "Double declaration Ambient");
+	scene->amb_ex = TRUE;
+	scene->amb_ratio = rt_atof(&str);
+	check_values(scene->amb_ratio, 0, 1, "Ambient lightning ratio");
+	scene->amb_color = rt_albedo(&str);
+	check_null(&str);
 }
 
-int		parse_color(char **str)
+void	parse_camera(t_mlx *mlx, char *str)
 {
-	int r;
-	int g;
-	int b;
+	t_cam	*new;
+	t_cam	*ptr;
 
-	r = rt_atoi(str);
-	pass_comma(str);
-	g = rt_atoi(str);
-	pass_comma(str);
-	b = rt_atoi(str);
-	return (r * pow(256, 2) + g * pow(256, 1) + b);
+	if (!(new = (t_cam *)malloc(sizeof(t_cam))))
+		error_check(5, "Camera");
+	new->look_from = rt_ato3(&str);
+	new->look_at = rt_ato3(&str);
+	new->fov = rt_atoi(&str);
+	check_values(new->fov, 0, 180, "FOV");
+	new->next = NULL;
+	ptr = mlx->cam;
+	if (!mlx->cam)
+		mlx->cam = new;
+	else
+	{
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->next = new;
+	}
+	check_null(&str);
 }
 
-void	before_parsing(t_mlx *mlx, t_scene *data, t_fig **lst, char *str)
+void	parse_light(t_scene *scene, char *str)
 {
-	
-	// if (*str == '#' || *str == 0)
-	// 		return ;
-	//	else
-	
-	find_figure(mlx, data, lst, str);
+	t_light		*new;
+	t_light		*p;
+
+	if (!(new = (t_light *)malloc(sizeof(t_light))))
+		error_check(5, "Light");
+	new->position = rt_ato3(&str);
+	new->br = rt_atof(&str);
+	check_values(new->br, 0, 1, "Brightness");
+	new->color = rt_albedo(&str);
+	new->next = NULL;
+	p = scene->light;
+	if (!scene->light)
+		scene->light = new;
+	else
+	{
+		while (p->next)
+			p = p->next;
+		p->next = new;
+	}
+	check_null(&str);
 }
 
-void	parse(t_mlx *mlx, t_scene *data, t_fig **lst, char **av)
+void	parse_(t_data *data, char *str)
 {
-	char	*str;
-	int		fd;
-
-	*lst = NULL;
-	data->l = NULL;
-	mlx->cam = NULL;
-//	data->res_ex = 0;
-//	data->amb_ex = 0;
-	if ((fd = open(av[1], O_RDONLY)) == -1)
-		exit(1);
-	while (get_next_line(fd, &str))
-		before_parsing(mlx, data, lst, str);
-	free(str);
-	str = 0;
+	if (*str == '#' || *str == 0)
+		return ;
+	else if (*str == 's' && *(str + 1) == 'p')
+		parse_sphere(&data->lst, str + 2);
+	else if (*str == 'p' && *(str + 1) == 'l')
+		parse_plane(&data->lst, str + 2);
+	else if (*str == 's' && *(str + 1) == 'q')
+		parse_square(&data->lst, str + 2);
+	else if (*str == 'c' && *(str + 1) == 'y')
+		parse_cylinder(&data->lst, str + 2);
+	else if (*str == 't' && *(str + 1) == 'r')
+		parse_triangle(&data->lst, str + 2);
+	else if (*str == 'R')
+		parse_resolution(&data->scene, str + 1);
+	else if (*str == 'A')
+		parse_ambient(&data->scene, str + 1);
+	else if (*str == 'c')
+		parse_camera(&data->mlx, str + 1);
+	else if (*str == 'l')
+		parse_light(&data->scene, str + 1);
 }
