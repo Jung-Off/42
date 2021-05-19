@@ -12,7 +12,7 @@
 
 #include "../includes/minirt.h"
 
-int		key_press(int key, t_data *data)
+int			key_press(int key, t_data *data)
 {
 	if (key == 53)
 		exit(0);
@@ -29,7 +29,7 @@ int		key_press(int key, t_data *data)
 	return (0);
 }
 
-void	parse(t_data *data, char *rt_file)
+void		parse(t_data *data, char *rt_file)
 {
 	char	*str;
 	int		fd;
@@ -56,7 +56,7 @@ void	parse(t_data *data, char *rt_file)
 	ft_mlx_init(data);
 }
 
-void	ft_mlx_init(t_data *data)
+void		ft_mlx_init(t_data *data)
 {
 	data->mlx.mlx_ptr = mlx_init();
 	data->mlx.win_ptr = mlx_new_window(data->mlx.mlx_ptr,
@@ -67,18 +67,24 @@ void	ft_mlx_init(t_data *data)
 			&data->mlx.bpp, &data->mlx.size_l, &data->mlx.endian);
 }
 
-int		main(int argc, char **argv)
+static void	input_error(int ac, char **av)
+{
+	if (ac < 2 || ac > 3)
+		error_check(1, "");
+	if (ac == 3 && ft_strncmp(av[2], "--save", 6))
+		error_check(3, "");
+	if ((ac == 2 || ac == 3) && ft_strncmp(av[1] +
+			ft_strlen(av[1]) - 3, ".rt", 3))
+		error_check(2, "");
+}
+
+int			main(int ac, char **av)
 {
 	t_data	data;
 
-	if (argc < 2 || argc > 3)
-		error_check(1, "");
-	if (argc == 2 && ft_strncmp(argv[1] + ft_strlen(argv[1]) - 3, ".rt", 3))
-		error_check(2, "");
-	if (argc == 3 && ft_strncmp(argv[2], "--save", 6))
-		error_check(3, "");
-	parse(&data, argv[1]);
-	if (argc == 3)
+	input_error(ac, av);
+	parse(&data, av[1]);
+	if (ac == 3)
 	{
 		while (data.mlx.cam)
 		{

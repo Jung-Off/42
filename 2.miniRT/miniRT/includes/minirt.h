@@ -26,6 +26,8 @@
 # define FALSE 0
 # define EPSILON 1e-6
 # define LUMEN 2
+# define R_MAX_X 1920
+# define R_MAX_Y 1080
 
 double	degrees_to_radians(int a);
 void	comma(char **str);
