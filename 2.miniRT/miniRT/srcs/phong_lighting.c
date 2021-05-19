@@ -67,6 +67,6 @@ t_p3	point_light_get(t_data *data, t_light *light, t_ray *r,
 	if (in_shadow(data->lst, light_ray, light_len))
 		return (vdefine(0, 0, 0));
 	light_dir = vunit(light_dir);
-	return (vscalarmul(vadd(vadd(data->scene.amb_color, diffuse(light, rec)),
+	return (vscalarmul(vadd(diffuse(light, rec),
 					specular(light, r, rec)), light->br * LUMEN));
 }

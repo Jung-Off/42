@@ -25,7 +25,7 @@
 # define TRUE 1
 # define FALSE 0
 # define EPSILON 1e-6
-# define LUMEN 1
+# define LUMEN 2
 
 double	degrees_to_radians(int a);
 void	comma(char **str);

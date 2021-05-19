@@ -52,7 +52,7 @@ t_bool	hit_cylinder(t_fig *lst, t_ray *r, t_hit_record *rec)
 		{
 			rec->t = cy_inter;
 			rec->p = ray_at(r, cy_inter);
-			rec->normal = lst->fig.cy.n;
+			rec->normal = cy_normal;
 		}
 		else
 		{
