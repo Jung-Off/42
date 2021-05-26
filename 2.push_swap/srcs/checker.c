@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   save_num.h                                         :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 15:54:42 by jji               #+#    #+#             */
-/*   Updated: 2021/05/25 15:54:44 by jji              ###   ########.fr       */
+/*   Created: 2021/05/26 20:36:20 by jji               #+#    #+#             */
+/*   Updated: 2021/05/26 20:36:22 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SAVE_NUM_H
-# define SAVE_NUM_H
+#include "../includes/checker.h"
 
-# include "main.h"
+void same_check(int save, t_link *lst)
+{
+	while(lst->next)
+	{
+		lst = lst->next;
+		if(save == lst->num)
+			error_check2();
+	}
+}
 
-// void make_number(char *str, t_link **new);
-int null_guard(t_link *new_lst);
-int link_number(int argc, char **argv, t_link **lst);
+void duplicate_check(t_link *lst)
+{
+	int save;
 
-
-#endif
+	while(lst->next)
+	{
+		save = lst->num;
+		same_check(save, lst);
+		lst = lst->next;
+	}
+}

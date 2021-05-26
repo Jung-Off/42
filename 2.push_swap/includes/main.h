@@ -14,14 +14,14 @@
 
 # define MAIN_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
 
-#include "structure.h"
-#include "error.h"
-#include "utils.h"
-#include "save_num.h"
-#include "make_list.h"
+# include "structure.h"
+# include "error.h"
+# include "utils.h"
+# include "save_num.h"
+# include "make_list.h"
 
 #endif

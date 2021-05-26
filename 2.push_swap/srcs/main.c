@@ -25,12 +25,13 @@ int main(int argc, char **argv)
 		lst_free(lst);
 		exit(1); //return (1);
 	}
+
 ///>>>>>>>>>>/////
-	// while(argc--)
-	// {
-	// 	printf("%d\n", lst->num);
-	// 	lst = lst->next;
-	// }
+	while(argc--)
+	{
+		printf("%d\n", lst->num);
+		lst = lst->next;
+	}
 //<<<<<<<<<<<///
 	// while(argc--)
 	// {

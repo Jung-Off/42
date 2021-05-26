@@ -14,9 +14,9 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-#include "main.h"
+# include "main.h"
 
 int ft_isnum(char str);
 int push_atoi(char *str);
 
-# endif
+#endif

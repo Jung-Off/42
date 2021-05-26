@@ -13,10 +13,9 @@
 #ifndef MAKE_LIST_H
 # define MAKE_LIST_H
 
-#include "main.h"
+# include "main.h"
 
 void make_node(t_link **lst);
-
 void add_node(t_link **lst, t_link *new_lst);
 void last_to_first(t_link **lst);
 
