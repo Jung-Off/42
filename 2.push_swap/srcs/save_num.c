@@ -18,7 +18,15 @@
 //     (*new)->num = push_atoi(str);
 // }
 
-void link_number(int argc, char **argv, t_link **lst)
+int null_guard(t_link *new_lst)
+{
+    if(!new_lst)
+        return (1);
+    else
+        return (0);
+}
+
+int link_number(int argc, char **argv, t_link **lst)
 {
     int     i;
     t_link *new_lst;
@@ -27,6 +35,8 @@ void link_number(int argc, char **argv, t_link **lst)
     while(i < argc)
     {
         make_node(&new_lst);                //노드 생성
+        if (null_guard(new_lst))
+            return (1);
         new_lst->num = push_atoi(argv[i]);  //여기에서 숫자를 저장하는 함수
         add_node(lst, new_lst);             //붙이는 함수
         i++;
@@ -35,4 +45,5 @@ void link_number(int argc, char **argv, t_link **lst)
                 //중복확인
 
     last_to_first(lst);
+    return (0);
 }

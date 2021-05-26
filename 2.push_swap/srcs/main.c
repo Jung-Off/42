@@ -19,14 +19,18 @@ int main(int argc, char **argv)
 	lst = 0;
 	
 	error_check(argc, argv);
-	link_number(argc, argv, &lst);
 
-///>>>>>>>>>>/////
-	while(argc--)
+	if (link_number(argc, argv, &lst))
 	{
-		printf("%d\n", lst->num);
-		lst = lst->next;
+		lst_free(lst);
+		exit(1); //return (1);
 	}
+///>>>>>>>>>>/////
+	// while(argc--)
+	// {
+	// 	printf("%d\n", lst->num);
+	// 	lst = lst->next;
+	// }
 //<<<<<<<<<<<///
 	// while(argc--)
 	// {
@@ -34,4 +38,11 @@ int main(int argc, char **argv)
 	// 	lst = lst->prev;
 	// }
 	//linke_number 애서 저장한 lst를 이용할 예정
+
+	return (0);
 }
+	//누수 테스트
+	// t_link *test = lst->prev;
+	// lst->prev->next = NULL;
+	// lst_free(lst);
+	// free(test);

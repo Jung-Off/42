@@ -16,8 +16,9 @@
 #include "main.h"
 
 void    error_check(int argc, char **argv);
-void  error_check2(void);
+void    error_check2(void);
 int     malloc_error(t_link **add);
+void    lst_free(t_link *lst);
 
 
 #endif

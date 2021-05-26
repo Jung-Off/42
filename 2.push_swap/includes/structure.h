@@ -15,9 +15,9 @@
 
 typedef struct	s_link
 {
-    int		num;
-    void	*next;
-    void	*prev;
+    int             num;
+    struct s_link	*next;
+    struct s_link	*prev;
 }				t_link;
 
 # endif

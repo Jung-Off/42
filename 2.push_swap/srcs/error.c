@@ -38,3 +38,16 @@ int	malloc_error(t_link **add)
 	else
 		return (0);
 }
+
+void lst_free(t_link *lst)
+{
+	t_link *temp;
+
+	while(lst)
+	{
+		temp = (lst)->next;
+		free(lst);
+		lst = temp;
+	}
+	return ;
+}
