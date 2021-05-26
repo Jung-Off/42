@@ -16,12 +16,22 @@ int main(int argc, char **argv)
 {
 	t_link *lst;
 
-	//lst = 0;
+	lst = 0;
 	
-	error_function(argc, argv);
-	//init_list(&lst);
+	error_check(argc, argv);
+	link_number(argc, argv, &lst);
 
-	link_number(argc, argv, &lst);	
-
+///>>>>>>>>>>/////
+	while(argc--)
+	{
+		printf("%d\n", lst->num);
+		lst = lst->next;
+	}
+//<<<<<<<<<<<///
+	// while(argc--)
+	// {
+	// 	printf("%d\n", lst->num);
+	// 	lst = lst->prev;
+	// }
 	//linke_number 애서 저장한 lst를 이용할 예정
 }

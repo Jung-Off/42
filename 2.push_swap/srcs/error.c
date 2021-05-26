@@ -12,15 +12,21 @@
 
 #include "../includes/error.h"
 
-void error_function(int argc, char **argv)
+void error_check(int argc, char **argv)
 {
 	if (argc < 2)
 	{
-		write(1, "Error", 5);
-		exit (0);
+		write(1, "Error\n", 6);
+		exit(1);
 	}
 
 	//error 만 출력하면 되니까 이 함수를 우려먹기위한 인자를 어떻게 바꿀지 고민중 사용할 예정
+}
+
+void  error_check2(void)
+{
+	write(1, "Error\n", 6);
+	exit(1);
 }
 
 int	malloc_error(t_link **add)

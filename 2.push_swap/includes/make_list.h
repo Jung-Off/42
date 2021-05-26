@@ -15,8 +15,10 @@
 
 #include "main.h"
 
-void    init_list(&lst);
-void    add_link(t_link **lst);
+void make_node(t_link **lst);
+
+void add_node(t_link **lst, t_link *new_lst);
+void last_to_first(t_link **lst);
 
 
 #endif

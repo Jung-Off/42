@@ -12,29 +12,37 @@
 
 #include "../includes/make_list.h"
 
-void    init_list(t_link **lst)
+void make_node(t_link **lst)
 {
-	(*lst)->next = NULL;
-	(*lst)->prev = NULL;
+    if (malloc_error(lst))
+        return ;
+    (*lst)->next = NULL;
+    (*lst)->prev = NULL;
 }
 
-void    add_link(t_link **lst)
+void add_node(t_link **lst, t_link *new_lst)
 {
+    t_link *move_lst;
 
-    t_link *add;
-
-    if(malloc_error(&add))
-        return ;
-
-    if (lst == NULL)
-    {
-        *lst = add;
-    }
+    move_lst = *lst;
+    if (*lst == NULL)
+        *lst = new_lst;
     else
     {
-        while((*lst)->next == NULL)
-            (*lst) = (*lst) ->next;
-        *lst = add;
+        while (move_lst->next)
+            move_lst = move_lst->next;
+        move_lst->next = new_lst;
+        new_lst->prev = move_lst; 
     }
-    
+}
+
+void last_to_first(t_link **lst)
+{
+    t_link *last_node;
+
+    last_node = *lst;
+    while (last_node->next)
+        last_node = last_node->next;
+    last_node->next = *lst;
+    (*lst)->prev = last_node;
 }
