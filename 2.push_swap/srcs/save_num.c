@@ -41,7 +41,10 @@ int link_number(int argc, char **argv, t_link **lst)
         add_node(lst, new_lst);             //붙이는 함수
         i++;
     }
-    duplicate_check(*lst);//중복확인
+    duplicate_check(*lst); //중복확인
+    if(ascending_check(*lst))
+        return (1);
+         //오름차순 확인
     last_to_first(lst);
     return (0);
 }

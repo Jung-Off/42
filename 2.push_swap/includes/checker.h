@@ -17,5 +17,6 @@
 
 void same_check(int save, t_link *lst);
 void duplicate_check(t_link *lst);
+int ascending_check(t_link *lst);
 
 #endif

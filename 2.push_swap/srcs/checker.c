@@ -33,3 +33,14 @@ void duplicate_check(t_link *lst)
 		lst = lst->next;
 	}
 }
+
+int ascending_check(t_link *lst)
+{
+	while(lst->next)
+	{
+		if(lst->num > lst->next->num)
+			return (0);
+		lst = lst->next;
+	}
+	return(1);
+}

@@ -18,27 +18,19 @@
 	// stack_a_free(stack_a);
 	// free(test);
 
-static void print_function(int argc, t_link *stack_a, t_link *stack_b)
+static void print_function(int argc, t_link *stack)
 {
 	///>>>>>>>>>>/////
 	
 	int a = argc;
-	printf("\nb : ");
-	while(--a)
-	{
-		printf(" %d", stack_b->num);
-		stack_b = stack_b->next;
-	}
-	a = argc;
-	printf("\na : ");
-	while(--a)
-	{
-		printf(" %d", stack_a->num);
-		stack_a = stack_a->next;
-	}
-	a = argc;
 
-	
+	if(!(stack))
+		return;
+	while(--a)
+	{
+		printf(" %d", stack->num);
+		stack = stack->next;
+	}
 	//<<<<<<<<<<<///
 	// while(argc--)
 	// {
@@ -65,7 +57,11 @@ int main(int argc, char **argv)
 	}
 	
 	go_algorithm(&stack_a, &stack_b);
-	print_function(argc, stack_a, stack_b);
+
+	printf("\na : ");
+	print_function(argc, stack_a);
+	printf("\nb : ");
+	print_function(argc, stack_b);
 
 	return (0);
 }

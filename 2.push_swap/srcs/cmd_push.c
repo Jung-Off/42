@@ -25,6 +25,8 @@ void push_b(t_link **stack_a, t_link **stack_b)
     a_top->next->prev = a_top->prev;
     if(a_top->next == a_top)
         *stack_a = NULL;
+
+        
     if(!(*stack_b))
     {
         *stack_b = a_top;
