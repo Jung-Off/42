@@ -18,13 +18,13 @@ void go_algorithm(t_link **stack_a, t_link **stack_b)
     //swap_ab(*stack_a, *stack_b);
     //명령어 생각
 
-    rotate_a(stack_a);
+    //rotate_a(stack_a);
     //rotate_ab(stack_a, stack_b);
 
     //rrotate_b(stack_b);
-    rrotate_ab(stack_a, stack_b);
+    //rrotate_ab(stack_a, stack_b);
 
-    // push_a(stack_a, stack_b);
+    //push_a(stack_a, stack_b);
     push_b(stack_a, stack_b);
     push_b(stack_a, stack_b);
     push_b(stack_a, stack_b);
@@ -32,4 +32,7 @@ void go_algorithm(t_link **stack_a, t_link **stack_b)
     push_b(stack_a, stack_b);
     push_b(stack_a, stack_b);
     push_b(stack_a, stack_b);
+    push_b(stack_a, stack_b);
+    push_a(stack_a, stack_b);
+    push_a(stack_a, stack_b);
 }

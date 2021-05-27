@@ -42,9 +42,11 @@ int link_number(int argc, char **argv, t_link **lst)
         i++;
     }
     duplicate_check(*lst); //중복확인
-    if(ascending_check(*lst))
-        return (1);
-         //오름차순 확인
+    if(ascending_check(*lst)) //오름차순 확인
+    {
+        lst_free(*lst);
+        exit (0);
+    }
     last_to_first(lst);
     return (0);
 }

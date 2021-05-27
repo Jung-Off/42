@@ -21,6 +21,7 @@
 # include "structure.h"
 # include "error.h"
 # include "utils.h"
+# include "checker.h"
 # include "save_num.h"
 # include "make_list.h"
 # include "cmd_swap.h"

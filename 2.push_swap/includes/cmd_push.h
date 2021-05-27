@@ -17,6 +17,9 @@
 # include "main.h"
 
 // void push_a(t_link **stack_a, t_link **stack_b);
-void push_b(t_link **stack_a, t_link **stack_b);
+void    push_b(t_link **stack_a, t_link **stack_b);
+t_link *pop_function(t_link **stack);
+void    push_function(t_link **stack, t_link *top);
+void    push_a(t_link **stack_a, t_link **stack_b);
 
 #endif
