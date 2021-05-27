@@ -12,38 +12,60 @@
 
 #include "../includes/main.h"
 
-int main(int argc, char **argv)
+	//누수 테스트
+	// t_link *test = stack_a->prev;
+	// stack_a->prev->next = NULL;
+	// stack_a_free(stack_a);
+	// free(test);
+
+static void print_function(int argc, t_link *stack_a, t_link *stack_b)
 {
-	t_link *lst;
-
-	lst = 0;
+	///>>>>>>>>>>/////
 	
-	error_check(argc, argv);
-
-	if (link_number(argc, argv, &lst))
+	int a = argc;
+	printf("\nb : ");
+	while(--a)
 	{
-		lst_free(lst);
-		exit(1); //return (1);
+		printf(" %d", stack_b->num);
+		stack_b = stack_b->next;
 	}
-
-///>>>>>>>>>>/////
-	while(argc--)
+	a = argc;
+	printf("\na : ");
+	while(--a)
 	{
-		printf("%d\n", lst->num);
-		lst = lst->next;
+		printf(" %d", stack_a->num);
+		stack_a = stack_a->next;
 	}
-//<<<<<<<<<<<///
+	a = argc;
+
+	
+	//<<<<<<<<<<<///
 	// while(argc--)
 	// {
-	// 	printf("%d\n", lst->num);
-	// 	lst = lst->prev;
+	// 	printf("%d\n", stack_a->num);
+	// 	stack_a = stack_a->prev;
 	// }
-	//linke_number 애서 저장한 lst를 이용할 예정
+	//linke_number 애서 저장한 stack_a를 이용할 예정
+
+}
+
+int main(int argc, char **argv)
+{
+	t_link *stack_a;
+	t_link *stack_b;
+
+	stack_a = 0;
+	stack_b = 0;
+	error_check(argc, argv);
+
+	if (link_number(argc, argv, &stack_a))
+	{
+		lst_free(stack_a);
+		exit(1); //return (1);
+	}
+	
+	go_algorithm(&stack_a, &stack_b);
+	print_function(argc, stack_a, stack_b);
 
 	return (0);
 }
-	//누수 테스트
-	// t_link *test = lst->prev;
-	// lst->prev->next = NULL;
-	// lst_free(lst);
-	// free(test);

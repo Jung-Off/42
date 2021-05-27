@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_list.h                                        :+:      :+:    :+:   */
+/*   cmd_push.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 16:09:50 by jji               #+#    #+#             */
-/*   Updated: 2021/05/25 16:09:51 by jji              ###   ########.fr       */
+/*   Created: 2021/05/27 15:50:21 by jji               #+#    #+#             */
+/*   Updated: 2021/05/27 15:50:22 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAKE_LIST_H
-# define MAKE_LIST_H
+
+#ifndef CMD_PUSH_H
+# define CMD_PUSH_H
 
 # include "main.h"
 
-void make_node(t_link **lst);
-void add_node(t_link **lst, t_link *new_lst);
-void last_to_first(t_link **lst);
+// void push_a(t_link **stack_a, t_link **stack_b);
+void push_b(t_link **stack_a, t_link **stack_b);
 
 #endif

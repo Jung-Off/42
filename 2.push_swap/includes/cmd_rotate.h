@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_list.h                                        :+:      :+:    :+:   */
+/*   cmd_rotate.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/25 16:09:50 by jji               #+#    #+#             */
-/*   Updated: 2021/05/25 16:09:51 by jji              ###   ########.fr       */
+/*   Created: 2021/05/27 15:34:18 by jji               #+#    #+#             */
+/*   Updated: 2021/05/27 15:34:18 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAKE_LIST_H
-# define MAKE_LIST_H
+
+#ifndef CMD_ROTATE_H
+# define CMD_ROTATE_H
 
 # include "main.h"
 
-void make_node(t_link **lst);
-void add_node(t_link **lst, t_link *new_lst);
-void last_to_first(t_link **lst);
+void rotate_a(t_link **stack_a);
+void rotate_b(t_link **stack_b);
+void rotate_ab(t_link **stack_a, t_link **stack_b);
 
 #endif

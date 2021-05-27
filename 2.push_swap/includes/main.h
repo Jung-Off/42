@@ -23,5 +23,10 @@
 # include "utils.h"
 # include "save_num.h"
 # include "make_list.h"
+# include "cmd_swap.h"
+# include "cmd_push.h"
+# include "cmd_rotate.h"
+# include "cmd_rrotate.h"
+# include "init_algorithm.h"
 
 #endif
