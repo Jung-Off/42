@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #ifndef MAIN_H
-
 # define MAIN_H
 
 # include <unistd.h>
@@ -29,5 +28,7 @@
 # include "cmd_rotate.h"
 # include "cmd_rrotate.h"
 # include "init_algorithm.h"
+
+void	print_stack(t_link *stack);
 
 #endif

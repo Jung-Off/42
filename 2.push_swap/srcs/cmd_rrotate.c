@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/cmd_rrotate.h"
 
 void rrotate_a(t_link **stack_a)

@@ -15,6 +15,13 @@
 
 # include "main.h"
 
-void go_algorithm(t_link **stack_a, t_link **stack_b);
+int     return_pivot(int *tmp, int i);
+int     *input_arr(t_link * stack_a, int *tmp, int num);
+int     malloc_error2(int **tmp, int num);
+int     setup_pivot(t_link *stack_a, int num);
+void    go_algorithm(t_link **stack_a, t_link **stack_b, int num);
+
+void a_to_b(t_link **a, t_link **b, int pivot);
+
 
 #endif

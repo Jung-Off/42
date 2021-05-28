@@ -12,12 +12,6 @@
 
 #include "../includes/save_num.h"
 
-
-// void make_number(char *str, t_link **new)
-// {
-//     (*new)->num = push_atoi(str);
-// }
-
 int null_guard(t_link *new_lst)
 {
     if(!new_lst)

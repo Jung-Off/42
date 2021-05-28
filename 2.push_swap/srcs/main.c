@@ -41,6 +41,22 @@ static void print_function(int argc, t_link *stack)
 
 }
 
+void	print_stack(t_link *stack)
+{
+	t_link	*head;
+
+	if (!stack)
+		return ;
+	head = stack;
+	printf("%d ", stack->num);
+	stack = stack->next;
+	while (stack != head)
+	{
+		printf("%d ", stack->num);
+		stack = stack->next;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	t_link *stack_a;
@@ -56,12 +72,12 @@ int main(int argc, char **argv)
 		exit(1); //return (1);
 	}
 	
-	go_algorithm(&stack_a, &stack_b);
+	go_algorithm(&stack_a, &stack_b, argc - 1);
 
 	printf("\na : ");
-	print_function(argc, stack_a);
+	print_stack(stack_a);
 	printf("\nb : ");
-	print_function(argc, stack_b);
+	print_stack(stack_b);
 
 	return (0);
 }
