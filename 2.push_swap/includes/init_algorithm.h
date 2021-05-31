@@ -21,6 +21,7 @@ int     malloc_error2(int **tmp, int num);
 int     setup_pivot(t_link *stack_a, int num);
 void    go_algorithm(t_link **stack_a, t_link **stack_b, int num);
 
+void before_push(t_link **a, int rotate, int len);
 void a_to_b(t_link **a, t_link **b, int pivot);
 
 

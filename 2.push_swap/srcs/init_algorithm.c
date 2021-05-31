@@ -87,7 +87,9 @@ void b_to_a(t_link **a, t_link **b, int len)
     int rotate = 0;
     int push = 0;
 
-    pivot = setup_pivot(*a, len);
+    pivot = setup_pivot(*b, len);
+    printf("\nb to a | pivot | %d", pivot);
+    // printf("---2 =%d\n", pivot);
     if(len == 1)
     {
         push_a(a,b);
@@ -95,9 +97,9 @@ void b_to_a(t_link **a, t_link **b, int len)
     }
     while(len--)
     {
-        if((*a)->num >= pivot && ++push) 
+        if((*b)->num >= pivot && ++push) 
             push_a(a,b);
-        else if((*a)->num < pivot && ++rotate)
+        else if((*b)->num < pivot && ++rotate)
             rotate_b(b);
         // print_function(pivot, *a);
     }
@@ -105,8 +107,13 @@ void b_to_a(t_link **a, t_link **b, int len)
     int copy = rotate;
     while(copy--)
         rrotate_b(b);
-    //  b_to_a(a, b, rotate);
-    //  a_to_b(a, b, push);
+    printf("\nA : ");
+    print_stack(*a);
+    printf("\nB : ");
+    print_stack(*b);
+    printf("\n");
+    a_to_b(a, b, push);
+    b_to_a(a, b, rotate);
 
 }
 
@@ -114,9 +121,11 @@ void a_to_b(t_link **a, t_link **b, int len)
 {
     int pivot;
     int rotate = 0;
-    int  push = 0;
+    int push = 0;
+    int copy_len = len;
 
     pivot = setup_pivot(*a, len);
+    printf("\na to b | pivot | %d", pivot);
     if(len == 1)
         return ;
     while(len--)
@@ -125,37 +134,43 @@ void a_to_b(t_link **a, t_link **b, int len)
             push_b(a,b);
         else if((*a)->num >= pivot && ++rotate)
             rotate_a(a);
-        // print_function(pivot, *a);
     }
-     int copy = rotate;
-    while(copy--)
-        rrotate_a(a);
-    // printf("\n[[[[pivot %d]]]]", pivot);
-    // printf("\na : ");
-	// print_stack(*a);
-	// printf("\nb : ");
-	// print_stack(*b);
+    before_push(a, rotate, copy_len); //이걸 쓸려면 맨 처음에만 쓰기 가능
+
+    printf("\nA : ");
+    print_stack(*a);
+    printf("\nB : ");
+    print_stack(*b);
+    printf("\n");
     a_to_b(a, b, rotate);
-   b_to_a(a, b, push);
+    b_to_a(a, b, push);
+}
+
+void before_push(t_link **a, int rotate, int len)
+{
+    // if(len == len / 2)
+    //     return ;
+    // else
+        while(rotate--)
+            rrotate_a(a);
 }
 
 
-
-    //swap_a(*stack_a);
-    //swap_ab(*stack_a, *stack_b);
-    //명령어 생각
-    //rotate_a(stack_a);
-    //rotate_ab(stack_a, stack_b);
-    //rrotate_b(stack_b);
-    //rrotate_ab(stack_a, stack_b);
-    //push_a(stack_a, stack_b);
-//     push_b(stack_a, stack_b);
-//     push_b(stack_a, stack_b);
-//     push_b(stack_a, stack_b);
-//     push_b(stack_a, stack_b);
-//     push_b(stack_a, stack_b);
-//     push_b(stack_a, stack_b);
-//     push_b(stack_a, stack_b);
-//     push_b(stack_a, stack_b);
-//     push_a(stack_a, stack_b);
-//     push_a(stack_a, stack_b);
+    // swap_a(*stack_a);
+    // swap_ab(*stack_a, *stack_b);
+    // 명령어 생각
+    // rotate_a(stack_a);
+    // rotate_ab(stack_a, stack_b);
+    // rrotate_b(stack_b);
+    // rrotate_ab(stack_a, stack_b);
+    // push_a(stack_a, stack_b);
+    // push_b(stack_a, stack_b);
+    // push_b(stack_a, stack_b);
+    // push_b(stack_a, stack_b);
+    // push_b(stack_a, stack_b);
+    // push_b(stack_a, stack_b);
+    // push_b(stack_a, stack_b);
+    // push_b(stack_a, stack_b);
+    // push_b(stack_a, stack_b);
+    // push_a(stack_a, stack_b);
+    // push_a(stack_a, stack_b);
