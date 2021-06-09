@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 17:52:14 by jji               #+#    #+#             */
-/*   Updated: 2021/02/15 20:27:46 by jji              ###   ########.fr       */
+/*   Updated: 2021/06/09 17:33:59 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		ft_putzero(t_flag *t, char *str_d)
 	int gap;
 	int dup;
 
-	gap = t->wid - ft_max(ft_strlen(str_d), t->pre);
+	gap = t->wid - ft_strlen(str_d);
 	dup = gap;
 	if (t->zero == 1)
 	{
