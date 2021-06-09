@@ -57,12 +57,31 @@ void	print_stack(t_link *stack)
 	}
 }
 
-
+void decending_set(t_link **stack_a, t_link **stack_b, int num)
+{
+	int push_count;
+	
+	push_count = 0;
+	while(num-- > 1)
+	{
+		push_b(stack_a,stack_b);
+		push_count++;
+	}
+	while(push_count-- > 0)
+	{
+		push_a(stack_a, stack_b);
+		rotate_a(stack_a);
+	}
+}
 
 void go_algorithm(t_link **stack_a, t_link **stack_b, int num)
 {
-	// if (decending_check(*stack_a))
-	// 	decending_set(stack_a, stack_b);
+	
+	if (decending_check(*stack_a, num))
+	{
+		decending_set(stack_a, stack_b, num);
+		return ;
+	}
 	a_to_b(stack_a, stack_b, num);
 }
 
@@ -83,10 +102,10 @@ int main(int argc, char **argv)
 
 	go_algorithm(&stack_a, &stack_b, argc - 1);
 
-	printf("\na : ");
-	print_stack(stack_a);
-	printf("\nb : ");
-	print_stack(stack_b);
+	// printf("\na : ");
+	// print_stack(stack_a);
+	// printf("\nb : ");
+	// print_stack(stack_b);
 
 	return (0);
 }
