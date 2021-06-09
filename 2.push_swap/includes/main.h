@@ -27,7 +27,8 @@
 # include "cmd_push.h"
 # include "cmd_rotate.h"
 # include "cmd_rrotate.h"
-# include "init_algorithm.h"
+# include "a_to_b.h"
+# include "b_to_a.h"
 # include "setup_pivot.h"
 
 void	print_stack(t_link *stack);

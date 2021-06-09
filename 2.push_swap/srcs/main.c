@@ -57,6 +57,15 @@ void	print_stack(t_link *stack)
 	}
 }
 
+
+
+void go_algorithm(t_link **stack_a, t_link **stack_b, int num)
+{
+	// if (decending_check(*stack_a))
+	// 	decending_set(stack_a, stack_b);
+	a_to_b(stack_a, stack_b, num);
+}
+
 int main(int argc, char **argv)
 {
 	t_link *stack_a;
