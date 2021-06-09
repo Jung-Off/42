@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_algorithm.h                                   :+:      :+:    :+:   */
+/*   setup_pivot.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/27 15:01:55 by jji               #+#    #+#             */
-/*   Updated: 2021/05/27 15:01:57 by jji              ###   ########.fr       */
+/*   Created: 2021/06/09 14:22:45 by jji               #+#    #+#             */
+/*   Updated: 2021/06/09 14:22:47 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INIT_ALGORITHM_H
-# define INIT_ALGORITHM_H
+
+#ifndef SETUP_PIVOT_H
+# define SETUP_PIVOT_H
 
 # include "main.h"
 
-void    go_algorithm(t_link **stack_a, t_link **stack_b, int num);
-void    before_push(t_link **a, int rotate);
-void    a_to_b(t_link **a, t_link **b, int pivot);
+int setup_pivot(t_link *stack_a, int num);
+int *input_arr(t_link *stack_a, int *tmp, int num);
+int return_pivot(int *tmp, int i);
 
 
 #endif

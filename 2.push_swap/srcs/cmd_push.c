@@ -48,6 +48,7 @@ void push_b(t_link **stack_a, t_link **stack_b)
     if(!(*stack_a))
         return ;
     push_function(stack_b, pop_function(stack_a));
+    write(1, "pb\n", 3);
 }
 
 void push_a(t_link **stack_a, t_link **stack_b)
@@ -55,4 +56,5 @@ void push_a(t_link **stack_a, t_link **stack_b)
     if(!(*stack_b))
         return ;
     push_function(stack_a, pop_function(stack_b));
+    write(1, "pa\n", 3);
 }

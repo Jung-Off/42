@@ -29,7 +29,7 @@ void swap_a(t_link *stack_a)
         return ;
     bottom = stack_a->next;
     ft_swap(&(stack_a->num), &(bottom->num));
-    //write(1, "sa\n", 3);
+    write(1, "sa\n", 3);
 }
 
 void swap_b(t_link *stack_b)
@@ -40,7 +40,7 @@ void swap_b(t_link *stack_b)
         return ;
     bottom = stack_b->next;
     ft_swap(&(stack_b->num), &(bottom->num));
-    //write(1, "sb\n", 3);
+    write(1, "sb\n", 3);
 }
 
 void swap_ab(t_link *stack_a, t_link *stack_b)

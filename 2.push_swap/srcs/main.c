@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 		lst_free(stack_a);
 		exit(1); //return (1);
 	}
-	
+
 	go_algorithm(&stack_a, &stack_b, argc - 1);
 
 	printf("\na : ");

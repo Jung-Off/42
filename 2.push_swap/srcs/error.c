@@ -14,13 +14,8 @@
 
 void error_check(int argc, char **argv)
 {
-	if (argc < 2)
-	{
-		write(1, "Error\n", 6);
-		exit(1);
-	}
-
-	//error 만 출력하면 되니까 이 함수를 우려먹기위한 인자를 어떻게 바꿀지 고민중 사용할 예정
+	if (argc == 1)
+		exit(0);
 }
 
 void  error_check2(void)
@@ -34,6 +29,16 @@ int	malloc_error(t_link **add)
 	*add = malloc(sizeof(t_link));
 
 	if (*add == NULL)
+		return (1);
+	else
+		return (0);
+}
+
+int	malloc_error2(int **tmp, int num)
+{
+	*tmp = malloc(sizeof(int) * num);
+
+	if (*tmp == NULL)
 		return (1);
 	else
 		return (0);

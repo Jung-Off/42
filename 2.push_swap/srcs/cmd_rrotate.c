@@ -20,6 +20,7 @@ void rrotate_a(t_link **stack_a)
         return ;
     head = (*stack_a)->prev;
     (*stack_a) = head;
+    write(1, "rra\n", 4);
     //출력
 }
 
@@ -31,6 +32,7 @@ void rrotate_b(t_link **stack_b)
         return ;
     head = (*stack_b)->prev;
     (*stack_b) = head;
+    write(1, "rrb\n", 4);
     //출력
 }
 
