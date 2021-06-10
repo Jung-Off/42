@@ -33,6 +33,8 @@ static int except_case(t_link **a, t_link **b,int len)
     if(len == 2)
     {
         set_last(b);
+        push_a(a,b);
+        push_a(a,b);
         return (1);
     }
     return (0);

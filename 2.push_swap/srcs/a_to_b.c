@@ -25,13 +25,15 @@ static void set_last(t_link **a)
         swap_a(*a);
 }
 
-static int except_case(t_link **a, int len)
+static int except_case(t_link **a, t_link **b, int len)
 {
     if (len == 1)
         return (1);
     if (len == 2)
     {
         set_last(a);
+        // push_a(a, b);
+        // push_a(a, b);
         return (1);
     }
     return (0);
@@ -43,11 +45,11 @@ void a_to_b(t_link **a, t_link **b, int len)
     int rotate;
     int push;
     static int first;
-    
+
     rotate = 0;
     push = 0;
     pivot = setup_pivot(*a, len);
-    if (except_case(a, len))
+    if (except_case(a, b, len))
         return ;
     while(len--)
     {

@@ -17,5 +17,6 @@
 
 int ft_isnum(char str);
 int push_atoi(char *str);
+void num3_set(t_link **a, t_link **b, int num);
 
 #endif

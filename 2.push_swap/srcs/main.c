@@ -76,13 +76,23 @@ void decending_set(t_link **stack_a, t_link **stack_b, int num)
 
 void go_algorithm(t_link **stack_a, t_link **stack_b, int num)
 {
-	
+	if(num == 3)
+	{
+		num3_set(stack_a, stack_b, num);
+		return ;
+	}
 	if (decending_check(*stack_a, num))
 	{
+		if(num == 2)
+		{
+			swap_a(*stack_a);
+			return ;
+		}
 		decending_set(stack_a, stack_b, num);
 		return ;
 	}
-	a_to_b(stack_a, stack_b, num);
+	else
+		a_to_b(stack_a, stack_b, num);
 }
 
 int main(int argc, char **argv)

@@ -34,14 +34,14 @@ void duplicate_check(t_link *lst)
 	}
 }
 
-int decending_check(t_link *lst, int num)
+int decending_check(t_link *lst, int len)
 {
-	while(num--)
+	while(--len)
 	{
-		if(lst-> num < lst->next->num)
+		if(lst->num < lst->next->num)
 			return (0);
+		lst = lst->next;
 	}
-
 	return (1);
 }
 
