@@ -6,19 +6,18 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/10 15:20:11 by jji               #+#    #+#             */
-/*   Updated: 2021/06/10 15:20:12 by jji              ###   ########.fr       */
+/*   Updated: 2021/06/10 20:28:55 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef JUST_3_H
 # define JUST_3_H
 
 # include "main.h"
 
-int max_3(t_link *a);
-int min_3(t_link *a);
-void first_3(t_link **a);
-void num3_set(t_link **a, t_link **b);
+int		max_3(t_link *a);
+int		min_3(t_link *a);
+void	first_3(t_link **a);
+void	num3_set(t_link **a, t_link **b);
 
 #endif

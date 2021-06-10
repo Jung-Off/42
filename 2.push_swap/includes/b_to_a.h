@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 20:17:46 by jji               #+#    #+#             */
-/*   Updated: 2021/06/09 20:17:47 by jji              ###   ########.fr       */
+/*   Updated: 2021/06/10 20:25:30 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "main.h"
 
-void b_to_a(t_link **a, t_link **b, int len);
+void	b_to_a(t_link **a, t_link **b, int len);
 
 #endif
