@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,23 +6,23 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 20:36:20 by jji               #+#    #+#             */
-/*   Updated: 2021/05/26 20:36:22 by jji              ###   ########.fr       */
+/*   Updated: 2021/06/10 20:45:41 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/checker.h"
 
-void same_check(int save, t_link *lst)
+void	same_check(int save, t_link *lst)
 {
 	while (lst->next)
 	{
 		lst = lst->next;
-		if(save == lst->num)
+		if (save == lst->num)
 			error_check2();
 	}
 }
 
-void duplicate_check(t_link *lst)
+void	duplicate_check(t_link *lst)
 {
 	int save;
 
@@ -35,7 +34,7 @@ void duplicate_check(t_link *lst)
 	}
 }
 
-int decending_check(t_link *lst, int len)
+int		decending_check(t_link *lst, int len)
 {
 	while (--len)
 	{
@@ -46,7 +45,7 @@ int decending_check(t_link *lst, int len)
 	return (1);
 }
 
-int ascending_check(t_link *lst)
+int		ascending_check(t_link *lst)
 {
 	while (lst->next)
 	{
@@ -54,10 +53,10 @@ int ascending_check(t_link *lst)
 			return (0);
 		lst = lst->next;
 	}
-	return(1);
+	return (1);
 }
 
-int ascending_check_len(t_link *lst, int len)
+int		ascending_check_len(t_link *lst, int len)
 {
 	while (--len)
 	{
@@ -65,5 +64,5 @@ int ascending_check_len(t_link *lst, int len)
 			return (0);
 		lst = lst->next;
 	}
-	return(1);
+	return (1);
 }
