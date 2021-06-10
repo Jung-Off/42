@@ -14,7 +14,7 @@
 
 int null_guard(t_link *new_lst)
 {
-    if(!new_lst)
+    if (!new_lst)
         return (1);
     else
         return (0);
@@ -26,7 +26,7 @@ int link_number(int argc, char **argv, t_link **lst)
     t_link *new_lst;
 
     i = 1;
-    while(i < argc)
+    while (i < argc)
     {
         make_node(&new_lst);                //노드 생성
         if (null_guard(new_lst))
@@ -36,7 +36,7 @@ int link_number(int argc, char **argv, t_link **lst)
         i++;
     }
     duplicate_check(*lst); //중복확인
-    if(ascending_check(*lst)) //오름차순 확인
+    if (ascending_check(*lst)) //오름차순 확인
     {
         lst_free(*lst);
         exit (0);

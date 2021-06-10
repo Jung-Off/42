@@ -24,9 +24,9 @@ static void print_function(int argc, t_link *stack)
 	
 	int a = argc;
 
-	if(!(stack))
+	if (!(stack))
 		return;
-	while(--a)
+	while (--a)
 	{
 		printf(" %d", stack->num);
 		stack = stack->next;
@@ -40,6 +40,8 @@ static void print_function(int argc, t_link *stack)
 	//linke_number 애서 저장한 stack_a를 이용할 예정
 
 }
+
+////출력하는 함수 확인 하는 함수
 
 void	print_stack(t_link *stack)
 {
@@ -62,12 +64,12 @@ void decending_set(t_link **stack_a, t_link **stack_b, int num)
 	int push_count;
 	
 	push_count = 0;
-	while(num-- > 1)
+	while (num-- > 1)
 	{
 		push_b(stack_a,stack_b);
 		push_count++;
 	}
-	while(push_count-- > 0)
+	while (push_count-- > 0)
 	{
 		push_a(stack_a, stack_b);
 		rotate_a(stack_a);
@@ -76,14 +78,14 @@ void decending_set(t_link **stack_a, t_link **stack_b, int num)
 
 void go_algorithm(t_link **stack_a, t_link **stack_b, int num)
 {
-	if(num == 3)
+	if (num == 3)
 	{
-		num3_set(stack_a, stack_b, num);
+		num3_set(stack_a, stack_b);
 		return ;
 	}
 	if (decending_check(*stack_a, num))
 	{
-		if(num == 2)
+		if (num == 2)
 		{
 			swap_a(*stack_a);
 			return ;

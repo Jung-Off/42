@@ -30,6 +30,7 @@
 # include "a_to_b.h"
 # include "b_to_a.h"
 # include "setup_pivot.h"
+# include "just_3.h"
 
 void	print_stack(t_link *stack);
 

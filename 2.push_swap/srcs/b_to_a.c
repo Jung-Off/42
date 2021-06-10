@@ -14,29 +14,35 @@
 
 static void before_push(t_link **b, int rotate)
 {
-        while(rotate--)
-            rrotate_b(b);
+    while (rotate--)
+        rrotate_b(b);
 }
-static void set_last(t_link **b)
+
+static void set_2(t_link **b)
 {
-    if((*b)->num < (*b)->next->num)
+    if ((*b)->num < (*b)->next->num)
         swap_b(*b);
 }
 
 static int except_case(t_link **a, t_link **b,int len)
 {
-    if(len == 1)
+    if (len == 1)
     {
-        push_a(a,b);
+        push_a(a, b);
         return (1);
     }
-    if(len == 2)
+    else if (len == 2)
     {
-        set_last(b);
-        push_a(a,b);
-        push_a(a,b);
+        set_2(b);
+        push_a(a, b);
+        push_a(a, b);
         return (1);
     }
+    // else if (len == 3)
+    // {
+    //      set_3(a, b);
+    // }
+    
     return (0);
 }
 
@@ -48,14 +54,14 @@ void b_to_a(t_link **a, t_link **b, int len)
 
     rotate = 0;
     push = 0;
-    pivot = setup_pivot(*b, len);
     if (except_case(a, b, len))
         return ;
-    while(len--)
+    pivot = setup_pivot(*b, len);
+    while (len--)
     {
-        if((*b)->num >= pivot && ++push) 
+        if ((*b)->num >= pivot && ++push) 
             push_a(a,b);
-        else if((*b)->num < pivot && ++rotate)
+        else if ((*b)->num < pivot && ++rotate)
             rotate_b(b);
     }
     before_push(b, rotate);

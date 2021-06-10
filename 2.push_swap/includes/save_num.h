@@ -15,7 +15,6 @@
 
 # include "main.h"
 
-// void make_number(char *str, t_link **new);
 int null_guard(t_link *new_lst);
 int link_number(int argc, char **argv, t_link **lst);
 

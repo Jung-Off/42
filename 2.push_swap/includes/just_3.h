@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_push.h                                         :+:      :+:    :+:   */
+/*   just_3.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/27 15:50:21 by jji               #+#    #+#             */
-/*   Updated: 2021/05/27 15:50:22 by jji              ###   ########.fr       */
+/*   Created: 2021/06/10 15:20:11 by jji               #+#    #+#             */
+/*   Updated: 2021/06/10 15:20:12 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CMD_PUSH_H
-# define CMD_PUSH_H
+
+#ifndef JUST_3_H
+# define JUST_3_H
 
 # include "main.h"
 
-void    push_b(t_link **stack_a, t_link **stack_b);
-t_link *pop_function(t_link **stack);
-void    push_function(t_link **stack, t_link *top);
-void    push_a(t_link **stack_a, t_link **stack_b);
+int max_3(t_link *a);
+int min_3(t_link *a);
+void first_3(t_link **a);
+void num3_set(t_link **a, t_link **b);
 
 #endif

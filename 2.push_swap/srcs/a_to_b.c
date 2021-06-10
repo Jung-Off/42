@@ -12,28 +12,66 @@
 
 #include "../includes/a_to_b.h"
 
-// 
+
 static void before_push(t_link **a, int rotate)
 {
         while(rotate--)
             rrotate_a(a);
 }
 
-static void set_last(t_link **a)
+static void set_2(t_link **a)
 {
     if((*a)->num > (*a)->next->num)
         swap_a(*a);
 }
 
+static void set_3(t_link **a, t_link **b)
+{
+    int max;
+    int min;
+
+    max = max_3(*a);
+    min = min_3(*a);
+    if ((*a)->num == max)
+        swap_a(*a);
+    if ((*a)->num == min)
+    {
+        if (ascending_check_len(*a, 3))
+            return ;
+        else
+        {
+            rotate_a(a);
+            swap_a(*a);
+            rrotate_a(a);
+        }     
+    }
+    else
+    {
+        if((*a)->next->num == min)
+            swap_a(*a);
+        else
+        {
+            push_b(a, b);
+            swap_a(*a);
+            push_a(a, b);
+            swap_a(*a);
+        }
+    }
+}
+
+
 static int except_case(t_link **a, t_link **b, int len)
 {
     if (len == 1)
         return (1);
-    if (len == 2)
+    else if (len == 2)
     {
-        set_last(a);
-        // push_a(a, b);
-        // push_a(a, b);
+        set_2(a);
+        return (1);
+    }
+    else if (len == 3)
+    {
+        set_3(a, b);
         return (1);
     }
     return (0);
@@ -48,9 +86,9 @@ void a_to_b(t_link **a, t_link **b, int len)
 
     rotate = 0;
     push = 0;
-    pivot = setup_pivot(*a, len);
     if (except_case(a, b, len))
         return ;
+    pivot = setup_pivot(*a, len);
     while(len--)
     {
         if((*a)->num < pivot && ++push) 
@@ -59,10 +97,7 @@ void a_to_b(t_link **a, t_link **b, int len)
             rotate_a(a);
     }
     if (first++ != 0)
-         before_push(a, rotate);
+        before_push(a, rotate);
     a_to_b(a, b, rotate);
     b_to_a(a, b, push);
 }
-
-
-

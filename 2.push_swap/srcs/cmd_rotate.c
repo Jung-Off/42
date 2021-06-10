@@ -20,7 +20,6 @@ void rotate_a(t_link **stack_a)
         return ;
     head = (*stack_a)->next;
     (*stack_a) = head;
-    //출력
     write(1, "ra\n", 3);
 }
 
@@ -33,12 +32,10 @@ void rotate_b(t_link **stack_b)
     head = (*stack_b)->next;
     (*stack_b) = head;
     write(1, "rb\n", 3);
-    //출력
 }
 
 void rotate_ab(t_link **stack_a, t_link **stack_b)
 {
     rotate_a(stack_a);
     rotate_b(stack_b);
-    //출력
 }

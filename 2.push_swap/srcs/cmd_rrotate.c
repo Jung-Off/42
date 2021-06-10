@@ -16,29 +16,26 @@ void rrotate_a(t_link **stack_a)
 {
     t_link *head;
 
-    if(!(*stack_a))
+    if (!(*stack_a))
         return ;
     head = (*stack_a)->prev;
     (*stack_a) = head;
     write(1, "rra\n", 4);
-    //출력
 }
 
 void rrotate_b(t_link **stack_b)
 {
     t_link *head;
 
-    if(!(*stack_b))
+    if (!(*stack_b))
         return ;
     head = (*stack_b)->prev;
     (*stack_b) = head;
     write(1, "rrb\n", 4);
-    //출력
 }
 
 void rrotate_ab(t_link **stack_a, t_link **stack_b)
 {
     rrotate_a(stack_a);
     rrotate_b(stack_b);
-    //출력
 }

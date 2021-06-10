@@ -15,8 +15,6 @@
 
 # include "main.h"
 
-
 void    a_to_b(t_link **a, t_link **b, int pivot);
-
 
 #endif

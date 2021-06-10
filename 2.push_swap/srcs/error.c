@@ -15,7 +15,7 @@
 void error_check(int argc, char **argv)
 {
 	if (argc == 1)
-		exit(0);
+		exit(1);
 }
 
 void  error_check2(void)
@@ -48,7 +48,7 @@ void lst_free(t_link *lst)
 {
 	t_link *temp;
 
-	while(lst)
+	while (lst)
 	{
 		temp = (lst)->next;
 		free(lst);

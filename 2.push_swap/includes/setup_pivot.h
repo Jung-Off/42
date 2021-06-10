@@ -20,5 +20,4 @@ int setup_pivot(t_link *stack_a, int num);
 int *input_arr(t_link *stack_a, int *tmp, int num);
 int return_pivot(int *tmp, int i);
 
-
 #endif

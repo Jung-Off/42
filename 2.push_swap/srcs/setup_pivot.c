@@ -42,8 +42,7 @@ int setup_pivot(t_link *stack_a, int num)
     int count;
 
     if(malloc_error2(&tmp, num))
-        exit(0);
-    //예외처리
+        exit(1);
     tmp = input_arr(stack_a, tmp ,num);
     i = 0;
     while (i < num)
@@ -57,7 +56,7 @@ int setup_pivot(t_link *stack_a, int num)
             ++j;
         }
         if (count == num / 2)
-            return(return_pivot(tmp, i));
+            return (return_pivot(tmp, i));
         i++;
     }
     return (return_pivot(tmp, 0));
