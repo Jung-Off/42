@@ -18,6 +18,6 @@
 int		max_3(t_link *a);
 int		min_3(t_link *a);
 void	first_3(t_link **a);
-void	num3_set(t_link **a, t_link **b);
+void	num3_set(t_link **a);
 
 #endif

@@ -6,16 +6,16 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 15:33:16 by jji               #+#    #+#             */
-/*   Updated: 2021/06/10 20:55:34 by jji              ###   ########.fr       */
+/*   Updated: 2021/06/11 12:35:43 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/error.h"
 
-void	error_check(int argc, char **argv)
+void	error_check(int argc)
 {
 	if (argc == 1)
-		exit(1);
+		exit(0);
 }
 
 void	error_check2(void)

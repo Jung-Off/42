@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "make_list.h": "c",
-        "ratio": "c",
-        "memory": "c",
-        "utility": "c",
-        "checker.h": "c"
-    }
-}

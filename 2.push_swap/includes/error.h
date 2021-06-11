@@ -15,7 +15,7 @@
 
 # include "main.h"
 
-void	error_check(int argc, char **argv);
+void	error_check(int argc);
 void	error_check2(void);
 int		malloc_error(t_link **add);
 int		malloc_error2(int **tmp, int num);

@@ -55,9 +55,7 @@ static void	set_3(t_link **a, t_link **b)
 
 static int	except_case(t_link **a, t_link **b, int len)
 {
-	if (len == 1)
-		return (1);
-	else if (len == 2)
+	if (len == 2)
 	{
 		set_2(a);
 		return (1);

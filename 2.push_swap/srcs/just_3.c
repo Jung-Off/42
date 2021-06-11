@@ -42,7 +42,7 @@ void	first_3(t_link **a)
 	rrotate_a(a);
 }
 
-void	num3_set(t_link **a, t_link **b)
+void	num3_set(t_link **a)
 {
 	int max;
 	int min;

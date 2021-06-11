@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 15:22:43 by jji               #+#    #+#             */
-/*   Updated: 2021/05/25 15:38:19 by jji              ###   ########.fr       */
+/*   Updated: 2021/06/11 12:20:06 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 # include "structure.h"
 # include "error.h"
@@ -31,7 +30,5 @@
 # include "b_to_a.h"
 # include "setup_pivot.h"
 # include "just_3.h"
-
-void	print_stack(t_link *stack);
 
 #endif
