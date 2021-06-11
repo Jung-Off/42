@@ -60,6 +60,11 @@ static int	except_case(t_link **a, t_link **b, int len)
 		set_2(a);
 		return (1);
 	}
+	else if (len == 3 && lst_len(*a) == 3)
+	{
+		num3_set(a);
+		return (1);
+	}
 	else if (len == 3)
 	{
 		set_3(a, b);

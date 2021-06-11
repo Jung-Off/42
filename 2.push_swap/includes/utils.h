@@ -15,6 +15,7 @@
 
 # include "main.h"
 
+int	lst_len(t_link *stack_a);
 int ft_isnum(char str);
 int push_atoi(char *str);
 

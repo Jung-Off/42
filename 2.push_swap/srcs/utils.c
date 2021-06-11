@@ -12,6 +12,21 @@
 
 #include "../includes/utils.h"
 
+int	lst_len(t_link *stack_a)
+{
+	t_link *temp;
+	int len;
+
+	len = 1;
+	temp = stack_a->next;
+	while (temp != stack_a)
+	{
+		temp = temp->next;
+		++len;
+	}
+	return(len);
+}
+
 int	ft_isnum(char str)
 {
 	if (str >= '0' && str <= '9')
