@@ -14,8 +14,8 @@
 
 int	lst_len(t_link *stack_a)
 {
-	t_link *temp;
-	int len;
+	t_link	*temp;
+	int		len;
 
 	len = 1;
 	temp = stack_a->next;
@@ -24,7 +24,7 @@ int	lst_len(t_link *stack_a)
 		temp = temp->next;
 		++len;
 	}
-	return(len);
+	return (len);
 }
 
 int	ft_isnum(char str)
