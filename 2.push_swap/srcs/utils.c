@@ -39,19 +39,26 @@ int	push_atoi(char *str)
 {
 	long long	sum;
 	int			minus;
+	int			isnum;
 
+	isnum = 0;
 	sum = 0;
 	minus = 1;
-	if (*str == '-' && str++)
-		minus = -1;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			minus *= -1;
+		str++;
+	}
 	while (*str)
 	{
 		if (!ft_isnum(*str))
 			error_check2();
 		sum = sum * 10 + (*(str++) - '0');
+		isnum = 1;
 	}
 	sum *= minus;
-	if (sum > 2147483647 || sum < -2147483648)
+	if (isnum == 0 || sum > 2147483647 || sum < -2147483648)
 		error_check2();
 	return (sum);
 }
