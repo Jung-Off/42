@@ -1,0 +1,79 @@
+NAME		=	philo
+
+CC			=	gcc
+CFLAGS		=	-Wall -Werror -Wextra -g
+SRCS		=	main.c \
+				set_public.c \
+				call_public.c \
+				is_invalid.c \
+				gen_philos.c \
+				get_time.c \
+				handle_thread.c \
+				philo_routine.c \
+				act_eat.c \
+				act_sleep.c \
+				act_think.c \
+				display_message.c \
+				display_err_message.c \
+				watch_done.c \
+				watch_died.c \
+				usleep_loop.c \
+				utils.c \
+				garbage_collector.c \
+
+OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
+
+OBJDIR		= ./objs
+
+all:		$(NAME)
+
+$(NAME):	$(OBJS)
+			@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lpthread
+			@echo "\nStart program"
+
+$(OBJDIR)/%.o:%.c
+			@printf "Generating philosopher's table... %-33.33s\r" $@
+			@mkdir $(OBJDIR) 2> /dev/null || true
+			@$(CC) $(CFLAGS) -I./philo.h -o $@ -c $<
+
+clean:
+			@rm -rf $(OBJDIR) 2> /dev/null || true
+
+fclean:		clean
+			@rm -rf $(NAME) 2> /dev/null || true
+
+re:			fclean all
+
+norm:
+			@norminette *.c
+			@norminette *.h
+
+test0:		re
+			@./$(NAME) 4 410 200 200
+			# "no one should die"
+
+test1:		re
+			@./$(NAME) 5 800 200 200
+			# "no one should die"
+
+test2:		re
+			@./$(NAME) 5 800 200 200
+			# "no one should die"
+
+test3:		re
+			@./$(NAME) 5 800 200 200 7
+			# "no one should die"
+
+test4:		re
+			@./$(NAME) 4 310 200 100
+			# "a philosopher should die"
+
+test5:		re
+			@./$(NAME) 1 800 200 200
+			# "a philosopher should die"
+
+test6:	re
+			@./$(NAME) 3 4100 2000 2000
+			# "check if philo die right time"
+
+.PHONY:		all clean fclean re norm test0 test1 test2 test3 test4 test5 test6
