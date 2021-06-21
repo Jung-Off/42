@@ -51,7 +51,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 all : $(NAME)
 
 clean :
-		@rm -r $(OBJ_DIR)
+		@rm -rf $(OBJ_DIR)
 		@echo "\x1b[31mCLEAN\x1b[0m"
 fclean : clean
 		@rm -f $(NAME)
