@@ -1,4 +1,4 @@
-# **************************************************************************** #
+#**************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -11,8 +11,12 @@
 # **************************************************************************** #
 
 NAME := push_swap
+
+CC := gcc
+CFLAGS := -Wall -Wextra -Werror
+
 SRC_DIR := ./srcs/
-SRC = a_to_b.c \
+SRC_NAME := a_to_b.c \
 	   b_to_a.c \
 	   checker.c \
 	   cmd_push.c \
@@ -26,26 +30,34 @@ SRC = a_to_b.c \
 	   save_num.c \
 	   setup_pivot.c \
 	   utils.c
+SRCS := $(addprefix $(SRC_DIR), $(SRC_NAME)) 
 
-SRCS = $(addprefix $(SRC_DIR), $(SRC)) 
+OBJ_DIR := ./objs/
+OBJ_NAME := $(SRC_NAME:.c=.o)
+OBJ := $(addprefix $(OBJ_DIR), $(OBJ_NAME))
 
-OBJS := $(SRCS:.c=.o)
-CC := gcc
-CFLAGS := -Wall -Wextra -Werror
 INCLUDE := -I./includes
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re norm
 
-$(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+$(NAME) : $(OBJ)
+	@$(CC) $(CFLAGS) $(INCLUDE) -o $@ $^
+	@echo "\x1b[32m\nStart program\x1b[0m"
 
-%.o : %.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 all : $(NAME)
 
 clean :
-		rm -f $(OBJS)
+		@rm -r $(OBJ_DIR)
+		@echo "\x1b[31mCLEAN\x1b[0m"
 fclean : clean
-		rm -f $(NAME)
+		@rm -f $(NAME)
+		@echo "\x1b[31;101mFCLEAN\x1b[0m"
+
 re : fclean all
+
+norm :
+		@norminette .
