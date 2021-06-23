@@ -45,11 +45,8 @@ int ft_stdout(const char *output)
 int main(int argc, char const *argv[])
 {
     ft_stdin(argv[1]);
-    // ft_stdout(argv[2]);
-
-    // write(1, "abc", 3);  
-
     execve ("/bin/cat", 0, 0);
-
+    ft_stdout(argv[2]);
+    
     return (SUCCESS);
 }
