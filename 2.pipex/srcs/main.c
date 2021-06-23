@@ -42,11 +42,31 @@ int ft_stdout(const char *output)
     return (SUCCESS);
 }
 
+static void connect_pipe(int pipefd[2], int io)
+{
+    dup2(pipefd[io], io);
+    close(pipefd[0]);
+    close(pipefd[1]);
+}
+
 int main(int argc, char const *argv[])
 {
-    ft_stdin(argv[1]);
-    execve ("/bin/cat", 0, 0);
-    ft_stdout(argv[2]);
-    
+
+    int pipefd[2];
+    pid_t pid;
+
+    pipe(pipefd);
+    pid = fork();
+
+    if (pid > 0)
+    {
+        ft_stdout(argv[argc - 1]);
+        connet_pipe(pipefd, STDIN_FILENO);
+    }
+    else if (pid == 0)
+    {
+        ft_stdin(argv[1]);
+        connet_pipe(pipefd, STDOUT_FILENO);
+    }
     return (SUCCESS);
 }
