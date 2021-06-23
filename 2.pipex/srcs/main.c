@@ -12,25 +12,43 @@
 
 #include "../includes/main.h"
 
-int ft_stdin(const char *file)
+int ft_stdin(const char *input)
 {
     int fd;
 
-    fd = open(file, O_RDONLY);
+    fd = open(input, O_RDONLY);
     if (fd < 0)
     {
-        //perror(file);
+        perror(input);
         return (ERROR);
     }
     dup2(fd, STDIN_FILENO);
     close(fd);
+    return (SUCCESS);
+}
 
+int ft_stdout(const char *output)
+{
+    int fd;
+
+    fd = open(output, O_RDWR | O_CREAT, 0644);
+    if (fd < 0)
+    {
+        perror(output);
+        return (ERROR);
+    }
+    dup2(fd, STDOUT_FILENO);
+    close(fd);
     return (SUCCESS);
 }
 
 int main(int argc, char const *argv[])
 {
     ft_stdin(argv[1]);
+    // ft_stdout(argv[2]);
+
+    // write(1, "abc", 3);  
+
     execve ("/bin/cat", 0, 0);
 
     return (SUCCESS);
