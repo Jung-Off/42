@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/22 18:17:11 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 19:58:29 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	size_t i;
+	size_t src_len;
 
-#endif
+	i = 0;
+	if (!dst || !src)
+		return (0);
+	src_len = ft_strlen(src);
+	if (dstsize == 0)
+		return (src_len);
+	while (src[i] && i < (dstsize - 1))
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (src_len);
+}

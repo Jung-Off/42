@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 23:29:39 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 22:48:39 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	char	*new_s;
+	size_t	i;
 
-#endif
+	i = 0;
+	if (s == 0 || f == 0)
+		return (0);
+	if (!(new_s = (char*)malloc(sizeof(char) * ft_strlen(s) + 1)))
+		return (0);
+	while (s[i])
+	{
+		new_s[i] = f(i, s[i]);
+		i++;
+	}
+	new_s[i] = '\0';
+	return (new_s);
+}

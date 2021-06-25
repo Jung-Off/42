@@ -1,34 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/22 20:51:01 by jji               #+#    #+#             */
+/*   Updated: 2020/12/24 13:01:58 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
-
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+int	ft_isprint(int c)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
-
-#endif
+	if (c >= 32 && c <= 126)
+		return (1);
+	else
+		return (0);
+}

@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/23 15:45:47 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 19:20:49 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+void	ft_bzero(void *s, size_t n)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
-
-#endif
+	ft_memset(s, 0, n);
+}

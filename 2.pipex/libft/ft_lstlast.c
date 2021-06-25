@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/27 00:46:36 by jji               #+#    #+#             */
+/*   Updated: 2020/12/27 17:00:24 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+t_list	*ft_lstlast(t_list *lst)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	t_list *p;
 
-#endif
+	p = lst;
+	if (lst)
+	{
+		while (p->next)
+			p = p->next;
+	}
+	return (p);
+}

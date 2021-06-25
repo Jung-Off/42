@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 12:41:32 by jji               #+#    #+#             */
+/*   Updated: 2021/01/04 21:48:22 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	unsigned char	*new_s1;
+	unsigned char	*new_s2;
+	size_t			i;
 
-#endif
+	i = 0;
+	new_s1 = (unsigned char*)s1;
+	new_s2 = (unsigned char*)s2;
+	while (i < n)
+	{
+		if (new_s1[i] != new_s2[i])
+			return (new_s1[i] - new_s2[i]);
+		++i;
+	}
+	return (0);
+}

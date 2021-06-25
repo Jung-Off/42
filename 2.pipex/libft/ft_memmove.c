@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 13:18:14 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 19:37:36 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	unsigned char	*s;
+	unsigned char	*d;
+	size_t			i;
 
-#endif
+	if (src == dst || len == 0)
+		return (dst);
+	s = (unsigned char*)src;
+	d = dst;
+	i = 0;
+	if (src > dst)
+		while (i < len)
+		{
+			d[i] = s[i];
+			++i;
+		}
+	else
+		while (0 < len)
+		{
+			d[len - 1] = s[len - 1];
+			len--;
+		}
+	return (dst);
+}

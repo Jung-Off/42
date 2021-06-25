@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 00:00:54 by jji               #+#    #+#             */
+/*   Updated: 2020/12/26 19:47:25 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+void	*ft_calloc(size_t count, size_t size)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	char	*c;
+	size_t	i;
 
-#endif
+	i = 0;
+	if (!(c = (char*)malloc(count * size)))
+		return (0);
+	while (i < count * size)
+	{
+		c[i] = 0;
+		++i;
+	}
+	return (c);
+}

@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/27 18:43:10 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 20:40:30 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*))
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	t_list	*p;
+	t_list	*head;
 
-#endif
+	head = 0;
+	while (lst)
+	{
+		if (!(p = ft_lstnew(f(lst->content))))
+		{
+			ft_lstclear(&head, del);
+			return (0);
+		}
+		ft_lstadd_back(&head, p);
+		lst = lst->next;
+	}
+	return (head);
+}

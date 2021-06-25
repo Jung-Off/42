@@ -12,7 +12,7 @@
 
 #include "../includes/main.h"
 
-int ft_stdin(const char *input)
+int ft_stdin(char *input)
 {
     int fd;
 
@@ -27,7 +27,7 @@ int ft_stdin(const char *input)
     return (SUCCESS);
 }
 
-int ft_stdout(const char *output)
+int ft_stdout(char *output)
 {
     int fd;
 
@@ -35,38 +35,65 @@ int ft_stdout(const char *output)
     if (fd < 0)
     {
         perror(output);
-        return (ERROR);
+    	return (ERROR);
     }
     dup2(fd, STDOUT_FILENO);
     close(fd);
     return (SUCCESS);
 }
 
-static void connect_pipe(int pipefd[2], int io)
+void ft_close(int pipefd[2])
 {
-    dup2(pipefd[io], io);
-    close(pipefd[0]);
-    close(pipefd[1]);
+    close(pipefd[READ]);
+    close(pipefd[WRITE]);
 }
 
-int main(int argc, char const *argv[])
+void exe_init(t_exe *exe, char *argv)
 {
+    char **dump;
 
+    dump = ft_split(argv, ' ');
+    exe->cmd[0] = ft_strjoin("/usr/local/bin/", dump[0]);
+    exe->cmd[1] = ft_strjoin("/usr/bin/", dump[0]);
+    exe->cmd[2] = ft_strjoin("/bin/", dump[0]);
+    exe->cmd[3] = ft_strjoin("/usr/sbin/", dump[0]);
+    exe->cmd[4] = ft_strjoin("/sbin/", dump[0]);
+    exe->argv = dump;
+	exe->envp = NULL;
+}
+
+void ft_exe(char *argv)
+{
+    t_exe	exe;
+    int		i;
+
+    i = 0;
+    exe_init(&exe, argv);
+    while(i++ < 5)
+        execve(exe.cmd[i], exe.argv, exe.envp);
+    perror(exe.argv[0]);
+}
+
+int main(int argc, char *argv[])
+{
     int pipefd[2];
     pid_t pid;
 
     pipe(pipefd);
     pid = fork();
-
     if (pid > 0)
     {
-        ft_stdout(argv[argc - 1]);
-        connet_pipe(pipefd, STDIN_FILENO);
+        ft_stdin(argv[1]);
+        dup2(pipefd[WRITE], STDOUT_FILENO);
+        ft_close(pipefd);
+        ft_exe(argv[2]);
     }
     else if (pid == 0)
     {
-        ft_stdin(argv[1]);
-        connet_pipe(pipefd, STDOUT_FILENO);
+        ft_stdout(argv[4]);
+        dup2(pipefd[READ], STDIN_FILENO);
+        ft_close(pipefd);
+        ft_exe(argv[3]);
     }
-    return (SUCCESS);
+    return (0);
 }

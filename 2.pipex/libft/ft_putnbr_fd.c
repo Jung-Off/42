@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 19:25:28 by jji               #+#    #+#             */
+/*   Updated: 2020/12/25 19:26:44 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+void	ft_putnbr_fd(int n, int fd)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
-
-#endif
+	if (fd < 0)
+		return ;
+	if (n == -2147483648)
+		write(fd, "-2147483648", 11);
+	else if (n < 0)
+	{
+		write(fd, "-", 1);
+		ft_putnbr_fd((-1) * n, fd);
+	}
+	else
+	{
+		if (n > 9)
+			ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd('0' + (n % 10), fd);
+	}
+}

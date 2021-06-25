@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/25 00:26:01 by jji               #+#    #+#             */
+/*   Updated: 2020/12/27 23:46:17 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+char	*ft_strdup(const char *s1)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	int		i;
+	char	*s;
 
-#endif
+	i = 0;
+	if (!(s = (char*)malloc(ft_strlen(s1) * sizeof(char) + 1)))
+		return (NULL);
+	while (s1[i])
+	{
+		s[i] = s1[i];
+		++i;
+	}
+	s[i] = '\0';
+	return (s);
+}

@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/24 13:58:14 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 19:23:48 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	size_t			i;
+	unsigned char	*d;
+	unsigned char	*s;
+	unsigned char	new_c;
 
-#endif
+	if (!dst && !src)
+		return (NULL);
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	new_c = (unsigned char)c;
+	i = 0;
+	while (n > i)
+	{
+		d[i] = s[i];
+		if (s[i] == new_c)
+			return (d + (i + 1));
+		++i;
+	}
+	return (0);
+}

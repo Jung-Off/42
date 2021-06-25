@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/23 16:33:04 by jji               #+#    #+#             */
+/*   Updated: 2020/12/29 19:18:23 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	size_t			i;
+	unsigned char	*s;
+	unsigned char	*d;
 
-#endif
+	if (!dst && !src)
+		return (NULL);
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	i = 0;
+	while (n > 0)
+	{
+		d[i] = s[i];
+		--n;
+		++i;
+	}
+	return (d);
+}

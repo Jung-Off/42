@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/22 20:38:36 by jji              ###   ########.fr       */
+/*   Created: 2020/12/23 21:12:37 by jji               #+#    #+#             */
+/*   Updated: 2020/12/24 21:31:56 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-
-# define ERROR -1
-# define SUCCESS 0
-
-# define READ 0
-# define WRITE 1
-
-typedef struct  s_exe
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-    char *cmd[5];
-    char **argv;
-    char **envp;
-}               t_exe;
+	unsigned char	*u_s1;
+	unsigned char	*u_s2;
+	size_t			i;
 
-#endif
+	u_s1 = (unsigned char *)s1;
+	u_s2 = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (u_s1[i] == u_s2[i] && u_s1[i] != '\0' &&
+			u_s2[i] != '\0' && i < n - 1)
+		i++;
+	return (u_s1[i] - u_s2[i]);
+}
