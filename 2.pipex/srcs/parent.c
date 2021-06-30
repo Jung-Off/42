@@ -12,36 +12,35 @@
 
 #include "../includes/main.h"
 
-int		connect_file_to_stdin(const char *infile)
+void		connect_file_to_stdout(char *outfile)
 {
 	int fd;
 
-	fd = open(infile, O_RDONLY);
+	fd = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
-		perror(infile);
+		perror(outfile);
 		exit(ERROR);
 	}
-	dup2(fd, STDIN_FILENO);
+	dup2(fd, STDOUT_FILENO);
 	close(fd);
-	return (SUCCESS);
 }
 
-void	connect_stdout_pipe_w(int pipefd[2])
+void	connect_stdin_pipe_r(int pipefd[2])
 {
-	dup2(pipefd[WRITE], STDOUT_FILENO);
+	dup2(pipefd[READ], STDIN_FILENO);
 	close(pipefd[READ]);
 	close(pipefd[WRITE]);
 }
 
-void	use_pipe_w_to_stdout(char *argv)
+void	use_pipe_r_to_file(char *argv)
 {
 	t_exe	exe;
 	int		i;
 
 	i = 0;
 	init_exe(&exe, argv);
-	while (i++ < 5)
-		execve(exe.path[i], exe.argv, exe.envp);
+	while (i < 5)
+		execve(exe.path[i++], exe.argv, exe.envp);
 	perror(argv);
 }
