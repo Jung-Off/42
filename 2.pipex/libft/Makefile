@@ -72,10 +72,11 @@ OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES)))
 OBJS_B = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES_B)))
 
 .c.o: $(SRCS)
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 $(NAME) : $(OBJS)
-	$(AR) $@ $?
+	@$(AR) $@ $?
+	@echo "\x1b[32m\nStart LIBFT\x1b[0m"
 
 bonus : $(OBJS_B)
 	$(AR) $(NAME) $?
@@ -83,10 +84,12 @@ bonus : $(OBJS_B)
 all: $(NAME)
 
 clean:
-	$(RM) $(OBJS) $(OBJS_B)
+	@$(RM) $(OBJS) $(OBJS_B)
+	@echo "\x1b[31mCLEAN_LIBFT\x1b[0m"
 
 fclean : clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
+	@echo "\x1b[31;101mFCLEAN_LIBFT\x1b[0m"
 
 re: clean all
 
