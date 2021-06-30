@@ -36,7 +36,7 @@ void			init_exe(t_exe *exe, char const *argv);
 void			connect_file_to_stdout(char *outfile);
 void			connect_stdin_pipe_r(int pipefd[2]);
 void			use_pipe_r_to_file(char *argv);
-void 			connect_file_to_stdin(const char *infile);
+void			connect_file_to_stdin(const char *infile);
 void			connect_stdout_pipe_w(int pipefd[2]);
 void			use_pipe_w_to_stdout(char *argv);
 

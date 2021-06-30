@@ -12,7 +12,7 @@
 
 #include "../includes/main.h"
 
-void		connect_file_to_stdin(const char *infile)
+void	connect_file_to_stdin(const char *infile)
 {
 	int fd;
 

@@ -12,7 +12,7 @@
 
 #include "../includes/main.h"
 
-void		connect_file_to_stdout(char *outfile)
+void	connect_file_to_stdout(char *outfile)
 {
 	int fd;
 
