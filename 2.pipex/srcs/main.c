@@ -32,14 +32,14 @@ int		main(int argc, char *argv[])
 	pid_t	pid;
 	int		status;
 
-	if(argc != 5)
+	if (argc != 5)
 		return (1);
 	pipe(pipefd);
 	pid = fork();
 	if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
-		if(WIFEXITED(status) == 0)
+		if (WEXITSTATUS(status) == 1)
 			exit(1);
 		connect_file_to_stdout(argv[4]);
 		connect_stdin_pipe_r(pipefd);
