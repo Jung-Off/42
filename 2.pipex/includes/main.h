@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 20:38:36 by jji               #+#    #+#             */
-/*   Updated: 2021/06/30 15:03:50 by jji              ###   ########.fr       */
+/*   Updated: 2021/07/01 12:44:10 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct	s_exe
 	char * const	*envp;
 }				t_exe;
 
-void			*free_mem(char * const *mem);
+void			*free_mem(char *const *mem);
 void			init_exe(t_exe *exe, char const *argv);
 void			connect_file_to_stdout(char *outfile);
 void			connect_stdin_pipe_r(int pipefd[2]);

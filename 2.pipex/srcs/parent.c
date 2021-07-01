@@ -45,4 +45,5 @@ void	use_pipe_r_to_file(char *argv, char *file)
 	free_mem(exe.argv);
 	unlink(file);
 	perror(argv);
+	exit(ERROR);
 }

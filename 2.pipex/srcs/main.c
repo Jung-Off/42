@@ -6,13 +6,13 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/22 20:37:01 by jji               #+#    #+#             */
-/*   Updated: 2021/06/30 15:07:30 by jji              ###   ########.fr       */
+/*   Updated: 2021/07/01 12:49:27 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/main.h"
 
-void	*free_mem(char * const *mem)
+void	*free_mem(char *const *mem)
 {
 	int i;
 	int n;
