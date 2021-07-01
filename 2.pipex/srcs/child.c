@@ -42,5 +42,7 @@ void	use_pipe_w_to_stdout(char *argv)
 	init_exe(&exe, argv);
 	while (i < 5)
 		execve(exe.path[i++], exe.argv, exe.envp);
+	free_mem(exe.argv);
 	perror(argv);
+	exit(ERROR);
 }

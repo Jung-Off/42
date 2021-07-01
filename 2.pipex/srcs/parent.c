@@ -33,7 +33,7 @@ void	connect_stdin_pipe_r(int pipefd[2])
 	close(pipefd[WRITE]);
 }
 
-void	use_pipe_r_to_file(char *argv)
+void	use_pipe_r_to_file(char *argv, char *file)
 {
 	t_exe	exe;
 	int		i;
@@ -42,5 +42,7 @@ void	use_pipe_r_to_file(char *argv)
 	init_exe(&exe, argv);
 	while (i < 5)
 		execve(exe.path[i++], exe.argv, exe.envp);
+	free_mem(exe.argv);
+	unlink(file);
 	perror(argv);
 }

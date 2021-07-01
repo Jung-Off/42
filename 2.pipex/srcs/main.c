@@ -12,11 +12,28 @@
 
 #include "../includes/main.h"
 
+void	*free_mem(char * const *mem)
+{
+	int i;
+	int n;
+
+	i = 0;
+	n = 0;
+	while (mem[n] != NULL)
+		n++;
+	while (i < n)
+		free((void *)mem[i++]);
+	free((void *)mem);
+	return (0);
+}
+
 void	init_exe(t_exe *exe, char const *argv)
 {
 	char **cmd;
 
 	cmd = ft_split(argv, ' ');
+	if (cmd == NULL)
+		exit(1);
 	exe->path[0] = ft_strjoin("/usr/local/bin/", cmd[0]);
 	exe->path[1] = ft_strjoin("/usr/bin/", cmd[0]);
 	exe->path[2] = ft_strjoin("/bin/", cmd[0]);
@@ -43,7 +60,7 @@ int		main(int argc, char *argv[])
 			exit(1);
 		connect_file_to_stdout(argv[4]);
 		connect_stdin_pipe_r(pipefd);
-		use_pipe_r_to_file(argv[3]);
+		use_pipe_r_to_file(argv[3], argv[4]);
 	}
 	else if (pid == 0)
 	{
