@@ -43,6 +43,12 @@ void	init_exe(t_exe *exe, char const *argv)
 	exe->envp = NULL;
 }
 
+void	error_argc(int argc)
+{
+	if (argc != 5)
+		exit(1);
+}
+
 int		main(int argc, char *argv[])
 {
 	int		pipefd[2];
@@ -50,8 +56,7 @@ int		main(int argc, char *argv[])
 	int		status;
 	int		fd;
 
-	if (argc != 5)
-		return (1);
+	error_argc(argc);
 	pipe(pipefd);
 	fd = make_outfile(argv[4]);
 	pid = fork();
