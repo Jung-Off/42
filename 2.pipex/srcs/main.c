@@ -63,11 +63,9 @@ int		main(int argc, char *argv[])
 	if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
-		if (WEXITSTATUS(status) == 1)
-			exit(1);
 		connect_file_to_stdout(fd);
 		connect_stdin_pipe_r(pipefd);
-		use_pipe_r_to_file(argv[3], argv[4]);
+		use_pipe_r_to_file(argv[3]);
 	}
 	else if (pid == 0)
 	{
