@@ -48,17 +48,19 @@ int		main(int argc, char *argv[])
 	int		pipefd[2];
 	pid_t	pid;
 	int		status;
+	int		fd;
 
 	if (argc != 5)
 		return (1);
 	pipe(pipefd);
+	fd = make_outfile(argv[4]);
 	pid = fork();
 	if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
 		if (WEXITSTATUS(status) == 1)
 			exit(1);
-		connect_file_to_stdout(argv[4]);
+		connect_file_to_stdout(fd);
 		connect_stdin_pipe_r(pipefd);
 		use_pipe_r_to_file(argv[3], argv[4]);
 	}

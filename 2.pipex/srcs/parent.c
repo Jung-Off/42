@@ -12,7 +12,7 @@
 
 #include "../includes/main.h"
 
-void	connect_file_to_stdout(char *outfile)
+int		make_outfile(char *outfile)
 {
 	int fd;
 
@@ -22,6 +22,11 @@ void	connect_file_to_stdout(char *outfile)
 		perror(outfile);
 		exit(ERROR);
 	}
+	return (fd);
+}
+
+void	connect_file_to_stdout(int fd)
+{
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
