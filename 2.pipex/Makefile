@@ -6,7 +6,7 @@
 #    By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/22 20:36:44 by jji               #+#    #+#              #
-#    Updated: 2021/07/01 12:50:46 by jji              ###   ########.fr        #
+#    Updated: 2021/07/07 13:09:13 by jji              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,4 +62,4 @@ fclean : clean
 re : fclean all
 
 norm :
-		@norminette .
+		@norminette-v2 .
