@@ -17,7 +17,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include <sys/wait.h>
 # include "../libft/libft.h"
 
 # define ERROR 1

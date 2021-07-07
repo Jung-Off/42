@@ -48,6 +48,7 @@ void	use_pipe_r_to_file(char *argv)
 	while (i < 5)
 		execve(exe.path[i++], exe.argv, exe.envp);
 	free_mem(exe.argv);
-	perror(argv);
+	write(2, argv, ft_strlen(argv));
+	write(2, ": command not found\n", 20);
 	exit(ERROR);
 }
