@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:17:58 by jji               #+#    #+#             */
-/*   Updated: 2021/09/07 11:02:37 by jji              ###   ########.fr       */
+/*   Updated: 2021/09/09 19:00:04 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,43 +70,53 @@ int philo_atoi(char *str)
 t_philo *philo_init(int ac, char *av[])
 {
 	t_philo *philo;
+	t_status status[philo_atoi(av[1])];
 
-	if(ac != 5 && ac != 6)
-		error_print();
 	philo = (t_philo *)malloc(sizeof(t_philo));
 	
 	if(ac == 5)
 		philo->option = OPTION_OFF;
 	else
-	{	
 		philo->option = OPTION_ON;
-		printf("");
-	}
+	
 	philo->number_of_philosophers = philo_atoi(av[1]);
 	philo->time_to_die = philo_atoi(av[2]);
 	philo->time_to_eat = philo_atoi(av[3]);
 	philo->time_to_sleep = philo_atoi(av[4]);
-	//여기서 문제가 av[5]라는 것이 인자가 4개일때는 없어서 5개일 때는 문제 없지만 4개일 때는 segfault가 난다
-	//if 때문에 접근 자체를 못하는 상황이 아닌가? 그러면 이것을 어떻게 처리를 해주어야 하지요?!@
-	philo->number_of_must_eat = philo_atoi(av[ac - 1]);
-	
-	/*if(OPTION_ON)
-		philo->number_of_must_eat = philo_atoi(av[ac + 1]);
-	else
-		philo->number_of_must_eat = 0;
-	*/
+	philo->eat_count = philo_atoi(av[ac - 1]);
 
+	int i = 0;
+
+	philo->status = status;
+
+	while(i < philo->number_of_philosophers)
+	{
+		philo->status[i].die = 0;
+		philo->status[i].hungry = 0;
+		++i;
+	}
 	return (philo);
 }
 	
 int main(int argc, char *argv[])
 {
 	t_philo *philo;
+
+	if(argc != 5 && argc != 6)
+		error_print();
+	
 	philo =	philo_init(argc, argv);
 
-	printf("%d\n", philo->option);
-	printf("%d\n%d\n%d\n%d\n%d ", philo->number_of_philosophers,
-			philo->time_to_die, philo->time_to_eat, philo->time_to_sleep,
-			philo->number_of_must_eat);
 
+	printf("%d\n", philo->option);
+	printf("philo numbers :%d\n die time : %d\n eat time : %d\n sleep time : %d\n eat count : %d\n", 
+			philo->number_of_philosophers, philo->time_to_die, 
+			philo->time_to_eat, philo->time_to_sleep, philo->eat_count);
+	
+	int i = 0;	
+	while(i < philo->number_of_philosophers + 2)
+	{
+		printf(" %d : die : %d  hungry : %d\n", i, philo->status[i].die ,philo->status[i].hungry); 
+		++i;
+	}
 }

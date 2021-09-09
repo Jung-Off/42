@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:18:00 by jji               #+#    #+#             */
-/*   Updated: 2021/09/07 10:05:40 by jji              ###   ########.fr       */
+/*   Updated: 2021/09/09 18:57:56 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 
 typedef int t_bool;
 
+typedef struct 	s_status
+{
+	int die;
+	int hungry;
+}				t_status;
+
 typedef struct	s_philo
 {
 	int		number_of_philosophers;
@@ -27,7 +33,9 @@ typedef struct	s_philo
 	int		time_to_eat;
 	int		time_to_sleep;
 	t_bool	option;
-	int		number_of_must_eat;
+	int		eat_count;
+	t_status *status;
+
 }				t_philo;
 
 #endif
