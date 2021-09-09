@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:17:58 by jji               #+#    #+#             */
-/*   Updated: 2021/09/09 19:00:04 by jji              ###   ########.fr       */
+/*   Updated: 2021/09/09 19:26:48 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,15 @@ t_philo *philo_init(int ac, char *av[])
 	philo->time_to_die = philo_atoi(av[2]);
 	philo->time_to_eat = philo_atoi(av[3]);
 	philo->time_to_sleep = philo_atoi(av[4]);
-	philo->eat_count = philo_atoi(av[ac - 1]);
 
-	int i = 0;
+	philo->eat_count = philo_atoi(av[ac - 1]);
+	
+	/*if(philo->option)
+		philo->eat_count = philo_atoi(av[5]);
+	else
+		philo->eat_count = 0;
+	*/
+		int i = 0;
 
 	philo->status = status;
 
@@ -114,7 +120,7 @@ int main(int argc, char *argv[])
 			philo->time_to_eat, philo->time_to_sleep, philo->eat_count);
 	
 	int i = 0;	
-	while(i < philo->number_of_philosophers + 2)
+	while(i < philo->number_of_philosophers)
 	{
 		printf(" %d : die : %d  hungry : %d\n", i, philo->status[i].die ,philo->status[i].hungry); 
 		++i;
