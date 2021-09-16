@@ -25,7 +25,7 @@ void	error_print(int err_num)
 	exit(1);
 }
 
-void	*print(void *arg)
+void	*start(void *arg)
 {
 	t_philo *status = (t_philo *)arg;
 
@@ -40,13 +40,32 @@ void	*print(void *arg)
 	return (0);
 }
 
+
+void pthread_start(t_info info, t_philo *philo)
+{
+	int i;
+
+	i = 0;
+	while (i < info.num_to_philo)
+	{
+		pthread_create(&(philo[i].thread), NULL, &start, &philo[i]);
+		pthread_create(&(philo[i].monitor), NULL, &check, &philo[i]);
+		++i;
+	}
+	i = 0;
+	while (i < info.num_to_philo)
+	{
+		pthread_join(philo[i].thread, NULL);
+		pthread_join(philo[i].monitor, NULL);
+		++i;
+	}
+}
+
 int	main(int argc, char *argv[])
 {
-	int		i;
 	t_philo	*philo;
 	t_info	info;
 
-	i = 0;
 	philo = NULL;
 	if (argc != 5 && argc != 6)
 		error_print(1);
@@ -54,13 +73,7 @@ int	main(int argc, char *argv[])
 	init_thread(info, philo);
 	init_mutex(info, philo);
 
-	//pthread_start();
+	pthread_start(info, philo);
 
-	while (i < info.num_to_philo)
-	{
-		pthread_create(&(philo[i].thread), NULL, &print, &philo[i]);
-		pthread_join(philo[i].thread, NULL);
-		++i;
-	}
 	//free fork philo//
 }

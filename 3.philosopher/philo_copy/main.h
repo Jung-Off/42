@@ -34,6 +34,7 @@ typedef struct s_philo
 {
 	int				idx;
 	pthread_t		thread;
+	pthread_t		monitor;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
