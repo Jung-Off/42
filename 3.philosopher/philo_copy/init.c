@@ -29,9 +29,10 @@ void init_mutex(t_info info, t_philo *philo)
 	put_the_fork(philo, info, forks);
 }
 
-void init_thread(t_info info, t_philo *philo)
+t_philo *init_thread(t_info info)
 {
 	int				i;
+	t_philo			*philo;
 
 	i = 0;
 	philo = make_philo(info);
@@ -41,6 +42,8 @@ void init_thread(t_info info, t_philo *philo)
 		philo[i].info = &info;
 		++i;
 	}
+
+	return (philo);
 }
 
 void	init_info(int ac, char *argv[], t_info *info)

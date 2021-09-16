@@ -49,7 +49,7 @@ int	philo_atoi(char *str);
 int philo_strlen(char *str);
 
 void init_mutex(t_info info, t_philo *philo);
-void init_thread(t_info info, t_philo *philo);
+t_philo *init_thread(t_info info);
 void	init_info(int ac, char *argv[], t_info *info);
 
 void valid_input(char *av[]);

@@ -28,14 +28,15 @@ void	error_print(int err_num)
 void	*start(void *arg)
 {
 	t_philo *status = (t_philo *)arg;
-
-	printf("idx :%d\n", status->idx);
+	printf("================\n");
+	printf("idx : %d\n", status->idx);
 	printf("forks : %p %p\n", status->l_fork, status->r_fork);
 	printf("num : %d\n", status->info->num_to_philo);
 	printf("die : %d\n", status->info->time_to_die);
 	printf("eat : %d\n", status->info->time_to_eat);
 	printf("sleep : %d\n", status->info->time_to_sleep);
 	printf("count : %d\n", status->info->num_of_eat);
+	printf("================");
 	printf("\n\n");
 	return (0);
 }
@@ -49,14 +50,15 @@ void pthread_start(t_info info, t_philo *philo)
 	while (i < info.num_to_philo)
 	{
 		pthread_create(&(philo[i].thread), NULL, &start, &philo[i]);
-		pthread_create(&(philo[i].monitor), NULL, &check, &philo[i]);
+		//pthread_create(&(philo[i].monitor), NULL, &check, &philo[i]);
 		++i;
+		usleep(10);
 	}
 	i = 0;
 	while (i < info.num_to_philo)
 	{
 		pthread_join(philo[i].thread, NULL);
-		pthread_join(philo[i].monitor, NULL);
+		//pthread_join(philo[i].monitor, NULL);
 		++i;
 	}
 }
@@ -70,7 +72,8 @@ int	main(int argc, char *argv[])
 	if (argc != 5 && argc != 6)
 		error_print(1);
 	init_info(argc, argv, &info);
-	init_thread(info, philo);
+	//여기서부터 다시시작
+	philo = init_thread(info);
 	init_mutex(info, philo);
 
 	pthread_start(info, philo);
