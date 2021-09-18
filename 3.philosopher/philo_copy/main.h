@@ -48,14 +48,24 @@ int	philo_isdigit(int c);
 int	philo_atoi(char *str);
 int philo_strlen(char *str);
 
+//1)
 void init_mutex(t_info info, t_philo *philo);
-t_philo *init_thread(t_info info);
+//2)
+//void init_mutex(t_info info, t_philo **philo);
+//1)
+void init_thread(t_info info, t_philo **philo);
+//2)
+//t_philo *init_thread(t_info info);
 void	init_info(int ac, char *argv[], t_info *info);
 
 void valid_input(char *av[]);
 t_philo	*make_philo(t_info info);
 pthread_mutex_t	*make_forks(t_info info);
+//1)
 void	put_the_fork(t_philo *philo, t_info info, pthread_mutex_t *forks);
+//2)
+//void	put_the_fork(t_philo **philo, t_info info, pthread_mutex_t *forks);
+
 
 void	error_print(int err_num);
 #endif

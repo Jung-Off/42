@@ -59,6 +59,7 @@ pthread_mutex_t	*make_forks(t_info info)
 	return (forks);
 }
 
+//1)
 void	put_the_fork(t_philo *philo, t_info info, pthread_mutex_t *forks)
 {
 	int	i;
@@ -71,3 +72,18 @@ void	put_the_fork(t_philo *philo, t_info info, pthread_mutex_t *forks)
 		++i;
 	}
 }
+//2)
+/*
+void	put_the_fork(t_philo **philo, t_info info, pthread_mutex_t *forks)
+{
+	int	i;
+
+	i = 0;
+	while (i < info.num_to_philo)
+	{	
+		(*philo[i]).l_fork = &(forks[i]);
+		(*philo[i]).r_fork = &(forks[(i + 1) % info.num_to_philo]);
+		++i;
+	}
+}
+*/
