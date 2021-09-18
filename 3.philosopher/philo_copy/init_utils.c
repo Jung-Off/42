@@ -38,6 +38,16 @@ void valid_input(char *av[])
 	}
 }
 
+t_info *make_info()
+{
+	t_info *info;
+
+	info = (t_info *)malloc(sizeof(t_info));
+	if (info == NULL)
+		error_print(4);
+	return (info);
+}
+
 t_philo	*make_philo(t_info info)
 {
 	t_philo	*philo;

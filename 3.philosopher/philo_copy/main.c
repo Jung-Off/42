@@ -31,6 +31,8 @@ void	*start(void *arg)
 	printf("================\n");
 	printf("idx : %d\n", status->idx);
 	printf("forks : %p %p\n", status->l_fork, status->r_fork);
+	printf("%p", status->info);
+	
 	printf("num : %d\n", status->info->num_to_philo);
 	printf("die : %d\n", status->info->time_to_die);
 	printf("eat : %d\n", status->info->time_to_eat);
@@ -41,20 +43,20 @@ void	*start(void *arg)
 	return (0);
 }
 
-void print_f(t_philo *philo)
-{
-	t_philo *status = philo;
-	printf("================\n");
-	printf("idx : %d\n", status->idx);
-	printf("forks : %p %p\n", status->l_fork, status->r_fork);
-	printf("num : %d\n", status->info->num_to_philo);
-	printf("die : %d\n", status->info->time_to_die);
-	printf("eat : %d\n", status->info->time_to_eat);
-	printf("sleep : %d\n", status->info->time_to_sleep);
-	printf("count : %d\n", status->info->num_of_eat);
-	printf("================");
-	printf("\n\n");
-}
+// void print_f(t_philo *philo)
+// {
+// 	t_philo *status = philo;
+// 	printf("================\n");
+// 	printf("idx : %d\n", status->idx);
+// 	printf("forks : %p %p\n", status->l_fork, status->r_fork);
+// 	printf("num : %d\n", status->info->num_to_philo);
+// 	printf("die : %d\n", status->info->time_to_die);
+// 	printf("eat : %d\n", status->info->time_to_eat);
+// 	printf("sleep : %d\n", status->info->time_to_sleep);
+// 	printf("count : %d\n", status->info->num_of_eat);
+// 	printf("================");
+// 	printf("\n\n");
+// }
 
 void pthread_start(t_info info, t_philo *philo)
 {
@@ -81,32 +83,32 @@ void pthread_start(t_info info, t_philo *philo)
 int	main(int argc, char *argv[])
 {
 	t_philo	*philo;
-	t_info	info;
+	t_info	*info;
 
 	philo = NULL;
 	if (argc != 5 && argc != 6)
 		error_print(1);
-	init_info(argc, argv, &info);
+ 	init_info(argc, argv, &info);
 	
 	
-//	내가 이걸 고민하고 있는 이유 philo도 넘어 갔다가 오면 공간이 있어야 되니까 &philo이어야 되는데
-//philo =으로 받는 것은 왜 안되는 것이며
+// //	내가 이걸 고민하고 있는 이유 philo도 넘어 갔다가 오면 공간이 있어야 되니까 &philo이어야 되는데
+// //philo =으로 받는 것은 왜 안되는 것이며
 
-//init_mutex는 주소를 넘겨오는데 philo로 만으로 충분한 것인가?
+// //init_mutex는 주소를 넘겨오는데 philo로 만으로 충분한 것인가?
 
-	//1)
+// 	//1)
 	init_thread(info, &philo);
-	//2) 
-	//philo = init_thread(info);
-
-	//1)
+// 	//2) 
+// 	//philo = init_thread(*info);
+// ////////////////
+// 	//1)
 	init_mutex(info, philo);
-	//2)
-	//init_mutex(info, &philo);
-	//여기 2번은 그래도 어느정도 납득이 됨
+// 	//2)
+// 	//init_mutex(info, &philo);
+// 	//여기 2번은 그래도 어느정도 납득이 됨
 
 
-	pthread_start(info, philo);
+	pthread_start(*info, philo);
 
 	//free fork philo//
 }
@@ -133,5 +135,3 @@ void	init_mutex_data(t_philo *philo)
 	philo[0].l_fork = &(philo->forks[i - 1]);
 }
 */
-
-ㄱ

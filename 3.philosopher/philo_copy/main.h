@@ -28,6 +28,7 @@ typedef struct s_info
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		num_of_eat;
+	pthread_mutex_t	*fork;
 }				t_info;
 
 typedef struct s_philo
@@ -35,7 +36,8 @@ typedef struct s_philo
 	int				idx;
 	pthread_t		thread;
 	pthread_t		monitor;
-	pthread_mutex_t	*fork;
+	pthread_mutex_t *fork;
+	
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	//죽었다 라는 것 표시 할것
@@ -48,15 +50,17 @@ int	philo_isdigit(int c);
 int	philo_atoi(char *str);
 int philo_strlen(char *str);
 
+t_info *make_info(void);
+
 //1)
-void init_mutex(t_info info, t_philo *philo);
+void init_mutex(t_info *info, t_philo *philo);
 //2)
 //void init_mutex(t_info info, t_philo **philo);
 //1)
-void init_thread(t_info info, t_philo **philo);
+void init_thread(t_info *info, t_philo **philo);
 //2)
 //t_philo *init_thread(t_info info);
-void	init_info(int ac, char *argv[], t_info *info);
+void	init_info(int ac, char *argv[], t_info **info);
 
 void valid_input(char *av[]);
 t_philo	*make_philo(t_info info);

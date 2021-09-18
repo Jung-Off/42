@@ -12,14 +12,14 @@
 
 #include "main.h"
 
-void init_mutex(t_info info, t_philo *philo)
+void init_mutex(t_info *info, t_philo *philo)
 {
-	int i = 0;
+	int i;
 	pthread_mutex_t *forks;
-	forks = make_forks(info);
-
+	
 	i = 0;
-	while (i < info.num_to_philo)
+	forks = make_forks(*info);
+	while (i < info->num_to_philo)
 	{
 		pthread_mutex_init(&(forks[i]), NULL);
 		++i;
@@ -27,7 +27,7 @@ void init_mutex(t_info info, t_philo *philo)
 	philo->fork = forks;
 //여기도 philo라는 포인터 참조해서 fork에 접근 여기다 대입하면 남아있는다
 
-	put_the_fork(philo, info, forks);
+	put_the_fork(philo, *info, forks);
 }
 
 
@@ -51,16 +51,16 @@ void init_mutex(t_info info, t_philo **philo)
 }
 */
 //1)
-void	init_thread(t_info info, t_philo **philo)
+void	init_thread(t_info *info, t_philo **philo)
 {
 	int				i;
 
 	i = 0;
-	*philo = make_philo(info);
-	while (i < info.num_to_philo)
+	*philo = make_philo(*info);
+	while (i < info->num_to_philo)
 	{
 		(*philo)[i].idx = i + 1;
-		(*philo)[i].info = &info;
+		(*philo)[i].info = info;
 		++i;
 	}
 }
@@ -81,15 +81,16 @@ t_philo	*init_thread(t_info info)
 	return (philo);
 }
 */
-void	init_info(int ac, char *argv[], t_info *info)
+void	init_info(int ac, char *argv[], t_info **info)
 {
 	valid_input(argv);
-	info->num_to_philo = philo_atoi(argv[1]);
-	info->time_to_die = philo_atoi(argv[2]);
-	info->time_to_eat = philo_atoi(argv[3]);
-	info->time_to_sleep = philo_atoi(argv[4]);
+	*info = make_info();
+	(*info)->num_to_philo = philo_atoi(argv[1]);
+	(*info)->time_to_die = philo_atoi(argv[2]);
+	(*info)->time_to_eat = philo_atoi(argv[3]);
+	(*info)->time_to_sleep = philo_atoi(argv[4]);
 	if (ac == 6)
-		info->num_of_eat = philo_atoi(argv[ac - 1]);
+		(*info)->num_of_eat = philo_atoi(argv[ac - 1]);
 	else
-		info->num_of_eat = 0;
+		(*info)->num_of_eat = 0;
 }
