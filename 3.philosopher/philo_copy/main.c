@@ -25,30 +25,14 @@ void	error_print(int err_num)
 	exit(1);
 }
 
-void	*start(void *arg)
-{
-	t_philo *status = (t_philo *)arg;
-	printf("================\n");
-	printf("idx : %d\n", status->idx);
-	printf("forks : %p %p\n", status->l_fork, status->r_fork);
-	printf("%p", status->info);
-	
-	printf("num : %d\n", status->info->num_to_philo);
-	printf("die : %d\n", status->info->time_to_die);
-	printf("eat : %d\n", status->info->time_to_eat);
-	printf("sleep : %d\n", status->info->time_to_sleep);
-	printf("count : %d\n", status->info->num_of_eat);
-	printf("================");
-	printf("\n\n");
-	return (0);
-}
-
-// void print_f(t_philo *philo)
+// void	*start(void *arg)
 // {
-// 	t_philo *status = philo;
+// 	t_philo *status = (t_philo *)arg;
 // 	printf("================\n");
 // 	printf("idx : %d\n", status->idx);
 // 	printf("forks : %p %p\n", status->l_fork, status->r_fork);
+// 	printf("%p", status->info);
+	
 // 	printf("num : %d\n", status->info->num_to_philo);
 // 	printf("die : %d\n", status->info->time_to_die);
 // 	printf("eat : %d\n", status->info->time_to_eat);
@@ -56,7 +40,57 @@ void	*start(void *arg)
 // 	printf("count : %d\n", status->info->num_of_eat);
 // 	printf("================");
 // 	printf("\n\n");
+// 	return (0);
 // }
+
+unsigned long	get_time(void)
+{
+	struct timeval	time;
+	unsigned long	now;
+
+	gettimeofday(&time, NULL);
+	now = time.tv_sec * 1000;
+	now = now + time.tv_usec / 1000;
+	return (now);
+}
+
+unsigned long	get_time_stamp(t_philo *philo)
+{
+	unsigned long	now;
+
+	now = get_time();
+	//printf("get : %lu \n",now);
+	return (now - philo->start);
+}
+
+//함수명 고려해볼것
+void	ft_usleep(unsigned long time_to_usleep)
+{
+	unsigned long	start;
+
+	start = get_time();
+	while (get_time() < start + time_to_usleep)
+		usleep(100);
+}
+
+void check_except(t_philo *philo)
+{
+	printf(GREEN"[%lums] philo [%d] has taken a fork in right hand\n"GREEN, get_time_stamp(philo), philo->idx);
+	ft_usleep(philo->info->time_to_die);
+	philo->info->death = 1;
+	printf(RED"[%lums] philo [%d] died\n"RED, get_time_stamp(philo), philo->idx);
+}
+
+void *start (void *input_philo)
+{
+	t_philo *philo;
+
+	philo = input_philo;
+	if(philo->info->num_to_philo == 1)
+		check_except(philo);
+	return (input_philo);
+}
+
 
 void pthread_start(t_info info, t_philo *philo)
 {
@@ -65,7 +99,8 @@ void pthread_start(t_info info, t_philo *philo)
 	i = 0;
 	while (i < info.num_to_philo)
 	{
-		
+		philo[i].start = get_time();
+		//printf("first get : %lu \n", philo[i].start);
 		pthread_create(&(philo[i].thread), NULL, &start, &philo[i]);
 		//pthread_create(&(philo[i].monitor), NULL, &check, &philo[i]);
 		++i;
@@ -89,49 +124,9 @@ int	main(int argc, char *argv[])
 	if (argc != 5 && argc != 6)
 		error_print(1);
  	init_info(argc, argv, &info);
-	
-	
-// //	내가 이걸 고민하고 있는 이유 philo도 넘어 갔다가 오면 공간이 있어야 되니까 &philo이어야 되는데
-// //philo =으로 받는 것은 왜 안되는 것이며
-
-// //init_mutex는 주소를 넘겨오는데 philo로 만으로 충분한 것인가?
-
-// 	//1)
 	init_thread(info, &philo);
-// 	//2) 
-// 	//philo = init_thread(*info);
-// ////////////////
-// 	//1)
-	init_mutex(info, philo);
-// 	//2)
-// 	//init_mutex(info, &philo);
-// 	//여기 2번은 그래도 어느정도 납득이 됨
-
-
+	init_mutex(*info, philo);
 	pthread_start(*info, philo);
 
 	//free fork philo//
 }
-
-//내가 뇌절을 하고 있는건가
-
-//구조체포인터 안의 주소에 주소를 넣으면 저장이 된다.
-//그러면 init_thread의 1번은 되어야 되는게 아닌가
-/*
-void	init_mutex_data(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->num_of_philo)
-	{
-		philo[i].message = philo->message;
-		philo[i].eating = philo->eating;
-		philo[i].r_fork = &(philo->forks[i]);
-		if (i != 0)
-			philo[i].l_fork = &(philo->forks[i - 1]);
-		i++;
-	}
-	philo[0].l_fork = &(philo->forks[i - 1]);
-}
-*/
