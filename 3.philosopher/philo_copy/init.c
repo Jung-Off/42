@@ -25,6 +25,7 @@ void init_mutex(t_info info, t_philo *philo)
 		++i;
 	}
 	philo->fork = forks;
+	pthread_mutex_init(&(philo->info->message), NULL);
 
 	put_the_fork(philo, info, forks);
 }

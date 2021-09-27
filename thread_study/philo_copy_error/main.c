@@ -43,20 +43,20 @@ void	*start(void *arg)
 	return (0);
 }
 
-// void print_f(t_philo *philo)
-// {
-// 	t_philo *status = philo;
-// 	printf("================\n");
-// 	printf("idx : %d\n", status->idx);
-// 	printf("forks : %p %p\n", status->l_fork, status->r_fork);
-// 	printf("num : %d\n", status->info->num_to_philo);
-// 	printf("die : %d\n", status->info->time_to_die);
-// 	printf("eat : %d\n", status->info->time_to_eat);
-// 	printf("sleep : %d\n", status->info->time_to_sleep);
-// 	printf("count : %d\n", status->info->num_of_eat);
-// 	printf("================");
-// 	printf("\n\n");
-// }
+void print_f(t_philo *philo)
+{
+	t_philo *status = philo;
+	printf("================\n");
+	printf("idx : %d\n", status->idx);
+	printf("forks : %p %p\n", status->l_fork, status->r_fork);
+	printf("num : %d\n", status->info->num_to_philo);
+	printf("die : %d\n", status->info->time_to_die);
+	printf("eat : %d\n", status->info->time_to_eat);
+	printf("sleep : %d\n", status->info->time_to_sleep);
+	printf("count : %d\n", status->info->num_of_eat);
+	printf("================");
+	printf("\n\n");
+}
 
 void pthread_start(t_info info, t_philo *philo)
 {
@@ -89,6 +89,8 @@ int	main(int argc, char *argv[])
 	if (argc != 5 && argc != 6)
 		error_print(1);
  	init_info(argc, argv, &info);
+
+	printf("%d %d \n", info.num_of_eat, info.num_to_philo );
 	
 	
 // //	내가 이걸 고민하고 있는 이유 philo도 넘어 갔다가 오면 공간이 있어야 되니까 &philo이어야 되는데
@@ -107,8 +109,8 @@ int	main(int argc, char *argv[])
 // 	//init_mutex(info, &philo);
 // 	//여기 2번은 그래도 어느정도 납득이 됨
 
-
-	pthread_start(info, philo);
+	//print_f(philo);
+	// pthread_start(info, philo);
 
 	//free fork philo//
 }

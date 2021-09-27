@@ -84,7 +84,7 @@ t_philo	*init_thread(t_info info)
 void	init_info(int ac, char *argv[], t_info *info)
 {
 	valid_input(argv);
-	info = make_info();
+	//info = make_info();
 	info->num_to_philo = philo_atoi(argv[1]);
 	info->time_to_die = philo_atoi(argv[2]);
 	info->time_to_eat = philo_atoi(argv[3]);

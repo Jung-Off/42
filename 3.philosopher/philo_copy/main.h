@@ -24,6 +24,16 @@
 # define LIVE 0
 # define DEATH 1
 
+
+# define LEFT 1
+# define RIGHT 2
+# define EAT 3
+# define SLEEP 4
+# define THINK 5
+
+# define FALSE 0
+# define TRUE 1
+
 #define RED 	"\x1b[31m"
 #define GREEN 	"\x1b[32m"
 #define YELLOW 	"\x1b[33m"
@@ -41,12 +51,15 @@ typedef struct s_info
 	int		num_of_eat;
 
 	int		death;
+
+	pthread_mutex_t message;
 	pthread_mutex_t	*fork;
 }				t_info;
 
 typedef struct s_philo
 {
 	int				idx;
+	unsigned long	last_meal;
 	pthread_t		thread;
 	pthread_t		monitor;
 	pthread_mutex_t *fork;
@@ -54,7 +67,7 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	//죽었다 라는 것 표시 할것
-	unsigned long	start;
+	unsigned long	start_behave;
 
 	t_info			*info;
 }				t_philo;
