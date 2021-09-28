@@ -18,6 +18,10 @@ CFLAGS := -Wall -Wextra -Werror -g3 -fsanitize=address
 SRCS := main.c \
 		init.c \
 		utils.c \
+		print.c \
+		time.c \
+		act.c \
+		check.c
 
 OBJS := $(SRCS:.c=.o)
 

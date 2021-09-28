@@ -45,13 +45,13 @@ int init_mutex(t_info *info, t_philo *philo)
 		pthread_mutex_init(&(forks[i]), NULL);
 		++i;
 	}
-	philo->fork = forks;
-//	pthread_mutex_init(&(philo->info->message), NULL);
+	info->fork = forks;
+	pthread_mutex_init(&(philo->info->message), NULL);
+//	pthread_mutex_init(philo->info->eating, NULL);
 	put_the_fork(philo, info, forks);
 	return (NEX);
 }
 
-//1)
 int	init_thread(t_info *info, t_philo **philo)
 {
 	int				i;
@@ -68,6 +68,8 @@ int	init_thread(t_info *info, t_philo **philo)
 	{
 		(*philo)[i].idx = i + 1;
 		(*philo)[i].info = info;
+		(*philo)[i].num_of_eat = info->num_of_eat;
+		(*philo)[i].done_eating = 0;
 		++i;
 	}
 	return (NEX);
@@ -93,7 +95,7 @@ int		init_info(int ac, char *argv[], t_info **info)
 	if (ac == 6)
 		(*info)->num_of_eat = philo_atoi(argv[ac - 1]);
 	else
-		(*info)->num_of_eat = 0;
+		(*info)->num_of_eat = -1;
 	(*info)->death = LIVE;
 	return (NEX);
 }

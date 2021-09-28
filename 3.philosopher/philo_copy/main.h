@@ -31,9 +31,6 @@
 # define SLEEP 4
 # define THINK 5
 
-# define FALSE 0
-# define TRUE 1
-
 # define EX 1
 # define NEX 0
 
@@ -56,22 +53,30 @@ typedef struct s_info
 
 	int		death;
 
+	//
+	pthread_mutex_t eating;
 	pthread_mutex_t message;
+	//이게 어디에 들어가야 할까 싶다.
+
 	pthread_mutex_t	*fork;
 }				t_info;
 
 typedef struct s_philo
 {
 	int				idx;
-	unsigned long	last_meal;
+	
 	pthread_t		thread;
 	pthread_t		monitor;
-	pthread_mutex_t *fork;
+	// pthread_mutex_t *fork;
 	
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
-	//죽었다 라는 것 표시 할것
-	unsigned long	start_behave;
+
+	unsigned long	time_to_0;
+	unsigned long	last_meal;
+	
+	int				num_of_eat;
+	int				done_eating;
 
 	t_info			*info;
 }				t_philo;
@@ -87,6 +92,23 @@ void	put_the_fork(t_philo *philo, t_info *info, pthread_mutex_t *forks);
 int init_mutex(t_info *info, t_philo *philo);
 int init_thread(t_info *info, t_philo **philo);
 int init_info(int ac, char *argv[], t_info **info);
+
+void	ft_stop(unsigned long time_to_usleep);
+unsigned long	get_time_stamp(t_philo *philo);
+unsigned long	get_time(void);
+
+void	error_print(int err_num);
+int		print_action_message(t_philo *philo, int act);
+
+int check_argc(int ac);
+void check_except(t_philo *philo);
+
+void philo_update (t_philo *philo);
+int philo_eat(t_philo *philo);
+int	philo_think(t_philo *philo);
+int	philo_sleep(t_philo *philo);
+
+
 
 
 #endif
