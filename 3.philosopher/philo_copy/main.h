@@ -34,6 +34,10 @@
 # define FALSE 0
 # define TRUE 1
 
+# define EX 1
+# define NEX 0
+
+
 #define RED 	"\x1b[31m"
 #define GREEN 	"\x1b[32m"
 #define YELLOW 	"\x1b[33m"
@@ -72,26 +76,17 @@ typedef struct s_philo
 	t_info			*info;
 }				t_philo;
 
+void	error_print(int err_num);
 
 int	philo_isdigit(int c);
 int	philo_atoi(char *str);
 int philo_strlen(char *str);
+int valid_input(char *av[]);
 
-t_info *make_info(void);
-
-
-void init_mutex(t_info info, t_philo *philo);
-
-
-void init_thread(t_info *info, t_philo **philo);
-void	init_info(int ac, char *argv[], t_info **info);
-
-void valid_input(char *av[]);
-t_philo	*make_philo(t_info info);
-pthread_mutex_t	*make_forks(t_info info);
-
-void	put_the_fork(t_philo *philo, t_info info, pthread_mutex_t *forks);
+void	put_the_fork(t_philo *philo, t_info *info, pthread_mutex_t *forks);
+int init_mutex(t_info *info, t_philo *philo);
+int init_thread(t_info *info, t_philo **philo);
+int init_info(int ac, char *argv[], t_info **info);
 
 
-void	error_print(int err_num);
 #endif

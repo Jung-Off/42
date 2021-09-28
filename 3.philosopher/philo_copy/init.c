@@ -12,43 +12,80 @@
 
 #include "main.h"
 
-void init_mutex(t_info info, t_philo *philo)
+void	put_the_fork(t_philo *philo, t_info *info, pthread_mutex_t *forks)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->num_to_philo)
+	{	
+		philo[i].l_fork = &(forks[i]);
+		philo[i].r_fork = &(forks[(i + 1) % info->num_to_philo]);
+		++i;
+	}
+}
+
+int init_mutex(t_info *info, t_philo *philo)
 {
 	int i;
 	pthread_mutex_t *forks;
 	
 	i = 0;
-	forks = make_forks(info);
-	while (i < info.num_to_philo)
+	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* info->num_to_philo);
+	if (forks == NULL)
+	{
+		error_print(4);
+		free(info);
+		free(philo);
+		return (EX);
+	}	
+	while (i < info->num_to_philo)
 	{
 		pthread_mutex_init(&(forks[i]), NULL);
 		++i;
 	}
 	philo->fork = forks;
-	pthread_mutex_init(&(philo->info->message), NULL);
-
+//	pthread_mutex_init(&(philo->info->message), NULL);
 	put_the_fork(philo, info, forks);
+	return (NEX);
 }
 
 //1)
-void	init_thread(t_info *info, t_philo **philo)
+int	init_thread(t_info *info, t_philo **philo)
 {
 	int				i;
 
 	i = 0;
-	*philo = make_philo(*info);
+	*philo = (t_philo *)malloc(sizeof(t_philo) * info->num_to_philo);
+	if (*philo == NULL)
+	{
+		free(info);
+		error_print(4);
+		return (EX);
+	}
 	while (i < info->num_to_philo)
 	{
 		(*philo)[i].idx = i + 1;
 		(*philo)[i].info = info;
 		++i;
 	}
+	return (NEX);
 }
 
-void	init_info(int ac, char *argv[], t_info **info)
+int		init_info(int ac, char *argv[], t_info **info)
 {
-	valid_input(argv);
-	*info = make_info();
+	if (valid_input(argv))
+	{
+		error_print(2);
+		return (EX);
+	}
+	*info = (t_info *)malloc(sizeof(t_info));
+	if (*info == NULL)
+	{
+		error_print(4);
+		return (EX);
+	}
 	(*info)->num_to_philo = philo_atoi(argv[1]);
 	(*info)->time_to_die = philo_atoi(argv[2]);
 	(*info)->time_to_eat = philo_atoi(argv[3]);
@@ -58,4 +95,5 @@ void	init_info(int ac, char *argv[], t_info **info)
 	else
 		(*info)->num_of_eat = 0;
 	(*info)->death = LIVE;
+	return (NEX);
 }

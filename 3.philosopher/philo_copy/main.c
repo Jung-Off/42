@@ -202,17 +202,27 @@ void pthread_start(t_info info, t_philo *philo)
 	}
 }
 
+int check_argc(int ac)
+{
+	if(ac != 5 && ac != 6)
+	{
+		error_print(1);
+		return (EX);
+	}
+	return (NEX);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_philo	*philo;
 	t_info	*info;
 
-	philo = NULL;
-	if (argc != 5 && argc != 6)
-		error_print(1);
- 	init_info(argc, argv, &info);
-	init_thread(info, &philo);
-	init_mutex(*info, philo);
+	if (check_argc(argc))
+		return (0);
+ 	if (init_info(argc, argv, &info) || init_thread(info, &philo))
+		return (0);
+	if (init_mutex(info, philo))
+		return (0);
 	pthread_start(*info, philo);
 
 	//free fork philo//

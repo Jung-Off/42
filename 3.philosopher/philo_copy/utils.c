@@ -15,9 +15,9 @@
 int	philo_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
-		return (0);
+		return (NEX);
 	else
-		return (1);
+		return (EX);
 }
 
 int	philo_atoi(char *str)
@@ -50,4 +50,31 @@ int philo_strlen(char *str)
 	while(str[i] != '\0')
 		++i;
 	return (i);
+}
+
+int valid_input(char *av[])
+{
+	int i;
+	int j;
+	int len;
+
+	i = 1;
+	while(av[i] != NULL)
+	{
+		j = 0;
+		len = philo_strlen(av[i]);
+		while(j < len)
+		{
+			if(len != 1)
+			{	
+				if ((j == 0) && (av[i][j] == '-' || av[i][j] == '+'))
+					j++;
+			}
+			if (philo_isdigit(av[i][j]))
+				return (EX);
+			++j;
+		}
+		++i;
+	}
+	return (NEX);
 }

@@ -17,7 +17,6 @@ CFLAGS := -Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRCS := main.c \
 		init.c \
-		init_utils.c \
 		utils.c \
 
 OBJS := $(SRCS:.c=.o)
