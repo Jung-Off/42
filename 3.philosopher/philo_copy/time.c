@@ -17,8 +17,8 @@ void	ft_stop(unsigned long time_to_usleep)
 	unsigned long	start;
 
 	start = get_time();
-	while (get_time() < start + time_to_usleep);
-		//usleep(100); //이것의 차이는 어떻게 될까
+	while (get_time() < start + time_to_usleep)
+		usleep(100); //이것의 차이는 어떻게 될까
 }
 
 unsigned long	get_time(void)

@@ -39,7 +39,6 @@ void print_fin_message(t_philo *philo)
 {
 	if (philo->info->death == DEATH)
 		return ;
-		
 	philo->done_eating = 1;
 	//usleep(100);
 	printf(GREEN"[%lums] philo[%d] is done eating!\n\033[0m"RESET,
@@ -50,7 +49,6 @@ int print_action_message(t_philo *philo, int act)
 {
 	if (philo->info->death == DEATH)
 		return (EX);
-	usleep(100);
 	pthread_mutex_lock(&(philo->info->message));
 	if (act == LEFT)
 		printf("[%lums] philo[%d] has taken a fork in left hand\n",

@@ -33,7 +33,6 @@ void *start (void *input_philo)
 			return (NULL);
 		if (philo_think(philo))
 			return (NULL);
-	//printf("\n\n\nstart=====%d====start\n\n\n", philo->num_of_eat);
 	}
 	return (NULL);
 }
@@ -43,7 +42,7 @@ void *check (void *input_philo)
 	t_philo *philo;
 
 	philo = input_philo;
-	if (philo->info->death == LIVE)
+	while (philo->info->death == LIVE)
 	{
 		pthread_mutex_lock(&philo->eating);
 		if (check_death(philo))
@@ -59,7 +58,7 @@ void *check (void *input_philo)
 			return (NULL);
 		}
 		pthread_mutex_unlock(&philo->eating);
-		//usleep(100);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -71,13 +70,11 @@ void pthread_start(t_info *info, t_philo *philo)
 	i = 0;
 	while (i < info->num_to_philo)
 	{
-		philo[i].time_to_0 = get_time();
-		philo[i].last_meal = philo[i].time_to_0;
 		pthread_create(&(philo[i].thread), NULL, &start, &philo[i]);
-		printf("\n\n\nmain=====%d====main\n\n\n", philo->num_of_eat);
+		//printf("\n\n\nmain=====%d====main\n\n\n", philo->num_of_eat);
 		pthread_create(&(philo[i].monitor), NULL, &check, &philo[i]);
 		++i;
-	// 이것의 차이 2
+		//usleep(100);
 	}
 	i = 0;
 	while (i < info->num_to_philo)
@@ -103,10 +100,3 @@ int	main(int argc, char *argv[])
 
 	//free fork philo//
 }
-
-
-//중간에 오류가 났을때
-//뮤텍스 destroy, malloc free
-
-//마지막에
-//뮤텍스 destroy, malloc free

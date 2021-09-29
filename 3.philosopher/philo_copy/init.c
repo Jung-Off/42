@@ -71,6 +71,8 @@ int	init_thread(t_info *info, t_philo **philo)
 		(*philo)[i].info = info;
 		(*philo)[i].num_of_eat = info->num_of_eat;
 		(*philo)[i].done_eating = 0;
+		(*philo)[i].time_to_0 = get_time();
+		(*philo)[i].last_meal = (*philo)[i].time_to_0;
 		++i;
 	}
 	return (NEX);

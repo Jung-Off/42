@@ -39,10 +39,7 @@ int check_death(t_philo *philo)
 
 int check_fin(t_philo *philo)
 {
-	printf("\n\n\ncheck======%d====check\n\n\n", philo->num_of_eat);
 	if (philo->num_of_eat == FIN)
 		return (EX);
-	printf("\n\n\ncheck======%d====check\n\n\n", philo->num_of_eat);
-
-	return (NEX);	
+	return (NEX);
 }
