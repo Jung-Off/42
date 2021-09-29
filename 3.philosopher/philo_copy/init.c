@@ -98,8 +98,9 @@ int	init_info(int ac, char *argv[], t_info **info)
 		(*info)->num_of_eat = philo_atoi(argv[ac - 1]);
 	else
 		(*info)->num_of_eat = -1;
-	if (!((*info)->num_to_philo && (*info)->time_to_die && (*info)->time_to_eat &&
-		(*info)->time_to_sleep && (*info)->num_of_eat))
+	if (!((*info)->num_to_philo && (*info)->time_to_die
+			&& (*info)->time_to_eat && (*info)->time_to_sleep
+			&& (*info)->num_of_eat))
 		return (EX);
 	(*info)->death = LIVE;
 	return (NEX);

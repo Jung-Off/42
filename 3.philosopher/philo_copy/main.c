@@ -83,9 +83,9 @@ void	pthread_start(t_info *info, t_philo *philo)
 	}
 }
 
-void pthread_end(t_info *info, t_philo *philo)
+void	pthread_end(t_info *info, t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	pthread_mutex_destroy(&(info->message));
