@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:53:50 by jji               #+#    #+#             */
-/*   Updated: 2021/09/28 16:53:51 by jji              ###   ########.fr       */
+/*   Updated: 2021/09/29 17:26:50 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_stop(unsigned long time_to_usleep)
 
 	start = get_time();
 	while (get_time() < start + time_to_usleep)
-		usleep(100); //이것의 차이는 어떻게 될까
+		usleep(100);
 }
 
 unsigned long	get_time(void)

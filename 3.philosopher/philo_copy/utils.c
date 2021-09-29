@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 14:38:27 by jji               #+#    #+#             */
-/*   Updated: 2021/09/16 14:38:28 by jji              ###   ########.fr       */
+/*   Updated: 2021/09/29 17:28:02 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,30 @@ int	philo_atoi(char *str)
 	return (num);
 }
 
-int philo_strlen(char *str)
+int	philo_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i] != '\0')
+	while (str[i] != '\0')
 		++i;
 	return (i);
 }
 
-int valid_input(char *av[])
+int	valid_input(char *av[])
 {
-	int i;
-	int j;
-	int len;
+	int	i;
+	int	j;
+	int	len;
 
 	i = 1;
-	while(av[i] != NULL)
+	while (av[i] != NULL)
 	{
 		j = 0;
 		len = philo_strlen(av[i]);
-		while(j < len)
+		while (j < len)
 		{
-			if(len != 1)
+			if (len != 1)
 			{	
 				if ((j == 0) && (av[i][j] == '-' || av[i][j] == '+'))
 					j++;

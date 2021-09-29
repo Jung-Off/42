@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 14:40:59 by jji               #+#    #+#             */
-/*   Updated: 2021/09/16 14:41:00 by jji              ###   ########.fr       */
+/*   Updated: 2021/09/29 17:17:55 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	put_the_fork(t_philo *philo, t_info *info, pthread_mutex_t *forks)
 	}
 }
 
-int init_mutex(t_info *info, t_philo *philo)
+int	init_mutex(t_info *info, t_philo *philo)
 {
-	int i;
-	pthread_mutex_t *forks;
-	
+	int				i;
+	pthread_mutex_t	*forks;
+
 	i = 0;
 	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* info->num_to_philo);
@@ -48,7 +48,6 @@ int init_mutex(t_info *info, t_philo *philo)
 	}
 	info->fork = forks;
 	pthread_mutex_init(&(info->message), NULL);
-	//pthread_mutex_init(&(info->eating), NULL);
 	put_the_fork(philo, info, forks);
 	return (NEX);
 }
@@ -78,7 +77,7 @@ int	init_thread(t_info *info, t_philo **philo)
 	return (NEX);
 }
 
-int		init_info(int ac, char *argv[], t_info **info)
+int	init_info(int ac, char *argv[], t_info **info)
 {
 	if (valid_input(argv))
 	{

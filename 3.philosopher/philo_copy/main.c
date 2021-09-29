@@ -6,15 +6,15 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:17:58 by jji               #+#    #+#             */
-/*   Updated: 2021/09/11 19:25:36 by jji              ###   ########.fr       */
+/*   Updated: 2021/09/29 17:19:48 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void *start (void *input_philo)
+void	*start(void *input_philo)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = input_philo;
 	if (philo->info->num_to_philo == 1)
@@ -37,9 +37,9 @@ void *start (void *input_philo)
 	return (NULL);
 }
 
-void *check (void *input_philo)
+void	*check(void *input_philo)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = input_philo;
 	while (philo->info->death == LIVE)
@@ -63,18 +63,16 @@ void *check (void *input_philo)
 	return (NULL);
 }
 
-void pthread_start(t_info *info, t_philo *philo)
+void	pthread_start(t_info *info, t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < info->num_to_philo)
 	{
 		pthread_create(&(philo[i].thread), NULL, &start, &philo[i]);
-		//printf("\n\n\nmain=====%d====main\n\n\n", philo->num_of_eat);
 		pthread_create(&(philo[i].monitor), NULL, &check, &philo[i]);
 		++i;
-		//usleep(100);
 	}
 	i = 0;
 	while (i < info->num_to_philo)
@@ -92,11 +90,10 @@ int	main(int argc, char *argv[])
 
 	if (check_argc(argc))
 		return (0);
- 	if (init_info(argc, argv, &info) || init_thread(info, &philo))
+	if (init_info(argc, argv, &info) || init_thread(info, &philo))
 		return (0);
 	if (init_mutex(info, philo))
 		return (0);
 	pthread_start(info, philo);
-
 	//free fork philo//
 }

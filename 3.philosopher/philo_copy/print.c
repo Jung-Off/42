@@ -6,7 +6,7 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:54:42 by jji               #+#    #+#             */
-/*   Updated: 2021/09/28 16:54:43 by jji              ###   ########.fr       */
+/*   Updated: 2021/09/29 17:28:27 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,27 @@ void	error_print(int err_num)
 		printf("error malloc assignment\n");
 }
 
-void print_die_message(t_philo *philo)
+void	print_die_message(t_philo *philo)
 {
 	if (philo->info->death == DEATH)
 		return ;
-
 	philo->info->death = DEATH;
 	//usleep(100);
 	printf(RED"[%lums] philo[%d] died"RESET,
-			get_time_stamp(philo), philo->idx);
+		get_time_stamp(philo), philo->idx);
 }
 
-void print_fin_message(t_philo *philo)
+void	print_fin_message(t_philo *philo)
 {
 	if (philo->info->death == DEATH)
 		return ;
 	philo->done_eating = 1;
 	//usleep(100);
 	printf(GREEN"[%lums] philo[%d] is done eating!\n\033[0m"RESET,
-			get_time_stamp(philo), philo->idx);
+		get_time_stamp(philo), philo->idx);
 }
 
-int print_action_message(t_philo *philo, int act)
+int	print_action_message(t_philo *philo, int act)
 {
 	if (philo->info->death == DEATH)
 		return (EX);
@@ -66,6 +65,5 @@ int print_action_message(t_philo *philo, int act)
 		printf(YELLOW"[%lums] philo[%d] thinks\n"RESET,
 			get_time_stamp(philo), philo->idx);
 	pthread_mutex_unlock(&(philo->info->message));
-
 	return (NEX);
 }
