@@ -32,13 +32,19 @@ int	philo_atoi(char *str)
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
+		{
 			error_print(3);
+			return (0);
+		}
 		str++;
 	}
 	while (*str)
 		num = num * 10 + (*(str++) - '0');
 	if (num > MAX_INT || num < MIN_INT)
+	{
 		error_print(3);
+		return (0);
+	}
 	return (num);
 }
 

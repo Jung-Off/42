@@ -30,8 +30,10 @@ void	print_die_message(t_philo *philo)
 		return ;
 	philo->info->death = DEATH;
 	//usleep(100);
+	pthread_mutex_lock(&(philo->info->message));
 	printf(RED"[%lums] philo[%d] died"RESET,
 		get_time_stamp(philo), philo->idx);
+	pthread_mutex_unlock(&(philo->info->message));
 }
 
 void	print_fin_message(t_philo *philo)
@@ -40,8 +42,10 @@ void	print_fin_message(t_philo *philo)
 		return ;
 	philo->done_eating = 1;
 	//usleep(100);
+	pthread_mutex_lock(&(philo->info->message));
 	printf(GREEN"[%lums] philo[%d] is done eating!\n\033[0m"RESET,
 		get_time_stamp(philo), philo->idx);
+	pthread_mutex_unlock(&(philo->info->message));
 }
 
 int	print_action_message(t_philo *philo, int act)

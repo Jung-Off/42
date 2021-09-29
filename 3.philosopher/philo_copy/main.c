@@ -83,6 +83,24 @@ void	pthread_start(t_info *info, t_philo *philo)
 	}
 }
 
+void pthread_end(t_info *info, t_philo *philo)
+{
+	int i;
+
+	i = 0;
+	pthread_mutex_destroy(&(info->message));
+	while (i < info->num_to_philo)
+	{
+		pthread_mutex_destroy(&(philo[i].eating));
+		pthread_mutex_destroy(&(info->fork[i]));
+		philo[i].info = NULL;
+		++i;
+	}
+	free(info->fork);
+	free(info);
+	free(philo);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_philo	*philo;
@@ -95,5 +113,5 @@ int	main(int argc, char *argv[])
 	if (init_mutex(info, philo))
 		return (0);
 	pthread_start(info, philo);
-	//free fork philo//
+	pthread_end(info, philo);
 }
