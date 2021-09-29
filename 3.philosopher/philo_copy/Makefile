@@ -26,7 +26,7 @@ SRCS := main.c \
 OBJS := $(SRCS:.c=.o)
 
 INCLUDE := -I.
-.PHONY : all clean fclean re norm
+.PHONY:		all clean fclean re norm test0 test1 test2 test3 test4 test5 test6
 
 $(NAME) : $(OBJS)
 		@$(CC) $(CFLAGS) $(INCLUDE) -o $@ $^
@@ -45,6 +45,35 @@ fclean : clean
 		@printf "\x1b[31;101mFCLEAN\x1b[0m\n"
 		
 re : fclean all
+
+test0:		re
+			@./$(NAME) 4 410 200 200
+			# "no one should die"
+
+test1:		re
+			@./$(NAME) 5 800 200 200
+			# "no one should die"
+
+test2:		re
+			@./$(NAME) 5 800 200 200
+			# "no one should die"
+
+test3:		re
+			@./$(NAME) 5 800 200 200 7
+			# "no one should die"
+
+test4:		re
+			@./$(NAME) 4 310 200 100
+			# "a philosopher should die"
+
+test5:		re
+			@./$(NAME) 1 800 200 200
+			# "a philosopher should die"
+
+test6:	re
+			@./$(NAME) 3 4100 2000 2000
+			# "check if philo die right time"
+
 
 norm :
 		@norminette .

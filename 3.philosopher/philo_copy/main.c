@@ -33,29 +33,57 @@ void *start (void *input_philo)
 			return (NULL);
 		if (philo_think(philo))
 			return (NULL);
+	//printf("\n\n\nstart=====%d====start\n\n\n", philo->num_of_eat);
 	}
 	return (NULL);
 }
 
-void pthread_start(t_info info, t_philo *philo)
+void *check (void *input_philo)
+{
+	t_philo *philo;
+
+	philo = input_philo;
+	if (philo->info->death == LIVE)
+	{
+		pthread_mutex_lock(&philo->eating);
+		if (check_death(philo))
+		{
+			print_die_message(philo);
+			pthread_mutex_unlock(&philo->eating);
+			return (NULL);
+		}
+		if (check_fin(philo))
+		{
+			print_fin_message(philo);
+			pthread_mutex_unlock(&philo->eating);
+			return (NULL);
+		}
+		pthread_mutex_unlock(&philo->eating);
+		//usleep(100);
+	}
+	return (NULL);
+}
+
+void pthread_start(t_info *info, t_philo *philo)
 {
 	int i;
 
 	i = 0;
-	while (i < info.num_to_philo)
+	while (i < info->num_to_philo)
 	{
 		philo[i].time_to_0 = get_time();
 		philo[i].last_meal = philo[i].time_to_0;
 		pthread_create(&(philo[i].thread), NULL, &start, &philo[i]);
-		//pthread_create(&(philo[i].monitor), NULL, &check, &philo[i]);
+		printf("\n\n\nmain=====%d====main\n\n\n", philo->num_of_eat);
+		pthread_create(&(philo[i].monitor), NULL, &check, &philo[i]);
 		++i;
-		usleep(100);// 이것의 차이 2
+	// 이것의 차이 2
 	}
 	i = 0;
-	while (i < info.num_to_philo)
+	while (i < info->num_to_philo)
 	{
 		pthread_join(philo[i].thread, NULL);
-		//pthread_join(philo[i].monitor, NULL);
+		pthread_join(philo[i].monitor, NULL);
 		++i;
 	}
 }
@@ -71,7 +99,7 @@ int	main(int argc, char *argv[])
 		return (0);
 	if (init_mutex(info, philo))
 		return (0);
-	pthread_start(*info, philo);
+	pthread_start(info, philo);
 
 	//free fork philo//
 }

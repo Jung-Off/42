@@ -43,11 +43,12 @@ int init_mutex(t_info *info, t_philo *philo)
 	while (i < info->num_to_philo)
 	{
 		pthread_mutex_init(&(forks[i]), NULL);
+		pthread_mutex_init(&(philo[i].eating), NULL);
 		++i;
 	}
 	info->fork = forks;
-	pthread_mutex_init(&(philo->info->message), NULL);
-//	pthread_mutex_init(philo->info->eating, NULL);
+	pthread_mutex_init(&(info->message), NULL);
+	//pthread_mutex_init(&(info->eating), NULL);
 	put_the_fork(philo, info, forks);
 	return (NEX);
 }

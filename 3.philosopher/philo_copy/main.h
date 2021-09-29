@@ -24,7 +24,6 @@
 # define LIVE 0
 # define DEATH 1
 
-
 # define LEFT 1
 # define RIGHT 2
 # define EAT 3
@@ -34,6 +33,7 @@
 # define EX 1
 # define NEX 0
 
+# define FIN 0
 
 #define RED 	"\x1b[31m"
 #define GREEN 	"\x1b[32m"
@@ -54,10 +54,10 @@ typedef struct s_info
 	int		death;
 
 	//
-	pthread_mutex_t eating;
+	
 	pthread_mutex_t message;
 	//이게 어디에 들어가야 할까 싶다.
-
+	//pthread_mutex_t eating;
 	pthread_mutex_t	*fork;
 }				t_info;
 
@@ -68,10 +68,11 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_t		monitor;
 	// pthread_mutex_t *fork;
-	
+
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 
+	pthread_mutex_t eating;
 	unsigned long	time_to_0;
 	unsigned long	last_meal;
 	
@@ -98,10 +99,15 @@ unsigned long	get_time_stamp(t_philo *philo);
 unsigned long	get_time(void);
 
 void	error_print(int err_num);
+void print_die_message(t_philo *philo);
+void print_fin_message(t_philo *philo);
 int		print_action_message(t_philo *philo, int act);
 
 int check_argc(int ac);
 void check_except(t_philo *philo);
+int check_fin(t_philo *philo);
+int check_death(t_philo *philo);
+
 
 void philo_update (t_philo *philo);
 int philo_eat(t_philo *philo);

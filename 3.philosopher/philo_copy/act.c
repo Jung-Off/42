@@ -14,10 +14,11 @@
 
 void philo_update (t_philo *philo)
 {
-    pthread_mutex_lock(&(philo->info->eating));
+    pthread_mutex_lock(&(philo->eating));
     philo->last_meal = get_time_stamp(philo);
     philo->num_of_eat--;
-    pthread_mutex_unlock(&(philo->info->eating));
+    printf("\n\n\nminus=====%d=====\n\n\n", philo->num_of_eat);
+    pthread_mutex_unlock(&(philo->eating));
 
 }
 
@@ -41,11 +42,15 @@ int philo_eat(t_philo *philo)
     if (print_action_message(philo, RIGHT))
         return (EX);
     philo_update(philo);
+
+printf("\n\n\neat=====%d====eat\n\n\n", philo->num_of_eat);
+
     if (print_action_message(philo, EAT))
         return (EX);
     ft_stop(philo->info->time_to_eat);
     pthread_mutex_unlock(philo->l_fork);
     pthread_mutex_unlock(philo->r_fork);
+    //usleep(100);
     return (NEX);
 }
 

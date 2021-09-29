@@ -29,3 +29,20 @@ void check_except(t_philo *philo)
 	philo->info->death = DEATH;
 	printf(RED"[%lums] philo [%d] died\n"RED, get_time_stamp(philo), philo->idx);
 }
+
+int check_death(t_philo *philo)
+{
+	if (get_time_stamp(philo) >= philo->last_meal + philo->info->time_to_die)
+		return (EX);
+	return (NEX);	
+}
+
+int check_fin(t_philo *philo)
+{
+	printf("\n\n\ncheck======%d====check\n\n\n", philo->num_of_eat);
+	if (philo->num_of_eat == FIN)
+		return (EX);
+	printf("\n\n\ncheck======%d====check\n\n\n", philo->num_of_eat);
+
+	return (NEX);	
+}
