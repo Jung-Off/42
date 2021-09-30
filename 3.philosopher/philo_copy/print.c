@@ -29,18 +29,23 @@ void	print_die_message(t_philo *philo)
 	if (philo->info->death == DEATH)
 		return ;
 	philo->info->death = DEATH;
-	pthread_mutex_lock(&(philo->info->message));
-	printf(RED"[%lums] philo[%d] died"RESET,
+	//pthread_mutex_lock(&(philo->info->message));
+	// usleep(100);
+	//lock을 걸어주면 (언락이 안되는 느낌)무한루프 이기 때문에
+	//death 부분이 변화하는 부분에는 print에 lock을 걸어주지 않는다
+	//동시중에 가장 늦게 출력이 되어야 하니까 sleep(30);정도
+	printf(RED"[%lums] philo[%d] died\n"RESET,
 		get_time_stamp(philo), philo->idx);
-	pthread_mutex_unlock(&(philo->info->message));
+	//pthread_mutex_unlock(&(philo->info->message));
 }
 
 void	print_fin_message(t_philo *philo)
 {
-	if (philo->info->death == DEATH)
-		return ;
+	//if (philo->info->death == DEATH)
+	//	return ;
 	philo->done_eating = 1;
 	pthread_mutex_lock(&(philo->info->message));
+	//usleep(100);
 	printf(GREEN"[%lums] philo[%d] is done eating!\n\033[0m"RESET,
 		get_time_stamp(philo), philo->idx);
 	pthread_mutex_unlock(&(philo->info->message));
@@ -51,19 +56,19 @@ int	print_action_message(t_philo *philo, int act)
 	if (philo->info->death == DEATH)
 		return (EX);
 	pthread_mutex_lock(&(philo->info->message));
-	if (act == LEFT)
+	if (act == LEFT && philo->info->death != DEATH)
 		printf("[%lums] philo[%d] has taken a fork in left hand\n",
 			get_time_stamp(philo), philo->idx);
-	else if (act == RIGHT)
+	else if (act == RIGHT && philo->info->death != DEATH)
 		printf("[%lums] philo[%d] has taken a fork in right hand\n",
 			get_time_stamp(philo), philo->idx);
-	else if (act == EAT)
+	else if (act == EAT && philo->info->death != DEATH)
 		printf(CYAN"[%lums] philo[%d] is eating\n"RESET,
 			get_time_stamp(philo), philo->idx);
-	else if (act == SLEEP)
+	else if (act == SLEEP && philo->info->death != DEATH)
 		printf(MAGENTA"[%lums] philo[%d] is sleeping\n"RESET,
 			get_time_stamp(philo), philo->idx);
-	else if (act == THINK)
+	else if (act == THINK && philo->info->death != DEATH)
 		printf(YELLOW"[%lums] philo[%d] thinks\n"RESET,
 			get_time_stamp(philo), philo->idx);
 	pthread_mutex_unlock(&(philo->info->message));

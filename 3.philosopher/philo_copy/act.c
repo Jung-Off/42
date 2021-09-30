@@ -14,34 +14,34 @@
 
 void	philo_update(t_philo *philo)
 {
-	pthread_mutex_lock(&(philo->eating));
+	//pthread_mutex_lock(&(philo->eating));
 	philo->last_meal = get_time_stamp(philo);
 	philo->num_of_eat--;
-	pthread_mutex_unlock(&(philo->eating));
+	//pthread_mutex_unlock(&(philo->eating));
 }
 
 int	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->l_fork);
-	if (philo->info->death)
+	if (print_action_message(philo, LEFT))
 	{
 		pthread_mutex_unlock(philo->l_fork);
 		return (EX);
 	}
-	if (print_action_message(philo, LEFT))
-		return (EX);
 	pthread_mutex_lock(philo->r_fork);
-	if (philo->info->death)
+	if (print_action_message(philo, RIGHT))
+	{
+		pthread_mutex_unlock(philo->l_fork);
+	 	pthread_mutex_unlock(philo->r_fork);
+		return (EX);
+	}
+	philo_update(philo);
+	if (print_action_message(philo, EAT))
 	{
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
 		return (EX);
 	}
-	if (print_action_message(philo, RIGHT))
-		return (EX);
-	philo_update(philo);
-	if (print_action_message(philo, EAT))
-		return (EX);
 	ft_stop(philo->info->time_to_eat);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
