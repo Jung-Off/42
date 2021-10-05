@@ -14,10 +14,10 @@
 
 void	philo_update(t_philo *philo)
 {
-	//pthread_mutex_lock(&(philo->eating));
+	pthread_mutex_lock(&(philo->eating));
 	philo->last_meal = get_time_stamp(philo);
 	philo->num_of_eat--;
-	//pthread_mutex_unlock(&(philo->eating));
+	pthread_mutex_unlock(&(philo->eating));
 }
 
 int	philo_eat(t_philo *philo)
@@ -32,7 +32,7 @@ int	philo_eat(t_philo *philo)
 	if (print_action_message(philo, RIGHT))
 	{
 		pthread_mutex_unlock(philo->l_fork);
-	 	pthread_mutex_unlock(philo->r_fork);
+		pthread_mutex_unlock(philo->r_fork);
 		return (EX);
 	}
 	philo_update(philo);

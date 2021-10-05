@@ -6,172 +6,112 @@
 /*   By: jji <jji@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:17:58 by jji               #+#    #+#             */
-/*   Updated: 2021/09/09 19:26:48 by jji              ###   ########.fr       */
+/*   Updated: 2021/09/29 17:19:48 by jji              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void error_print(int err_num)
+void	*start(void *input_philo)
 {
-	if(err_num == 1)
-		printf("error argc count\n");
-	else if(err_num == 2)
-		printf("error input char\n");
-	else if(err_num == 3)
-		printf("error input outofrange\n");
-	exit(1);
-}
+	t_philo	*philo;
 
-int	philo_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
-}
-
-int		philo_isspace(char ch)
-{
-	if (ch == ' ')
-		return (1);
-	if (ch == '\f')
-		return (1);
-	if (ch == '\n')
-		return (1);
-	if (ch == '\r')
-		return (1);
-	if (ch == '\t')
-		return (1);
-	if (ch == '\v')
-		return (1);
-	return (0);
-}
-
-int philo_atoi(char *str)
-{
-	int			isnum;
-	int			minus;
-	long long	num;
-
-	isnum = 0;
-	minus = 1;
-	num = 0;
-	while (philo_isspace(*str))
-		str++;
-	if (*str == '-' || *str == '+')
+	philo = input_philo;
+	if (philo->info->num_to_philo == 1)
+		check_except(philo);
+	if (philo->idx % 2 == 1)
+		ft_stop(philo->info->time_to_eat);
+	while (philo->info->death == LIVE)
 	{
-		if (*str == '-')
-			minus *= -1;
-		str++;
+		if (philo_eat(philo))
+			return (NULL);
+		if (philo->info->death || philo->done_eating)
+			return (NULL);
+		if (philo_sleep(philo))
+			return (NULL);
+		if (philo->info->death || philo->done_eating)
+			return (NULL);
+		if (philo_think(philo))
+			return (NULL);
 	}
-	while (*str)
+	return (NULL);
+}
+
+void	*check(void *input_philo)
+{
+	t_philo	*philo;
+
+	philo = input_philo;
+	while (philo->info->death == LIVE)
 	{
-		if(!philo_isdigit(*str))
-			error_print(2);
-		num = num * 10 + (*(str++) - '0');
-		isnum = 1;
+		pthread_mutex_lock(&philo->eating);
+		if (check_death(philo))
+		{
+			print_die_message(philo);
+			pthread_mutex_unlock(&philo->eating);
+			return (NULL);
+		}
+		if (check_fin(philo))
+		{
+			print_fin_message(philo);
+			pthread_mutex_unlock(&philo->eating);
+			return (NULL);
+		}
+		pthread_mutex_unlock(&philo->eating);
+		usleep(100);
 	}
-	num *= minus;
-	if (isnum == 0)
-		error_print(2);
-	else if(num > 2147483637 || num < -2147483648)
-		error_print(3);
-	return (num);
+	return (NULL);
 }
 
-t_data *data_init(int ac, char *av[])
+void	pthread_start(t_info *info, t_philo *philo)
 {
-	t_data *data;
+	int	i;
 
-	//숫자로 만 입력받기
-	if(!(data = (t_data *)malloc(sizeof(t_data))))
-		return (0);
-	data->num_of_philo = philo_atoi(av[1]);
-	data->time_to_die = philo_atoi(av[2]);
-	data->time_to_eat = philo_atoi(av[3]);
-	data->time_to_sleep = philo_atoi(av[4]);
-	data->eat_count = philo_atoi(av[ac - 1]);
-	return (data);
-}
-	
-t_status *status_init(int ac, char *av[])
-{
-	t_data *data;
-	pthread_mutex_t *forks;
-	t_status *status;
-	
-	data = data_init(ac, av);
-	if(!(status = (t_status *)malloc(sizeof(t_status) * data->num_of_philo)))
-		return 0;
-	if(!(forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data->num_of_philo)))
-		return 0;	
-
-	if(ac == 5)
-		status->option = OPTION_OFF;
-	else
-		status->option = OPTION_ON;
-
-	status->forks_free = forks;
-	int i = 0;
-	while(i < data->num_of_philo)
+	i = 0;
+	while (i < info->num_to_philo)
 	{
-		status[i].idx = i + 1;
-		status[i].data = data;
-		pthread_mutex_init(&(forks[i]), NULL);
+		pthread_create(&(philo[i].thread), NULL, &start, &philo[i]);
+		pthread_create(&(philo[i].monitor), NULL, &check, &philo[i]);
 		++i;
 	}
 	i = 0;
-	while(i < data->num_of_philo)
-	{	
-		if(i == 0)
-		{
-			status[i].l_fork = &(forks[data->num_of_philo - 1]);
-			status[i].r_fork = &(forks[0]);
-		}
-		else
-		{	
-			status[i].l_fork = &(forks[i - 1]);
-			status[i].r_fork = &(forks[i]);
-		}
-		i++;	
-	}
-	return (status);
-}
-
-void *print(void *arg)
-{
-	t_status *status = (t_status *)arg;
-
-	printf("idx :%d\n", status->idx);
-	printf("forks : %p %p\n", status->l_fork, status->r_fork);
-	printf("option : %d\n", status->option);
-	
-	printf("num : %d\n", status->data->num_of_philo);
-	printf("die : %d\n", status->data->time_to_die);
-	printf("eat : %d\n", status->data->time_to_sleep);
-	printf("sleep : %d\n", status->data->time_to_sleep);
-	printf("count : %d\n", status->data->eat_count);
-
-	printf("\n\n");
-	return 0;
-}
-	
-int main(int argc, char *argv[])
-{
-	t_status *status;
-
-	if(argc != 5 && argc != 6)
-		error_print(1);
-	status = status_init(argc, argv);
-
-
-	//포크
-	int i = 0;
-	while(i < status->data->num_of_philo)
+	while (i < info->num_to_philo)
 	{
-		pthread_create(&(status[i].philo), NULL, &print, &status[i]);
-		pthread_join(status[i].philo, NULL);
-		i++;
+		pthread_join(philo[i].thread, NULL);
+		pthread_join(philo[i].monitor, NULL);
+		++i;
 	}
+}
+
+void	pthread_end(t_info *info, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&(info->message));
+	while (i < info->num_to_philo)
+	{
+		pthread_mutex_destroy(&(philo[i].eating));
+		pthread_mutex_destroy(&(info->fork[i]));
+		philo[i].info = NULL;
+		++i;
+	}
+	free(info->fork);
+	free(info);
+	free(philo);
+}
+
+int	main(int argc, char *argv[])
+{
+	t_philo	*philo;
+	t_info	*info;
+
+	if (check_argc(argc))
+		return (0);
+	if (init_info(argc, argv, &info) || init_thread(info, &philo))
+		return (0);
+	if (init_mutex(info, philo))
+		return (0);
+	pthread_start(info, philo);
+	pthread_end(info, philo);
 }

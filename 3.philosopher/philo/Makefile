@@ -74,6 +74,9 @@ test6:	re
 			@./$(NAME) 3 4100 2000 2000
 			# "check if philo die right time"
 
+test7:	re
+			@./$(NAME) 199 410 200 200
+			# "many philo"
 
 norm :
 		@norminette .
