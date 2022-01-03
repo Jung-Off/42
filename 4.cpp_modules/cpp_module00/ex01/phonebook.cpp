@@ -1,41 +1,26 @@
 
 #include <iostream>
+#include "phonebook.hpp"
 
 
-class PhoneBook {
-    private:
-    int _index;
-    char *_firstname;
-    char *_lastname;
-    char *_nickname;
-
-    public:
-        void PhoneBook_Add(int index);
-        void print();
-};
-
-void PhoneBook::PhoneBook_Add(int index)
-{
-    _index = index;
-}
-
-void PhoneBook::print()
-{
-    std::cout << _index << std::endl;
-}
 
 int main()
 {
-    PhoneBook pb;
-    char *str;
+    PhoneBook book;
+    std::string str;
 
     while(1)
     {
         std::cout << "plz enter command : ";
         std::cin >> str;
-        switch (str)
+        book.cmd = str;
+        switch (book.check_cmd(str))
         {
-        case str == "EXIT":
+        case 1:
+            book.add(); 
+        case 2:
+            book.search(); 
+        
             /* code */
             break;
         
