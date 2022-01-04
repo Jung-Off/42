@@ -3,7 +3,7 @@
 # define PHONEBOOK_HPP
 
 #include <iostream>
-#include <stdio.h>
+#include <iomanip>
 #include "Member.hpp"
 
 #define RED 	"\x1b[31m"
@@ -17,6 +17,8 @@
 #define CMD_ADD     1
 #define CMD_SEARCH  2
 #define CMD_EXIT    3
+
+#define WIDTH       10
 
 class PhoneBook {
     private:

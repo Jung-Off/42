@@ -1,5 +1,10 @@
 #include "Member.hpp"
 
+void Member::set_idx(int idx)
+{
+    _idx = idx;
+} 
+
 void Member::set_fname(std::string firstname)
 {
     _FirstName = firstname;
@@ -23,6 +28,11 @@ void Member::set_Num(std::string num)
 void Member::set_Secret(std::string secret)
 {
     _DarkSecret = secret;
+}
+
+int Member::get_idx()
+{
+    return(_idx);
 }
 
 std::string Member::get_fname()

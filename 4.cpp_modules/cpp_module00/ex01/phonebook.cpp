@@ -13,7 +13,8 @@ void PhoneBook::pb_intro(void) const
 void PhoneBook::set_cmd(std::string new_cmd)
 {
     for (size_t i = 0; i < new_cmd.size(); ++i)
-        new_cmd[i] += toupper(new_cmd[i]);
+        new_cmd[i] = toupper(new_cmd[i]);
+        _cmd = new_cmd;
 }
 
 std::string PhoneBook::get_cmd() const
@@ -42,14 +43,13 @@ void PhoneBook::add(void)
     if (_index >= 8)
         set_index(0);
     increase_index();
+    _M[_index].set_idx(get_index());
 
     std::string temp;
 
     std::cout << "WHAT YOUR FIRST NAME ? : ";
     std::getline(std::cin, temp);
     _M[_index].set_fname(temp);
-
-    //여러번 입력을 받을 수 있게 하는 방법을 찾아 보아야겠다.
 
     std::cout << "WHAT YOUR LAST NAME ? : ";
     std::getline(std::cin, temp);
@@ -76,20 +76,31 @@ void PhoneBook::search(void)
     std::cout << "SEARCH" << std::endl;
     if (_index == 0)
     {
-        std::cout << "Phonebook is empty :(" << std::endl;
+        std::cout << RED << "Phonebook is empty :(" << RESET << std::endl;
         return ;
     }
     else
     {
-        std::cout << "__" << get_index() << "__" << std::endl;
-        std::cout << "[" << _M[_index].get_fname() << "]" << std::endl;
-        std::cout << "[" << _M[_index].get_lname() << "]" << std::endl;
-        std::cout << "[" << _M[_index].get_Nname() << "]" << std::endl;
-        std::cout << "[" << _M[_index].get_Num() << "]" << std::endl;
-        std::cout << "[" << _M[_index].get_Secret() << "]" << std::endl;
+        std::cout << std::setw(WIDTH) << "index" << "|" <<
+        std::setw(WIDTH) << "firstname" << "|" <<
+        std::setw(WIDTH) << "lastname" << "|" <<
+        std::setw(WIDTH) << "nickname" << "|" <<
+        std::setw(WIDTH) << "number" << std::endl;
+
+        for (int i = 1; i <= _index; ++i)
+        std::cout << std::setw(WIDTH) << _M[i].get_idx() << "|"
+        << std::setw(WIDTH) <<  _M[i].get_fname() << "|"
+        << std::setw(WIDTH) <<  _M[i].get_lname() << "|"
+        << std::setw(WIDTH) <<  _M[i].get_Nname() << "|"
+        << std::setw(WIDTH) <<  _M[i].get_Num() << std::endl;
         //SEARCH만 했을때
         //SEARCH index만 했을때
     }
+
+    std::string new_cmd;
+    std::getline(std::cin, new_cmd);
+    
+
 
 }
 
