@@ -1,32 +1,41 @@
 
+#ifndef PHONEBOOK_HPP
+# define PHONEBOOK_HPP
+
 #include <iostream>
+#include <stdio.h>
+#include "Member.hpp"
+
+#define RED 	"\x1b[31m"
+#define GREEN 	"\x1b[32m"
+#define YELLOW 	"\x1b[33m"
+#define BLUE 	"\x1b[34m"
+#define MAGENTA "\x1b[35m"
+#define CYAN	"\x1b[36m"
+#define RESET 	"\x1b[0m"
+
+#define CMD_ADD     1
+#define CMD_SEARCH  2
+#define CMD_EXIT    3
 
 class PhoneBook {
     private:
-    int _index;
-    char *_firstname;
-    char *_lastname;
-    char *_nickname;
+        int            _index;
+        Member         _M[8];
+        std::string    _cmd;
 
     public:
-        std::string cmd;
-        int check_cmd(std::string str);
-        void add(void);
+        void            pb_intro(void) const;
+        void            set_cmd(std::string new_cmd);
+        std::string     get_cmd(void) const;
+        void            add(void);
+        void            set_index(const int i);
+        int             get_index(void) const;
+        void            increase_index();
+        void            search(void);
+
+        PhoneBook();
+        ~PhoneBook();
 };
 
-int PhoneBook::check_cmd(std::string str)
-{
-    if (cmd.compare(0, 3, str))
-        return 1;
-    else if (cmd.compare(0, 4, str))
-        return 2;
-    else if (cmd.compare(0, 6, str))
-        return 3;
-    else
-        return 0;    
-}
-
-void PhoneBook::add(void)
-{
-    std::cout << "hello\n" << std::endl;
-}
+#endif
