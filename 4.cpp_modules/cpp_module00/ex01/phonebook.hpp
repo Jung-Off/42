@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 #include "Member.hpp"
 
 #define RED 	"\x1b[31m"
@@ -23,6 +24,7 @@
 class PhoneBook {
     private:
         int            _index;
+        int            _size;
         Member         _M[8];
         std::string    _cmd;
 
@@ -30,11 +32,15 @@ class PhoneBook {
         void            pb_intro(void) const;
         void            set_cmd(std::string new_cmd);
         std::string     get_cmd(void) const;
-        void            add(void);
         void            set_index(const int i);
         int             get_index(void) const;
         void            increase_index();
+        void            set_size(const int i);
+        int             get_size(void) const;
+        void            increase_size();
+        void            add(void);
         void            search(void);
+        std::string     print_width(std::string str) const;
 
         PhoneBook();
         ~PhoneBook();

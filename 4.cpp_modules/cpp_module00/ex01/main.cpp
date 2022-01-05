@@ -10,6 +10,8 @@ int main()
     {
         book.pb_intro();
         std::getline(std::cin, new_cmd);
+        if (std::cin.eof())
+            exit(1);
         book.set_cmd(new_cmd);
         if (book.get_cmd() == "ADD")
             book.add();

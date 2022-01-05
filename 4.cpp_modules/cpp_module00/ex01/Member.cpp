@@ -32,7 +32,7 @@ void Member::set_Secret(std::string secret)
 
 int Member::get_idx()
 {
-    return(_idx);
+    return(_idx + 1);
 }
 
 std::string Member::get_fname()
