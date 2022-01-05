@@ -5,7 +5,7 @@
 
 class Member {
     private:
-        int     _idx;
+        int             _idx;
         std::string     _FirstName;
         std::string     _LastName;
         std::string     _NickName;

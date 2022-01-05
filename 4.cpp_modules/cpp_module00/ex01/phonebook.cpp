@@ -58,8 +58,8 @@ void PhoneBook::add(void)
         set_index(0);
     _M[_index].set_idx(get_index());
 
-    std::cout << "phonebook : " << get_index() << std::endl;        //arr index
-    std::cout << "member : " << _M[_index].get_idx() << std::endl;  //phone book index
+    // std::cout << "phonebook : " << get_index() << std::endl;        //arr index
+    // std::cout << "member : " << _M[_index].get_idx() << std::endl;  //phone book index
 
     std::string temp;
 
@@ -147,12 +147,12 @@ void PhoneBook::search(void)
         {
             std::cout << std::endl;
             std::cout << "REQUSET" << std::endl;
-            std::cout << "Index : " << _M[search_i].get_idx() << std::endl; 
-            std::cout << "First Name : " << _M[search_i].get_fname() << std::endl;
-            std::cout << "Last Name : " << _M[search_i].get_lname() << std::endl;
-            std::cout << "Nick Name : " << _M[search_i].get_Nname() << std::endl;
-            std::cout << "Phone Num : " << _M[search_i].get_Num() << std::endl;
-            std::cout << "Darkset Secret : " << _M[search_i].get_Secret() << std::endl;
+            std::cout << "Index : " << _M[search_i - 1].get_idx() << std::endl; 
+            std::cout << "First Name : " << _M[search_i - 1].get_fname() << std::endl;
+            std::cout << "Last Name : " << _M[search_i - 1].get_lname() << std::endl;
+            std::cout << "Nick Name : " << _M[search_i - 1].get_Nname() << std::endl;
+            std::cout << "Phone Num : " << _M[search_i - 1].get_Num() << std::endl;
+            std::cout << "Darkset Secret : " << _M[search_i - 1].get_Secret() << std::endl;
             std::cout << std::endl;
             return ;
         }
