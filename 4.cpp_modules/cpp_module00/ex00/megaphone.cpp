@@ -1,8 +1,7 @@
 
 #include <iostream>
 
-//표준입력에 접근하기 위해 c++ 스타일을 사용하세요!
-//std::cout 시용하기
+//std::cout 사용하기
 
 int main(int ac, char *av[])
 {

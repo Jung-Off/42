@@ -5,7 +5,7 @@ RM := rm -f
 
 NAME := megaphone
 
-SRC_DIR		= ./
+SRC_DIR		=	./
 SRC_LIST	=	megaphone.cpp
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_LIST))
 OBJ			=	$(SRC:.cpp=.o)

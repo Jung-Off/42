@@ -3,7 +3,7 @@
 
 int main()
 {
-    PhoneBook book;
+    PhoneBook   book;
     std::string new_cmd;
 
     while(1)
