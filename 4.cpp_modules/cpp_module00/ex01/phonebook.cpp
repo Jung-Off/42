@@ -66,23 +66,33 @@ void PhoneBook::add(void)
     std::cout << std::endl;
     std::cout << YELLOW << "WHAT YOUR FIRST NAME ? : " << RESET;
     std::getline(std::cin, temp);
+    if (std::cin.eof())
+            exit(1);
     _M[_index].set_fname(temp);
 
     std::cout << YELLOW << "WHAT YOUR LAST NAME ? : " << RESET;
     std::getline(std::cin, temp);
+    if (std::cin.eof())
+            exit(1);
     _M[_index].set_lname(temp);
 
     std::cout << YELLOW << "WHAT YOUR NICK NAME ? : " << RESET;
     std::getline(std::cin, temp);
+    if (std::cin.eof())
+            exit(1);
     _M[_index].set_Nname(temp);
 
 
     std::cout << YELLOW << "WHAT YOUR PHONE NUMBER ? : " << RESET;
     std::getline(std::cin, temp);
+    if (std::cin.eof())
+            exit(1);
     _M[_index].set_Num(temp);
 
     std::cout << YELLOW << "WHAT YOUR SECRET ? : " << RESET;
     std::getline(std::cin, temp);
+    if (std::cin.eof())
+            exit(1);
     _M[_index].set_Secret(temp);
 
     increase_index();
