@@ -3,20 +3,32 @@
 
 int main()
 {
-    Zombie zombie1; // RED default Constructor
-    Zombie zombie2("hello"); // GREEN default Constructor
+    std::cout << "Default Constructor Call(noname)" << std::endl;
+    Zombie zombie1;             // RED default Constructor
+    std::cout << RED << "[" << zombie1.get_name() << "]" << RESET 
+            << " : Default Constructor NONAME" << std::endl;
+    std::cout << std::endl;
 
+    std::cout << "Default Constructor Call(name)" << std::endl;
+    Zombie zombie2("zom");    // GREEN default Constructor
+    std::cout << GREEN << "[" << zombie2.get_name() << "]" << RESET
+            << " : Default Constructor NAME" << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "=== new example ===" << std::endl;
+    std::cout << "Create" << std::endl;
     Zombie* zombie_star = newZombie("new"); // YELLOW new create no crowd
-
-    randomChump("random_Chump"); //CYAN  create yes crowd;
-
-    std::cout << RED << zombie1.get_name() << RESET << std::endl;
-    std::cout << GREEN << zombie2.get_name() << RESET << std::endl;
-    std::cout << YELLOW << zombie_star->get_name() << RESET << std::endl;
 
     delete zombie_star;
     zombie_star = NULL;
 
-    system("leaks Zombie");
+    std::cout << std::endl;
+    std::cout << "=== randomChump example === " << std::endl;
+    std::cout << "Create + Announce" << std::endl;
+    randomChump("Chump");            // CYAN  create yes crowd;
+
+
+
+    // system("leaks Zombie");
 
 }

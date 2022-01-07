@@ -4,6 +4,7 @@
 Zombie*     newZombie( std::string name )
 {
     Zombie* nZombie = new Zombie(name);
-    std::cout << YELLOW << name << " create" << RESET << std::endl; 
+    std::cout << YELLOW << "[" << name << "]" << RESET 
+    << " is create by NEW" << "(Dynamic memory allocation)" << std::endl; 
     return (nZombie);
 }

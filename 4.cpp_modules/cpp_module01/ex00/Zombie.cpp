@@ -1,17 +1,19 @@
 
 #include "Zombie.hpp"
 
+// RED default Constructor
 Zombie::Zombie()
     : _name("NO_NAME")
     {}
 
+// GREEN default Constructor
 Zombie::Zombie(std::string name)
     : _name(name)
     {}
 
 Zombie::~Zombie()
 {
-    std::cout << get_name() << " ZOMBIE_DEAD" << std::endl;
+    std::cout << CYAN << "[" << get_name() << "]" << RESET << " : Default Destructor" << std::endl;
 }
 
 void Zombie::set_name(std::string name)
@@ -26,5 +28,5 @@ std::string Zombie::get_name()
 
 void Zombie::announce()
 {
-    std::cout << get_name() << " BraiiiiiiinnnzzzZ..." << std::endl;
+    std::cout << YELLOW << get_name() << RESET << " BraiiiiiiinnnzzzZ..." << std::endl;
 }

@@ -7,4 +7,6 @@ void randomChump(std::string name)
 
     delete Zombie;
     Zombie = NULL;
+    
+    std::cout << std::endl;
 }
