@@ -25,6 +25,7 @@ class Zombie
         ~Zombie();
 };
 
+//그냥 다른 함수여서 멤버함수로써 구성하지 않았음
 Zombie*     newZombie(std::string name );
 void        randomChump(std::string name);
 
