@@ -5,13 +5,13 @@ int main()
 	char name[100];
 	char lang[200];
 
-	std::cout << "ì´ë¦„ì€ ë¬´ì—‡ì…ë‹ˆê¹Œ? ";
+	std::cout << "ÀÌ¸§Àº ¹«¾ùÀÔ´Ï±î? ";
 	std::cin >> name;
 
-	std::cout << "ì¢‹ì•„í•˜ëŠ” í”„ë¡œê·¸ë˜ë° ì–¸ì–´ëŠ”?";
+	std::cout << "ÁÁ¾ÆÇÏ´Â ÇÁ·Î±×·¡¹Ö ¾ğ¾î´Â?";
 	std::cin >> lang;
 
-	std::cout << "ë‚´ ì´ë¦„ì€ " << name << "ì…ë‹ˆë‹¤." << std::endl;
-	std::cout << "ì œì¼ ì¢‹ì•„í•˜ëŠ” ì–¸ì–´ëŠ” " << lang << "ì…ë‹ˆë‹¤." << std::endl;
+	std::cout << "³» ÀÌ¸§Àº " << name << "ÀÔ´Ï´Ù." << std::endl;
+	std::cout << "Á¦ÀÏ ÁÁ¾ÆÇÏ´Â ¾ğ¾î´Â " << lang << "ÀÔ´Ï´Ù." << std::endl;
 	return 0;
 }
