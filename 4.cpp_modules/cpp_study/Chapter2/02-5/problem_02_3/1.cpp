@@ -20,7 +20,7 @@ Point& PntAdder(const Point &p1, const Point &p2)
 int main()
 {
     Point *point1 = new Point;
-    Point *(&point_ref) = point1; 
+    //Point *(&point_ref) = point1; 
     point1->xpos = 10;
     point1->ypos = -10; 
 
