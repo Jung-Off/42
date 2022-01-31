@@ -10,7 +10,7 @@ int main()
     {
         PHONEBOOK::print_command();
         std::cout << "Command Line input : ";
-        cmd = book.command_upper(book.Input());
+        cmd = book.command_upper(Input());
         if (cmd == PHONEBOOK::Command[0])
             book.add();
         else if (cmd == PHONEBOOK::Command[1])

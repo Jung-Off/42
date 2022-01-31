@@ -18,13 +18,13 @@ class Contact
         void SetNickName(std::string nickname);
         void SetPhone(std::string phonenum);
         void SetSecert(std::string secert);
+        std::string GetFirstName() const;
+        std::string GetName() const;
+        std::string GetNickName() const;
+        std::string GetPhone() const;
+        std::string GetSecert() const;
         Contact();
         ~Contact();
-        // std::string GetFirstName();
-        // std::string GetName();
-        // std::string GetNickName();
-        // std::string GetPhone();
-        // std::string GetSecert();
 };
 
 #endif
