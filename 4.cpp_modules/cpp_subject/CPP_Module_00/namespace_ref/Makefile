@@ -1,11 +1,13 @@
 
-NAME := megaphone
+NAME := PhoneBook
 
 CC := clang++
 CFLAGS := -Wall -Wextra -Werror
 CDEBUG = -fsanitize=address -g -std=c++98
 
-SRCS := megaphone.cpp
+SRCS := PhoneBook.cpp \
+		Contact.cpp	\
+		main.cpp
 
 OBJ_DIR := ./objs/
 OBJ_NAME := $(SRCS:.cpp=.o)
