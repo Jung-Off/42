@@ -43,7 +43,7 @@ Karen::~Karen()
 
 void Karen::complain(std::string level)
 {
-    std::string temp[4] = { "debug", "info", "warning", "error" };
+    std::string temp[4] = { "DEBUG", "INFO", "WARNING", "ERROR" };
 
     for(int i = 0; i < 4; i++)
     {

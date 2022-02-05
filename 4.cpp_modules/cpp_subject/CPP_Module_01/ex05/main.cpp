@@ -3,15 +3,15 @@
 int main()
 {
     Karen a;
-    a.complain("debug");
+    a.complain("DEBUG");
     std::cout << std::endl;
 
-    a.complain("warning");
+    a.complain("WARNING");
     std::cout << std::endl;
 
-    a.complain("error");
+    a.complain("INFO");
     std::cout << std::endl;
 
-    a.complain("info");
+    a.complain("ERROR");
     std::cout << std::endl;
 }
