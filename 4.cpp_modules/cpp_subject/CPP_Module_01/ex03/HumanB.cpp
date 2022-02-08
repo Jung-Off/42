@@ -32,7 +32,11 @@ void HumanB::setWeapon(Weapon& club)
 
 void HumanB::attack() const
 {
-    // if (_weapon != NULL)
+    if (_weapon == NULL)
+    {
+        std::cout << "not have anything" << std::endl;
+        return ;
+    }
     std::cout << "[" << _name << "]" << " attacks with his " <<
         "[" << _weapon->getType() << "]" << std::endl;
     // else
@@ -43,6 +47,9 @@ HumanB::~HumanB()
 {
     // if (_weapon != NULL)
     //     delete _weapon;
-    std::cout << "HumanB " << "[" << _name << "]" << " died.." 
-    << "[" << _weapon->getType() << "]" << std::endl;
+    std::cout << "HumanB " << "[" << _name << "]" << " died.. ";
+    if (_weapon != NULL)
+        std::cout << "[" << _weapon->getType() << "]" << std::endl;
+    else
+        std::cout << " [ NULL ]" << std::endl;
 }

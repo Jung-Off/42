@@ -62,6 +62,7 @@ void Karen::complain(std::string level)
             (this->*_f[2])();
         case 3:
             (this->*_f[3])();
+            break;
         case 4:
             std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
     }
