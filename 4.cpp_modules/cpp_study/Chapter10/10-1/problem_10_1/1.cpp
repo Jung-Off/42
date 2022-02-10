@@ -11,6 +11,10 @@ class Point
     void ShowPosition() const{
         cout << '[' << xpos << ", " << ypos << ']' << endl;
     }
+    Point(const Point& cpy)
+    {
+        std::cout << "I am copy" << std::endl;
+    }
 
     Point& operator+=(const Point& pos1)
     {
