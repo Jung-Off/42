@@ -6,19 +6,19 @@ class Point
     private:
         int xpos, ypos;
     public:
-    Point(int x = 0, int y = 0) : xpos(x), ypos(y)
-    {}
-    void ShowPosition() const{
-        cout << '[' << xpos << ", " << ypos << ']' << endl;
-    }
-
-    Point& operator++()
-    {
-        xpos+=1;
-        ypos+=1;
-        return *this;
-    }
-    friend Point& operator--(Point &ref);
+        Point(int x = 0, int y = 0) : xpos(x), ypos(y)
+        { }
+        void ShowPosition() const
+        {
+            cout << '[' << xpos << ", " << ypos << ']' << endl;
+        }
+        Point& operator++()
+        {
+            xpos+=1;
+            ypos+=1;
+            return (*this);
+        }
+        friend Point& operator--(Point &ref);
 };
 
 Point& operator--(Point &ref)
@@ -42,3 +42,4 @@ int main()
     pos.ShowPosition();
     return 0;
 }
+

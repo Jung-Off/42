@@ -8,181 +8,94 @@ class Point
     public:
         Point(int x = 0, int y = 0) : xpos(x), ypos(y)
         { }
-    void ShowPosition() const{
-        cout << '[' << xpos << ", " << ypos << ']' << endl;
-    }
-    Point(const Point& cpy)
-    {
-        std::cout << "I am copy" << std::endl;
-    }
+        void ShowPosition() const
+        {
+            cout << '[' << xpos << ", " << ypos << ']' << endl;
+        }
+        Point& operator+=(const Point &pos1)
+        {
+            xpos += pos1.xpos;
+            ypos += pos1.ypos;
+            return (*this);
+        }
 
-    Point& operator+=(const Point& pos1)
-    {
-        xpos += pos1.xpos;
-        ypos += pos1.ypos;
-        return (*this);
-    }
-
-    Point& operator-=(const Point& pos1)
-    {
-        xpos -= pos1.xpos;
-        ypos -= pos1.ypos;
-        return (*this);
-    }
-    friend Point operator-(const Point& pos1, const Point& pos2); //전역함수로 오버로딩
-    friend bool operator==(const Point& pos1, const Point& pos2); //전역함수로 오버로딩
-    friend bool operator!=(const Point& pos1, const Point& pos2); //전역함수로 오버로딩
+        Point& operator-=(const Point &pos1)
+        {
+            xpos -= pos1.xpos;
+            ypos -= pos1.ypos;
+            return (*this);
+        }
+        friend Point operator-(const Point &pos1, const Point &pos2);
+        friend bool operator==(const Point &pos1, const Point &pos2);
+        friend bool operator!=(const Point &pos1, const Point &pos2);
 };
 
-Point operator-(const Point& pos1, const Point& pos2)
+Point operator-(const Point &pos1, const Point &pos2)
 {
-    Point ret(pos1.xpos - pos2.xpos, pos1.ypos - pos2.ypos);
-    return (ret);
+    Point pos(pos1.xpos-pos2.xpos, pos1.ypos-pos2.ypos);
+    return pos;
 }
 
-bool operator==(const Point& pos1, const Point& pos2)
+bool operator==(const Point &pos1, const Point &pos2)
 {
     if (pos1.xpos == pos2.xpos && pos1.ypos == pos2.ypos)
         return (true);
     return (false);
 }
 
-bool operator!=(const Point& pos1, const Point& pos2)
+bool operator!=(const Point &pos1, const Point &pos2)
 {
-    // if (pos1.xpos == pos2.xpos && pos1.ypos == pos2.ypos)
-    //     return (false);
-    // return (true);
-    return (!(pos1==pos2));
+    return (!(pos1 == pos2));
 }
 
 int main()
 {
-    {
-        Point a(1, 2);
-        Point b(3, 4);
-        a.ShowPosition();
-        b.ShowPosition();
-        std::cout << std::endl;
+    Point pos1(3, 4);
+    Point pos2(10, 20);
+    Point pos3 = pos1 - pos2;
 
-        std::cout << "problem 1 (1)" << std::endl;
+    std::cout << "==== problem_1 ====" << std::endl;
 
-        Point c = a - b;
-        std::cout << "c = a - b" << std::endl;
-        (a - b).ShowPosition();
-        // c.ShowPosition();
+    pos1.ShowPosition();
+    pos2.ShowPosition();
+    pos3.ShowPosition();
 
-        std::cout << std::endl;
+    std::cout << "==== problem_2 ====" << std::endl;
+    pos2 += pos1;
+    pos1.ShowPosition();
+    pos2.ShowPosition();
 
-        std::cout << "problem 1 (2)" << std::endl;
-        std::cout << "e = a.operator-(a, b)" << std::endl;
-        Point e = operator-(a, b);
-        // e.ShowPosition();
-        operator-(a, b).ShowPosition();
+    std::cout << "==== problem_2_1 ==== " << std::endl;
+    pos3 -= pos1;
+    pos1.ShowPosition();
+    pos2.ShowPosition();
+    pos3.ShowPosition();
 
-        std::cout << std::endl;
-        std::cout << "problem 1 end" << std::endl;
+    std::cout << "==== problem_3 ==== " << std::endl;
+    Point pos4(1, 3);
+    Point pos5(1, 3);
+    Point pos6(2, 3);
 
-        std::cout << std::endl << std::endl;
-    }    
-    std::cout << "problem 2" << std::endl;
+    if (pos4 == pos5)
+        std::cout << "p4, p5 same !" << std::endl;
+    else
+        std::cout << "p4, p5 different !" << std::endl;
 
-    {
-        Point a(1, 2);
-        Point b(3, 4);
-        
-        std::cout << "a += b" << std::endl;
-        a.ShowPosition();
-        b.ShowPosition();
-        std::cout << std::endl;
-        (a += b).ShowPosition();
-        a.ShowPosition();
-        std::cout << std::endl;
+    if (pos4 != pos6)
+        std::cout << "p4, p6 different !" << std::endl;
+    else
+        std::cout << "p4, p6 same !" << std::endl;
 
-        Point c(1, 2);
-        Point d(3, 4);
-        std::cout << "c -= d" << std::endl;
-        c.ShowPosition();
-        d.ShowPosition();
-        std::cout << std::endl;
-        (c -= d).ShowPosition();
-        c.ShowPosition();
-        std::cout << std::endl;
-    }
+    if (pos4 == pos6)
+        std::cout << "p4, p6 same !" << std::endl;
+    else
+        std::cout << "p4, p6 different !" << std::endl;
 
-    std::cout << "problem 3" << std::endl;
-    std::cout << std::endl;
-    {
-        Point a(1, 2);
-        Point c(1, 2);
-        Point b(3, 4);
-        Point d(3, 5);
-        Point f(4, 4);
-
-    std::cout << "==============" << std::endl;
-
-        std::cout << "[a] [c]" << std::endl;
-        if (a == c)
-            std::cout << "correct" << std::endl;
-        else
-            std::cout << " not correct " << std::endl;
-        std::cout << std::endl;
-
-        std::cout << "[a] [b]" << std::endl;
-        if (a == b)
-            std::cout << "correct" << std::endl;
-        else
-            std::cout << " not correct " << std::endl;
-        std::cout << std::endl;
-
-        std::cout << "[b] [d]" << std::endl;        
-        if (b == d)
-            std::cout << "correct" << std::endl;
-        else
-            std::cout << " not correct " << std::endl;
-        std::cout << std::endl;
-
-        std::cout << "[b] [f]" << std::endl;
-        if (b == f)
-            std::cout << "correct" << std::endl;
-        else
-            std::cout << " not correct " << std::endl;
-        std::cout << std::endl;
-
-    std::cout << "=!=!=!=!=!=!=!=!=!=!=!=!=!=" << std::endl << std::endl;
-
-
-        std::cout << "[a] [c]" << std::endl;
-        if (a != c)
-            std::cout << " not correct" << std::endl;
-        else
-            std::cout << "  correct " << std::endl;
-        std::cout << std::endl;
-
-        std::cout << "[a] [b]" << std::endl;
-        if (a != b)
-            std::cout << " not correct" << std::endl;
-        else
-            std::cout << "  correct " << std::endl;
-        std::cout << std::endl;
-
-        std::cout << "[b] [d]" << std::endl;        
-        if (b != d)
-            std::cout << "not correct" << std::endl;
-        else
-            std::cout << "  correct " << std::endl;
-        std::cout << std::endl;
-
-        std::cout << "[b] [f]" << std::endl;
-        if (b != f)
-            std::cout << "not correct" << std::endl;
-        else
-            std::cout << "  correct " << std::endl;
-        std::cout << std::endl;
-    
-    }
-
+    if (pos4 != pos5)
+        std::cout << "p4, p5 different !" << std::endl;
+    else
+        std::cout << "p4, p5 same !" << std::endl;
 
 
     return 0;
 }
-
