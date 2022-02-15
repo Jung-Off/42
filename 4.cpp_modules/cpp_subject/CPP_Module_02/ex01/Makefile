@@ -1,12 +1,12 @@
 
-NAME := Orthodox
+NAME := Fixed
 
 CC := clang++
 CFLAGS := -Wall -Wextra -Werror
 CDEBUG = -fsanitize=address -g -std=c++98
 
-SRCS := main.cpp 
-		# Fixed.cpp
+SRCS := main.cpp \
+		Fixed.cpp
 
 OBJ_DIR := ./objs/
 OBJ_NAME := $(SRCS:.cpp=.o)

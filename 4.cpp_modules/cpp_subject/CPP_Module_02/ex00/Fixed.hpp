@@ -7,7 +7,7 @@ class Fixed
 {
     private:
         int _FixedPoint;
-        static const int bits = 8;  
+        static const int _bits = 8;  
         //static const 는 이런식으로 초기화를 한다고 합니다
         
         //const int는 생성자 이니셜라이저에서
@@ -16,6 +16,8 @@ class Fixed
         //class 외부에서 int Fixed::bits = 8;
     public:
         Fixed();
+        Fixed(const int intger);
+        Fixed(const float Float);
         Fixed(const Fixed& fixed);
         Fixed& operator=(const Fixed& fixed);
         ~Fixed();
