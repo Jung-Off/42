@@ -16,8 +16,6 @@ class Fixed
         //class 외부에서 int Fixed::bits = 8;
     public:
         Fixed();
-        Fixed(const int intger);
-        Fixed(const float Float);
         Fixed(const Fixed& fixed);
         Fixed& operator=(const Fixed& fixed);
         ~Fixed();
