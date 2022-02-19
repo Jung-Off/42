@@ -22,28 +22,27 @@ class Fixed
         float toFloat(void) const;
         int toInt(void) const;
 
-        bool operator>(const Fixed& f);
-        bool operator<(const Fixed& f);
-        bool operator>=(const Fixed& f);
-        bool operator<=(const Fixed& f);
-        bool operator==(const Fixed& f);
-        bool operator!=(const Fixed& f);
+        bool operator>(const Fixed& fixed);
+        bool operator<(const Fixed& fixed);
+        bool operator>=(const Fixed& fixed);
+        bool operator<=(const Fixed& fixed);
+        bool operator==(const Fixed& fixed);
+        bool operator!=(const Fixed& fixed);
 
-        Fixed operator+(const Fixed& b);
-        Fixed operator-(const Fixed& b);
-        Fixed operator*(const Fixed& b);
-        Fixed operator/(const Fixed& b);
+        Fixed operator+(const Fixed& fixed);
+        Fixed operator-(const Fixed& fixed);
+        Fixed operator*(const Fixed& fixed);
+        Fixed operator/(const Fixed& fixed);
 
-        Fixed& operator++();        // 전위 증가
-        const Fixed operator++(int);   // 후위 증가 //const는 원래도 안되서 똑같이 하기 위함
-        Fixed& operator--();        // 전위 감소
-        const Fixed operator--(int);    // 후위 감소
+        Fixed& operator++();
+        const Fixed operator++(int); // 후위 증가 //const는 원래도 안되서 똑같이 하기 위함
+        Fixed& operator--();
+        const Fixed operator--(int); //후위 
 
-        const Fixed& max(const Fixed& a, const Fixed& b);
-        const Fixed& min(const Fixed& a, const Fixed& b);
+        static const Fixed& max(const Fixed& a, const Fixed& b);
+        static const Fixed& min(const Fixed& a, const Fixed& b);
 };
 
 std::ostream& operator<<(std::ostream &os, const Fixed &f);
-
 
 #endif
