@@ -3,11 +3,10 @@
 
 int main()
 {
-
-    // std::cout << "Constructor Check" << std::endl;
+   // std::cout << "Constructor Check" << std::endl;
 
     ClapTrap ct1; //default Constructor
-    ClapTrap ct2("claptrap2"); // 인자 Constructor
+    ClapTrap ct2("claptrap2"); // Copy Constructor
     ClapTrap ct3(ct2); // copy Constructor
     // std::cout << std::endl;
 

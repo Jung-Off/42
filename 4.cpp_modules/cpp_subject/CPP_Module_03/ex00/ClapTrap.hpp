@@ -21,31 +21,29 @@
 class ClapTrap
 {
     private:
-        std::string _name;          //이름
-        unsigned int _hitPoints;    //체력
-        unsigned int _energyPoint;  //마나
-        unsigned int _attackDamage; //공격력
-        static const unsigned int _maxHit = 50; //최대체력
+        std::string _name;
+        unsigned int _hp;
+        unsigned int _mp;
+        unsigned int _ad;
+        static const int _maxhp = 50;
     public:
-        //기본생성자, 생성자, 소멸자, 복사생성자, 대입연산자
-
         ClapTrap();
-        ClapTrap(std::string name);
+        ClapTrap(const ClapTrap& ct);
+        ClapTrap& operator=(const ClapTrap& ct);
         ~ClapTrap();
-        ClapTrap(const ClapTrap& a);
-        ClapTrap& operator=(const ClapTrap& b);
+        ClapTrap(std::string name); //추가 생성자
 
-        void attack(std::string const& target); //상대방에게 공격을 가하는
-        void takeDamage(unsigned int amount);   //상대방에게 공격을 당하는
-        void beRepaired(unsigned int mount);    //체력이 올라감
+        //멤버함수
+        void attack(std::string const & target);
+        void takeDamage(unsigned int amount);
+        void beRepaired(unsigned int amount);
 
-        //add function
+        //getter
+        //복사 or = 여기서 사용
         std::string getName() const;
-        unsigned int getDamage() const;
-        unsigned int getHit() const;
-        unsigned int getEnergy() const;
-        unsigned int getMaxH() const;
-        
+        unsigned int getHp() const;
+        unsigned int getMp() const;
+        unsigned int getAd() const;
 };
 
 #endif
