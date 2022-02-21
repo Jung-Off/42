@@ -25,7 +25,7 @@ class ClapTrap
         unsigned int _hitPoints;    //체력
         unsigned int _energyPoint;  //마나
         unsigned int _attackDamage; //공격력
-        const unsigned int _maxHit; //최대체력
+        static const unsigned int _maxHit = 50; //최대체력
     public:
         //기본생성자, 생성자, 소멸자, 복사생성자, 대입연산자
 
@@ -44,7 +44,8 @@ class ClapTrap
         unsigned int getDamage() const;
         unsigned int getHit() const;
         unsigned int getEnergy() const;
-        // unsigned int getMHit() const;
+        unsigned int getMaxH() const;
+        
 };
 
 #endif

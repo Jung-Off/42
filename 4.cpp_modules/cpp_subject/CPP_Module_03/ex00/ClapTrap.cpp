@@ -2,19 +2,19 @@
 #include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap()
-    :   _name("NONAME"), _hitPoints(10), _energyPoint(10), _attackDamage(0), _maxHit(50)
+    :   _name("NONAME"), _hitPoints(10), _energyPoint(10), _attackDamage(0)
 {
     std::cout << "Constructor [" << BLUE << _name << RESET << "] ClapTrap " << std::endl;   
 }
 
 ClapTrap::ClapTrap(std::string name)
-    :   _name(name), _hitPoints(10), _energyPoint(10), _attackDamage(0), _maxHit(50)
+    :   _name(name), _hitPoints(10), _energyPoint(10), _attackDamage(0)
 {
     std::cout << "Constructor [" << BLUE << _name  << RESET << "] ClapTrap " << std::endl;   
 }
 
 ClapTrap::ClapTrap(const ClapTrap& a)
-    : _name(a.getName()), _hitPoints(a.getHit()), _energyPoint(a.getEnergy()), _attackDamage(a.getDamage()), _maxHit(50)
+    : _name(a.getName()), _hitPoints(a.getHit()), _energyPoint(a.getEnergy()), _attackDamage(a.getDamage())
 {
     std::cout << "Copy Constructor [" << BLUE << _name << RESET << "] ClapTrap " << std::endl;   
 }
@@ -49,41 +49,42 @@ void ClapTrap::takeDamage(unsigned int amount)
 {
     if (_hitPoints == 0)
     {
-        std::cout << YELLOW << _name << RESET << " is Dead..." << std::endl;
-        std::cout << "Now " << _name << "[" << RED << _hitPoints << RESET << "]" << std::endl << std::endl;
+        std::cout << RED << _name << RESET << " is Dead... ";
         return ;
     }
-    if (_hitPoints > 0 && _hitPoints - amount <= 0)
+    if (_hitPoints > 0 && _hitPoints <= amount)
     {
-        std::cout << YELLOW << _name << RESET << "[" << RED << _hitPoints << RESET << "] Damaged..." << std::endl;
-        _hitPoints  = 0;
+        std::cout  << "[" << RED << _hitPoints << RESET << "] Damaged... "
+         << "Real Damage [" << YELLOW << amount << RESET << "] ";
+        _hitPoints = 0;
     }
-    else if (_hitPoints > 0 && _hitPoints - amount > 0)
+    else if (_hitPoints > 0 && _hitPoints > amount)
     {
-        std::cout << YELLOW << _name << RESET << "[" << RED << amount << RESET << "] Damaged..." << std::endl;
+        std::cout <<  "[" << RED << amount << RESET << "] Damaged... ";
         _hitPoints -= amount;
     }
-        std::cout << "Now " << _name << "[" << GREEN << _hitPoints << RESET << "]" << std::endl << std::endl;
+        std::cout << _name << "[" << GREEN << _hitPoints << RESET << "]" << std::endl;
 }
 
 //여기도 체력이 너무 많으면 회복이 안댐!
 void ClapTrap::beRepaired(unsigned int mount)
 {
-    if (_hitPoints == _maxHit)
+    if (_hitPoints == ClapTrap::_maxHit)
     {
-        std::cout << "[" << MAGENTA << _name << RESET << "]" << "Full Enough Hit!" << std::endl;
+        std::cout << "[" << GREEN << _name << RESET << "]" << "Full Enough Hit! ";
     }
-    else if (_hitPoints + mount > _maxHit)
+    else if (_hitPoints + mount > ClapTrap::_maxHit)
     {
-        std::cout << "[" << MAGENTA << _maxHit - _hitPoints << RESET << "] healing" << std::endl;
-        _hitPoints = _maxHit;
+        std::cout << "[" << GREEN << ClapTrap::_maxHit - _hitPoints << RESET << "] healing "
+        << "Real Repaired [" << YELLOW << mount << RESET << "] ";
+        _hitPoints = ClapTrap::_maxHit;
     }
     else
     {
-        std::cout << "[" << MAGENTA << mount << RESET << "] healing" << std::endl;
+        std::cout << "[" << GREEN << mount << RESET << "] healing ";
         _hitPoints += mount;
     }
-    std::cout << "Now " << _name << "[" << GREEN << _hitPoints << RESET << "]" << std::endl << std::endl;
+    std::cout << _name << "[" << GREEN << _hitPoints << RESET << "]" << std::endl;
 }
 
 unsigned int ClapTrap::getDamage() const
@@ -101,10 +102,10 @@ unsigned int ClapTrap::getHit() const
     return(_hitPoints);
 }
 
-// unsigned int ClapTrap::getMHit() const
-// {
-//     return (_maxHit);
-// }
+unsigned int ClapTrap::getMaxH() const
+{
+    return(ClapTrap::_maxHit);
+}
 
 std::string ClapTrap::getName() const
 {
