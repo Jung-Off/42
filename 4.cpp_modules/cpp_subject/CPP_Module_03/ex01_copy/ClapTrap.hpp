@@ -44,6 +44,11 @@ class ClapTrap
         unsigned int getHp() const;
         unsigned int getMp() const;
         unsigned int getAd() const;
+
+        void setName(std::string n);
+        void setHp(unsigned int h);
+        void setMp(unsigned int m);
+        void setAd(unsigned int a);
 };
 
 #endif

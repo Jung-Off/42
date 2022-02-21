@@ -15,12 +15,12 @@ class ScavTrap : public ClapTrap
         ScavTrap& operator=(const ScavTrap& ct);
         ~ScavTrap();
 
+        ScavTrap(std::string name);
+
         void attack(std::string const& target);
         void takeDamage(unsigned int amount);
-
-        ScavTrap(std::string name);
-        bool getGuard(void);
         void guardGate();
+        bool getGuard(void) const;
 };
 
 #endif

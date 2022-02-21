@@ -49,7 +49,7 @@ void ClapTrap::takeDamage(unsigned int amount)
 {
     if (_hp == 0)
     {
-        std::cout << RED << _name << RESET << " is Dead... ";
+        std::cout << "[" << RED << _name << RESET << "]" << " is Dead... ";
         return ;
     }
     if (_hp > 0 && _hp <= amount)
@@ -105,4 +105,24 @@ unsigned int ClapTrap::getMp() const
 unsigned int ClapTrap::getAd() const
 {
     return (_ad);
+}
+
+void ClapTrap::setName(std::string n)
+{
+    _name = n;
+}
+
+void ClapTrap::setHp(unsigned int h)
+{
+    _hp = h;
+}
+
+void ClapTrap::setMp(unsigned int m)
+{
+    _mp = m;
+}
+
+void ClapTrap::setAd(unsigned int a)
+{
+    _ad = a;
 }
