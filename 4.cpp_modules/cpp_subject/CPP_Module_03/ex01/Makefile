@@ -1,5 +1,5 @@
 
-NAME := ClapTrap
+NAME := ScavTrap
 
 CC := clang++
 CFLAGS := -Wall -Wextra -Werror
@@ -7,7 +7,7 @@ CDEBUG = -fsanitize=address -g -std=c++98
 
 SRCS := main.cpp \
 		ClapTrap.cpp \
-		ScavTrap.cpp
+		ScavTrap.cpp \
 
 OBJ_DIR := ./objs/
 OBJ_NAME := $(SRCS:.cpp=.o)

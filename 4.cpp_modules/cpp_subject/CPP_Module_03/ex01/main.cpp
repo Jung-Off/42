@@ -4,26 +4,35 @@
 int main()
 {
     ScavTrap st1;           //default Constructor
-    ScavTrap st2("st2");    // 인잝 Constructor
+    ScavTrap st2("st2");    // ě¸ě Constructor
     ScavTrap st3(st2);      // copy Constructor
 
+    // std::cout << "st1 Name : " << st1.getName() << " hp : " << st1.getHp()
+    //  << " mp : " << st1.getMp() << " ad : " << st1.getAd() << std::endl;
+    // std::cout << "st2 Name : " << st2.getName() << " hp : " << st2.getHp()
+    //  << " mp : " << st2.getMp() << " ad : " << st2.getAd() << std::endl;
+    // std::cout << "st3 Name : " << st3.getName() << " hp : " << st3.getHp()
+    //  << " mp : " << st3.getMp() << " ad : " << st3.getAd() << std::endl;
     st1 = st3;
 
-     std::cout << std::endl;
+    // std::cout << "st1 Name : " << st1.getName() << " hp :" << st1.getHp()
+    //  << " mp : " << st1.getMp() << " ad : " << st1.getAd() << std::endl;
+    // std::cout << std::endl;
+    std::cout << std::endl;
     st1.attack("moster");
 
-    
-    // st1.takeDamage(50); //100
-    // st1.guardGate(); //guard_mode on -> used energy point 
-    // st1.guardGate(); //warning message
-    // st1.takeDamage(50); //no damage -> guard_mode off
-    // st1.beRepaired(10); //10points be repaired
-    // st1.beRepaired(1000); //be repaired to maxHP
-    // st1.guardGate(); // guard_mode on -> used energy point 
-    // st1.takeDamage(50); //no damage -> guard_mode off
-    // st1.guardGate(); //can't get into guard_mode
-    // st1.takeDamage(1000); //died 
-    std::cout << std::endl;
+    st1.beRepaired(25);
+    st1.takeDamage(50);
+    st1.guardGate();
+    st1.guardGate();
+    st1.takeDamage(50);
+    st1.takeDamage(10);
+    st1.beRepaired(1000);
+    st1.guardGate();
+    st1.takeDamage(40);
+    st1.takeDamage(40);
+    st1.takeDamage(40);
+    st1.takeDamage(40);
 
-
+    std::cout << std::endl << std::endl;
 }
