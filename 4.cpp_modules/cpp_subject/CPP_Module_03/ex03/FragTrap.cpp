@@ -3,9 +3,9 @@
 
 FragTrap::FragTrap()
 {
-    setAd(30);
-    setHp(100);
-    setMp(100);
+    setAd();
+    setHp();
+    setMp();
 
     std::cout << "Constructor [" << BLUE << getName() << RESET << "] FragTrap " << std::endl;   
 }
@@ -42,9 +42,9 @@ FragTrap::~FragTrap()
 FragTrap::FragTrap(std::string name)
     : ClapTrap(name)
 {
-    setAd(30);
-    setHp(100);
-    setMp(100);
+    setAd();
+    setHp();
+    setMp();
 
     std::cout << "Constructor [" << BLUE << getName() << RESET << "] FragTrap " << std::endl;   
 }
@@ -65,4 +65,19 @@ void FragTrap::highFivesGuys(void) const
 {
     std::cout << "[" << _name << "]" << " feel good" <<
     " I feel strong" << std::endl;
+}
+
+void FragTrap::setAd()
+{
+    ClapTrap::setAd(30);
+}
+
+void FragTrap::setMp()
+{
+    ClapTrap::setMp(100);
+}
+
+void FragTrap::setHp()
+{
+    ClapTrap::setHp(100);
 }

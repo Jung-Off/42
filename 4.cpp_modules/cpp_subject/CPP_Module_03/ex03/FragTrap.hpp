@@ -10,11 +10,9 @@
 //assignation operator overload
 //destructor.
 
-
-class FragTrap : public ClapTrap
+class FragTrap : virtual public ClapTrap
 {
     private:
-        static const int _hfMp = 50;
     public:
         FragTrap();
         FragTrap(const FragTrap& ft);
@@ -25,8 +23,10 @@ class FragTrap : public ClapTrap
         void attack(std::string const& target);
         void takeDamage(unsigned int amount);
         void highFivesGuys(void) const;
+
+        void setAd();
+        void setMp();
+        void setHp();
 };
-
-
 
 #endif
