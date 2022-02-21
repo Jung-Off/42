@@ -49,7 +49,7 @@ void ClapTrap::takeDamage(unsigned int amount)
 {
     if (_hp == 0)
     {
-        std::cout << RED << _name << RESET << " is Dead... ";
+        std::cout << RED << _name << RESET << " is Dead... " << std::endl;
         return ;
     }
     if (_hp > 0 && _hp <= amount)
