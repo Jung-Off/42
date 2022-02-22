@@ -11,7 +11,7 @@ ScavTrap::ScavTrap()
     setMp(50);
     setHp(100);
 
-    std::cout << "Constructor [" << BLUE << getName() << RESET << "] ScavTrap " << std::endl;   
+    std::cout << "Constructor [" << YELLOW << getName() << RESET << "] " << BGREEN << "ScavTrap "<< RESET << std::endl;   
 }
 
 ScavTrap::ScavTrap(std::string name)
@@ -22,7 +22,7 @@ ScavTrap::ScavTrap(std::string name)
     setMp(50);
     setHp(100);
 
-    std::cout << "Constructor [" << BLUE << getName() << RESET << "] ScavTrap " << std::endl;   
+    std::cout << "Constructor [" << YELLOW << getName() << RESET << "]" << BGREEN << "ScavTrap " << RESET << std::endl;   
 }
 
 ScavTrap::ScavTrap(const ScavTrap& st)
@@ -33,7 +33,7 @@ ScavTrap::ScavTrap(const ScavTrap& st)
     _mp = st.getMp();
     _ad = st.getAd();
 
-    std::cout << "Copy Constructor [" << BLUE << getName() << RESET << "] ScavTrap " << std::endl;   
+    std::cout << "Copy Constructor [" << YELLOW << getName() << RESET << "]" << BGREEN << "ScavTrap " << RESET << std::endl;   
 }
 
 ScavTrap& ScavTrap::operator=(const ScavTrap& st)
@@ -47,23 +47,25 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& st)
     _mp = st.getMp();
     _ad = st.getAd();
 
-    std::cout << "Operator = [" << CYAN << getName() << RESET << "] ScavTrap " << std::endl;
+    std::cout << "Operator = [" << YELLOW << getName() << RESET << "]" << BGREEN << "ScavTrap " << RESET << std::endl;
     return (*this);
 }
 
 ScavTrap::~ScavTrap()
 {
-    std::cout << "Destructor ScavTrap " << getName() << std::endl;   
+    std::cout << "Destructor " << "[" << YELLOW << getName() << RESET << "]" << BGREEN << "ScavTrap " << RESET << std::endl;   
 }
 
 void ScavTrap::attack(std::string const& target)
 {
-    std::cout << "ScavTrap [" << RED << _name << RESET << "] attack "  << target <<
+    std::cout << MAGENTA << "ATTACK  >> " <<  RESET; 
+    std::cout << BGREEN << "ScavTrap" << RESET << "[" << RED << _name << RESET << "] attack "  << target <<
     ", causing [" << RED << _ad << RESET << "] points of damage!" << std::endl;
 }
 
 void ScavTrap::takeDamage(unsigned int amount)
 {
+    std::cout << BGREEN << "ScavTrapv" << RESET;
     if (_guard)
     {
         std::cout << "No Damaged !" << std::endl;
@@ -75,8 +77,9 @@ void ScavTrap::takeDamage(unsigned int amount)
 
 void ScavTrap::guardGate()
 {
+    std::cout << BBLUE << "Guard Start >> " << RESET ;
     if (_guard)
-        std::cout << "[" << BLUE << getName() << RESET << "]" << " Already guard";
+        std::cout << "[" << YELLOW << getName() << RESET << "]" << " Already guard";
     else
     {
         if (_mp >= ScavTrap::_guardMp)

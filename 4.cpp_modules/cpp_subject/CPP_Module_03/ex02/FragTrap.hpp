@@ -14,7 +14,6 @@
 class FragTrap : public ClapTrap
 {
     private:
-        static const int _hfMp = 50;
     public:
         FragTrap();
         FragTrap(const FragTrap& ft);

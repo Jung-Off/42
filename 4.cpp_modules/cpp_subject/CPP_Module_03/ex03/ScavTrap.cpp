@@ -7,22 +7,22 @@ ScavTrap::ScavTrap()
     : _guard(false)
 {
     //ClapTrap에서 생성하고 초기화하고 여기서 덮어 씌우는 느낌!
-    setAd();
+    setAd(20);
     setMp();
-    setHp();
+    setHp(100);
 
-    std::cout << "Constructor [" << BLUE << getName() << RESET << "] ScavTrap " << std::endl;   
+    std::cout << "Constructor [" << YELLOW << getName() << RESET << "] " << BGREEN << "ScavTrap "<< RESET << std::endl;   
 }
 
 ScavTrap::ScavTrap(std::string name)
     : ClapTrap(name), _guard(false)
 {
     //ClapTrap에서 생성하고 초기화하고 여기서 덮어 씌우는 느낌!
-    setAd();
+    setAd(20);
     setMp();
-    setHp();
+    setHp(100);
 
-    std::cout << "Constructor [" << BLUE << getName() << RESET << "] ScavTrap " << std::endl;   
+    std::cout << "Constructor [" << YELLOW << getName() << RESET << "]" << BGREEN << "ScavTrap " << RESET << std::endl;   
 }
 
 ScavTrap::ScavTrap(const ScavTrap& st)
@@ -33,7 +33,7 @@ ScavTrap::ScavTrap(const ScavTrap& st)
     _mp = st.getMp();
     _ad = st.getAd();
 
-    std::cout << "Copy Constructor [" << BLUE << getName() << RESET << "] ScavTrap " << std::endl;   
+    std::cout << "Copy Constructor [" << YELLOW << getName() << RESET << "]" << BGREEN << "ScavTrap " << RESET << std::endl;   
 }
 
 ScavTrap& ScavTrap::operator=(const ScavTrap& st)
@@ -47,24 +47,25 @@ ScavTrap& ScavTrap::operator=(const ScavTrap& st)
     _mp = st.getMp();
     _ad = st.getAd();
 
-    std::cout << "Operator = [" << CYAN << getName() << RESET << "] ScavTrap " << std::endl;
+    std::cout << "Operator = [" << YELLOW << getName() << RESET << "]" << BGREEN << "ScavTrap " << RESET << std::endl;
     return (*this);
 }
 
 ScavTrap::~ScavTrap()
 {
-    std::cout << "Destructor ScavTrap " << getName() << std::endl;   
+    std::cout << "Destructor " << "[" << YELLOW << getName() << RESET << "]" << BGREEN << "ScavTrap " << RESET << std::endl;   
 }
 
 void ScavTrap::attack(std::string const& target)
 {
-    std::cout << "ScavTrap [" << RED << _name << RESET << "] attack "  << target <<
+    std::cout << MAGENTA << "ATTACK  >> " <<  RESET; 
+    std::cout << BGREEN << "ScavTrap" << RESET << "[" << RED << _name << RESET << "] attack "  << target <<
     ", causing [" << RED << _ad << RESET << "] points of damage!" << std::endl;
 }
 
 void ScavTrap::takeDamage(unsigned int amount)
 {
-    std::cout << "ScavTrap attack!  "
+    std::cout << BGREEN << "ScavTrap " << RESET;
     if (_guard)
     {
         std::cout << "No Damaged !" << std::endl;
@@ -76,8 +77,9 @@ void ScavTrap::takeDamage(unsigned int amount)
 
 void ScavTrap::guardGate()
 {
+    std::cout << BBLUE << "Guard Start >> " << RESET ;
     if (_guard)
-        std::cout << "[" << BLUE << getName() << RESET << "]" << " Already guard";
+        std::cout << "[" << YELLOW << getName() << RESET << "]" << " Already guard";
     else
     {
         if (_mp >= ScavTrap::_guardMp)
@@ -93,7 +95,7 @@ void ScavTrap::guardGate()
             std::cout << "not use guard ";
         }
     }
-        std::cout << "  " << _name << " mp" << "[" << BLUE << _mp << RESET << "]" << std::endl;
+        std::cout << "  " << YELLOW << _name << RESET << " mp" << "[" << BLUE << _mp << RESET << "]" << std::endl;
 }
 
 bool ScavTrap::getGuard(void) const
@@ -101,22 +103,7 @@ bool ScavTrap::getGuard(void) const
     return (_guard);
 }
 
-void ScavTrap::setAd()
-{
-    ClapTrap::setAd(20);
-}
-
 void ScavTrap::setMp()
 {
     ClapTrap::setMp(50);
-}
-
-void ScavTrap::setHp()
-{
-    ClapTrap::setHp(100);
-}
-
-void ScavTrap::setGuard(bool a)
-{
-    _guard = false;
 }

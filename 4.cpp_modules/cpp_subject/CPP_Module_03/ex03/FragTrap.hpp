@@ -10,6 +10,7 @@
 //assignation operator overload
 //destructor.
 
+
 class FragTrap : virtual public ClapTrap
 {
     private:
@@ -24,9 +25,10 @@ class FragTrap : virtual public ClapTrap
         void takeDamage(unsigned int amount);
         void highFivesGuys(void) const;
 
-        void setAd();
-        void setMp();
         void setHp();
+        void setAd();
 };
+
+
 
 #endif

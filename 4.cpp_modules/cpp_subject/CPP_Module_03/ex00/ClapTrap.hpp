@@ -18,6 +18,16 @@
 #define CYAN	"\x1b[36m"
 #define RESET 	"\x1b[0m"
 
+
+#define BRED 	"\x1b[41m"
+#define BGREEN 	"\x1b[42m"
+#define BYELLOW "\x1b[43m"
+#define BBLUE 	"\x1b[44m"
+#define BMAGENTA "\x1b[45m"
+#define BCYAN 	"\x1b[46m"
+#define BRESET 	"\x1b[40m"
+
+
 class ClapTrap
 {
     private:
