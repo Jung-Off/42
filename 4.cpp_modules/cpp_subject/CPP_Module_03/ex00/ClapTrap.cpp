@@ -74,7 +74,7 @@ void ClapTrap::beRepaired(unsigned int mount)
     std::cout << CYAN << "BE REPAIRED  >> " <<  RESET;
     if (_hp == ClapTrap::_maxhp)
     {
-        std::cout << "[" << YELLOW << _name << RESET << "]" << "Full Enough Hit! ";
+        std::cout << "Full Enough Hit! ";
     }
     else if (_hp + mount > ClapTrap::_maxhp)
     {

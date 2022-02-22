@@ -24,7 +24,7 @@ DiamondTrap::DiamondTrap(std::string name)
     std::cout << "Constructor [" << YELLOW << getDName() << RESET << "] " << BMAGENTA << "DiamondTrap " << RESET << std::endl;   
 }
 
-DiamondTrap::DiamondTrap(const DiamondTrap& ft) : ScavTrap(ft.getName())
+DiamondTrap::DiamondTrap(const DiamondTrap& ft) : ClapTrap(ft.getName())
 {
     _name = ft.getDName();
     _hp = ft.getHp();
@@ -39,7 +39,7 @@ DiamondTrap& DiamondTrap::operator=(const DiamondTrap& ft)
     if (this == &ft)
         return (*this);
     // ClapTrap::operator=(ft);
-    ScavTrap::_name = ft.getName();
+    ClapTrap::_name = ft.getName();
     _hp = ft.getHp();
     _mp = ft.getMp();
     _ad = ft.getAd();
@@ -69,26 +69,6 @@ void DiamondTrap::takeDamage(unsigned int amount)
 DiamondTrap::~DiamondTrap()
 {
     std::cout << "Destructor " << "[" << YELLOW << getDName() << RESET << "]" << BMAGENTA << "DiamondTrap " << RESET  << std::endl;   
-}
-
-std::string DiamondTrap::getName() const
-{
-    return (ClapTrap::getName());
-}
-
-unsigned int DiamondTrap::getHp() const
-{
-    return (ClapTrap::getHp());
-}
-
-unsigned int DiamondTrap::getMp() const
-{
-    return (ClapTrap::getMp());
-}
-
-unsigned int DiamondTrap::getAd() const
-{
-    return (ClapTrap::getAd());
 }
 
 std::string DiamondTrap::getDName() const

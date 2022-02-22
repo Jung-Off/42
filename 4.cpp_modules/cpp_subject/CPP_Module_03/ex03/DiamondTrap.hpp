@@ -28,11 +28,6 @@ class  DiamondTrap : public FragTrap, public ScavTrap
         void takeDamage(unsigned int amount);
 
         std::string getDName() const;
-        std::string getName() const;
-        unsigned int getHp() const;
-        unsigned int getMp() const;
-        unsigned int getAd() const;
-
         void whoAmI() const;
 };
 

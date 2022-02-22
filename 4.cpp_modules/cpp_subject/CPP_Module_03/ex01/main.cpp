@@ -18,6 +18,15 @@ int main()
     // std::cout << "st1 Name : " << st1.getName() << " hp :" << st1.getHp()
     //  << " mp : " << st1.getMp() << " ad : " << st1.getAd() << std::endl;
     // std::cout << std::endl;
+
+    // check
+    // std::cout << std::endl;
+    // std::cout << "===== " << "Name : " << st1.getName() << " ====" << std::endl;
+    // std::cout << "===== " << "Hp : " << st1.getHp() << " ====" << std::endl;
+    // std::cout << "===== " << "Mp : " << st1.getMp() << " ====" << std::endl;
+    // std::cout << "===== " << "Ad : " << st1.getAd() << " ====" << std::endl;
+    // std::cout << std::endl;
+
     std::cout << std::endl;
     st1.attack("moster");
 

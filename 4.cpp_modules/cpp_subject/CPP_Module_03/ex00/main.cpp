@@ -10,6 +10,7 @@ int main()
     ClapTrap ct3(ct2); // copy Constructor
     // std::cout << std::endl;
 
+    
     // std::cout << ct1.getName() << std::endl;
     // std::cout << ct2.getName() << std::endl;
     // std::cout << ct3.getName() << std::endl;
@@ -20,6 +21,15 @@ int main()
     // std::cout << ct1.getName() << std::endl;
     // std::cout << ct2.getName() << std::endl;
     // std::cout << ct3.getName() << std::endl;
+
+
+    // check
+    // std::cout << std::endl;
+    // std::cout << "===== " << "Name : " << ct1.getName() << " ====" << std::endl;
+    // std::cout << "===== " << "Hp : " << ct1.getHp() << " ====" << std::endl;
+    // std::cout << "===== " << "Mp : " << ct1.getMp() << " ====" << std::endl;
+    // std::cout << "===== " << "Ad : " << ct1.getAd() << " ====" << std::endl;
+    // std::cout << std::endl;
     std::cout << std::endl;
 
 
@@ -35,6 +45,7 @@ int main()
     ct2.beRepaired(13); // 26
     ct2.beRepaired(13); // 39
     ct2.beRepaired(13); // 50
+    ct2.beRepaired(13); // full
     std::cout << std::endl;
 
 }

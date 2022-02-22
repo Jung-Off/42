@@ -12,8 +12,16 @@ int main()
     ClapTrap st1(st4);           //default Constructor
     ScavTrap st2(b);    // ě¸ě Constructor
     FragTrap st5(c);
-    FragTrap st3;      // copy Constructor
+    FragTrap st3(st5);      // copy Constructor
     st3 = st5;
+
+    // // check
+    // std::cout << std::endl;
+    // std::cout << "===== " << "Name : " << st3.getName() << " ====" << std::endl;
+    // std::cout << "===== " << "Hp : " << st3.getHp() << " ====" << std::endl;
+    // std::cout << "===== " << "Mp : " << st3.getMp() << " ====" << std::endl;
+    // std::cout << "===== " << "Ad : " << st3.getAd() << " ====" << std::endl;
+    // std::cout << std::endl;
 
     std::cout << std::endl;
     std::cout << " ======= " << st1.getName() << " attack =======" << std::endl;
