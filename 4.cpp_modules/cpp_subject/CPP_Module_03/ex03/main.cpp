@@ -12,10 +12,10 @@ int main()
     c = a;
     std::cout << std::endl;
     // check
-    std::cout << "===== " << "Name : " << a.getName() << " ====" << std::endl;
-    std::cout << "===== " << "Hp : " << a.getHp() << " ====" << std::endl;
-    std::cout << "===== " << "Mp : " << a.getMp() << " ====" << std::endl;
-    std::cout << "===== " << "Ad : " << a.getAd() << " ====" << std::endl;
+    // std::cout << "===== " << "Name : " << a.getName() << " ====" << std::endl;
+    // std::cout << "===== " << "Hp : " << a.getHp() << " ====" << std::endl;
+    // std::cout << "===== " << "Mp : " << a.getMp() << " ====" << std::endl;
+    // std::cout << "===== " << "Ad : " << a.getAd() << " ====" << std::endl;
 
     a.whoAmI();
     std::cout << std::endl;
