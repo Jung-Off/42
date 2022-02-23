@@ -63,6 +63,8 @@ void ScavTrap::attack(std::string const& target)
     ", causing [" << RED << _ad << RESET << "] points of damage!" << std::endl;
 }
 
+//_guard라는 조건이 있어야 되어서
+//상속을 받지 않고 오버라이딩! + ClapTrap의 takeDamage 불러서 씀!
 void ScavTrap::takeDamage(unsigned int amount)
 {
     std::cout << BGREEN << "ScavTrapv" << RESET;

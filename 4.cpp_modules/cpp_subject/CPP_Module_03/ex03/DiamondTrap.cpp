@@ -54,6 +54,9 @@ void DiamondTrap::attack(std::string const & target)
     ScavTrap::attack(target);
 }
 
+//_guard를 사용해야 되서 오버라이딩! 아니면 ScavTrap::takeDamage
+//이름이 나와서 그냥 오버라이딩했음
+//여기서 오버라이딩한 것음 ScavTrap의 함수를 오버라이딩 한 것 이겠지?
 void DiamondTrap::takeDamage(unsigned int amount)
 {
     std::cout << BMAGENTA << "DiamondTrap " << RESET;

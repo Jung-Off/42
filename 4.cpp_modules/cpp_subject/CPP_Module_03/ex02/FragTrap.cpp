@@ -56,6 +56,7 @@ void FragTrap::attack(std::string const& target)
     ", causing [" << RED << _ad << RESET << "] points of damage!" << std::endl;
 }
 
+//여기서도 FragTrap이라는 이름을 안써주면 그냥 takeDamage 놔두면 claptrap거 사용
 void FragTrap::takeDamage(unsigned int amount)
 {
     std::cout << BBLUE << "FragTrap " << RESET;
