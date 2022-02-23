@@ -28,8 +28,15 @@ int main()
     a.guardGate();
     a.guardGate();
     a.takeDamage(10);
+    a.takeDamage(10);
+    a.takeDamage(10);
+    a.takeDamage(10);
     a.guardGate();
-    a.takeDamage(40);
+    a.beRepaired(40);
+    a.takeDamage(30);
+    a.takeDamage(30);
+    a.takeDamage(30);
+    a.takeDamage(30);
 
     std::cout << std::endl;
 }

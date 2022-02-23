@@ -31,7 +31,9 @@ int main()
     st2.takeDamage(st1.getAd());
 
     st1.attack(c);
+    st3.beRepaired(5);
     st3.takeDamage(st1.getAd());
+    st3.beRepaired(5);
     std::cout << std::endl;
     std::cout << " ======= " << st2.getName() << " attack =======" << std::endl;
 
@@ -39,8 +41,10 @@ int main()
     st1.takeDamage(st2.getAd());
 
     st2.attack(c);
+    st3.beRepaired(5);
     st3.takeDamage(st2.getAd());
-
+    st3.beRepaired(5);
+    
     std::cout << std::endl;
     std::cout << " ======= " << st3.getName() << " attack =======" << std::endl;
 
