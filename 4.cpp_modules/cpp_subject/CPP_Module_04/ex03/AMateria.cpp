@@ -34,5 +34,5 @@ void AMateria::setType(std::string const type)
 
 void AMateria::use(ICharacter& target)
 {
-
+    std::cout << "* AMateria " << target.getName() << std::endl;
 }

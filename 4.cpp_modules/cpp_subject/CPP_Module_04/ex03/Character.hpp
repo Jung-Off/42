@@ -7,7 +7,8 @@
 class Character : public ICharacter
 {
     private:
-        AMateria* _ablity[4];
+        int         _index;
+        AMateria*   _ablity[4]; //이부분 딥카피 해야댐
         std::string _name;
     public:
         Character();
@@ -21,6 +22,8 @@ class Character : public ICharacter
         virtual void use(int idx, ICharacter& target);
 
         Character(std::string name);
+
+        int getIndex() const;
 };
 
 #endif
