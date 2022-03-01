@@ -10,11 +10,17 @@ Dog::Dog() : Animal("Dog")
 
 Dog::Dog(const Dog& a) : Animal(a.getType())
 {
-    _brain = new Brain();
+    //대입연산자로 넘기기
     //*this = a;
 
-    for(int i = 0; i < CELL_MAX; i++)
-        _brain->setCell(a.getBrain().getCell(i), i);
+    //공간 만들고
+    // _brain = new Brain();
+    // 여기서 복사
+    // for(int i = 0; i < CELL_MAX; i++)
+    //     _brain->setCell(a.getBrain().getCell(i), i);
+
+    //Brain의 복사연산자
+    _brain = new Brain(a.getBrain());
     std::cout << "Dog Copy Constructor " << getType() << std::endl;
 }
 
@@ -23,11 +29,14 @@ Dog& Dog::operator=(const Dog& a)
     std::cout << "Dog = operator " << getType() << std::endl;
     if (this != &a)
     {
+        // _brain = a._brain;  //소멸할때 문제가 생김!  //얕은 복사
         _type = a.getType();
-        //_brain = a._brain;
-
-        for(int i = 0; i < CELL_MAX; i++)
-            _brain->setCell(a.getBrain().getCell(i), i);
+        // for(int i = 0; i < CELL_MAX; i++)
+            // _brain->setCell(a.getBrain().getCell(i), i);
+        //brain의 대입연산자를 이용할 순 없을까?
+        // *_brain = *(a._brain);
+        *_brain = a.getBrain(); //이런식으로 하면 brain 대입 연산자
+        
     }
     return (*this);
 }
