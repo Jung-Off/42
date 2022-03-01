@@ -1,7 +1,7 @@
 
 #include "Ice.hpp"
 
-Ice::Ice() : AMateria("Ice")
+Ice::Ice() : AMateria("ice")
     {}
 
 Ice& Ice::operator=(const Ice& A)
@@ -29,7 +29,7 @@ AMateria* Ice::clone() const
     return (ice);
 }
 
-void Ice::use(ICharacter& target)
+void Ice::use(const ICharacter& target)
 {
     std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
 }

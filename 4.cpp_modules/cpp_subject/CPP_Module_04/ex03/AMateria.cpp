@@ -32,7 +32,7 @@ void AMateria::setType(std::string const type)
     _type = type;
 }
 
-void AMateria::use(ICharacter& target)
+void AMateria::use(const ICharacter& target)
 {
     std::cout << "* AMateria " << target.getName() << std::endl;
 }

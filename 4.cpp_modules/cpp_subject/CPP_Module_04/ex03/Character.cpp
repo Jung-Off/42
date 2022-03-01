@@ -1,15 +1,17 @@
 #include "Character.hpp"
 
 Character::Character()
-    :   _name("NONAME"), _index(0)
+    :   _name("NONAME")
 {
+    _index = 0;
     for (int i = 0; i < 4; i++)
         _ablity[i] = NULL;
 }
 
 Character::Character(const Character& a)
-    :   _name(a.getName()), _index(a.getIndex())
+    :   _name(a.getName())
 {
+    _index = a.getIndex();
     for (int i = 0; i < _index; i++)
         _ablity[i] = a._ablity[i]->clone();
         //a 자신을 복사하는 게 클론! 클론해서 나오는 주소를 _ablity[i]에 넣어!
@@ -39,7 +41,7 @@ Character& Character::operator=(const Character& a)
 
 Character::~Character()
 {
-    for (int i = 0; i < _index; i++)
+    for (int i = 0; i < 4; i++)
     {
         delete _ablity[i];
         _ablity[i] = NULL;
@@ -69,15 +71,18 @@ void Character::unequip(int idx)
 
 void Character::use(int idx, ICharacter& target)
 {
-    if (idx < 0 || idx >= _index)
+    if (idx < 0 || idx > _index)
         std::cout << "not invaild idx use" << std::endl;
-    else
+    else if (_ablity[idx]) //안들어갔을때 사용할려고 함
         _ablity[idx]->use(target);
+    else    // 비어있을 때
+        std::cout << "Character _ablity is empty" << std::endl;
 }
 
 Character::Character(std::string name)
-    : _name(name), _index(0)
+    : _name(name)
 {
+    _index = 0;
     for (int i = 0; i < 4; i++)
         _ablity[i] = NULL;
 }

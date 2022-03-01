@@ -14,7 +14,7 @@ class Ice : public AMateria
         // Ice(std::string const & type);
         // void setType(std::string const type);
         virtual AMateria* clone() const;
-        virtual void use(ICharacter& target); //여기부분 구현하기 ICaracter
+        virtual void use(const ICharacter& target); //여기부분 구현하기 ICaracter
 };
 
 #endif

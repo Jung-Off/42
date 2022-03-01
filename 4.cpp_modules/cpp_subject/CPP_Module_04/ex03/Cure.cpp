@@ -1,7 +1,7 @@
 
 #include "Cure.hpp"
 
-Cure::Cure() : AMateria("Cure")
+Cure::Cure() : AMateria("cure")
     {}
 
 Cure& Cure::operator=(const Cure& A)
@@ -29,7 +29,7 @@ AMateria* Cure::clone() const
     return (cure);
 }
 
-void Cure::use(ICharacter& target)
+void Cure::use(const ICharacter& target)
 {
     std::cout << "* heals " << target.getName() << "’s wounds *" << std::endl;
 }

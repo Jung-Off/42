@@ -2,20 +2,20 @@
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 
-#include "ICharacter.hpp"
+#include "AMateria.hpp"
 
 class Character : public ICharacter
 {
     private:
+        std::string _name;
         int         _index;
         AMateria*   _ablity[4]; //이부분 딥카피 해야댐
-        std::string _name;
     public:
         Character();
         Character(const Character& a);
         Character& operator=(const Character& a);
 
-        virtual ~Character();
+        ~Character();
         virtual std::string const & getName() const;
         virtual void equip(AMateria* m);
         virtual void unequip(int idx);
