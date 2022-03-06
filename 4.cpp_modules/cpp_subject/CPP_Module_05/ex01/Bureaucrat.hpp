@@ -4,6 +4,10 @@
 
 #include <iostream>
 
+#include "Form.hpp"
+
+class Form;
+
 class Bureaucrat
 {
     private:
@@ -21,6 +25,9 @@ class Bureaucrat
         int getGrade() const;
         void increGrade(int i); //(2 -> 1)
         void decreGrade(int i); //(1 -> 2)
+
+        //관료자에 >> signForm 함수추가 >> 정해진 문구
+        void signForm(Form &f);
 
         class GradeTooHighException : public std::exception
         {
