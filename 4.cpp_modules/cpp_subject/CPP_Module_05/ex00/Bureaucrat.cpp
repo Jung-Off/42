@@ -1,51 +1,51 @@
 #include "Bureaucrat.hpp"
 
+
 Bureaucrat::Bureaucrat()
-    : _name("NoName"), _grade(1)
+    : _name("NO"), _grade(1)
 {
-    std::cout << "Bureaucrat() name : " << _name << std::endl;
+    std::cout << "Bureaucrat() " << _name << ", " << _grade << std::endl;
+}
+
+Bureaucrat& Bureaucrat::operator=(const Bureaucrat &b)
+{
+    if (this != &b)
+    {
+        //여기 부분을 어떻게 처리를 할까!
+        //const는 만들자 마자 대입을 하지 않으면 대입할 수 없음!
+        // _name = B.getName();
+        _grade = b.getGrade();
+        (std::string&)_name = b.getName();
+        std::cout << "Bureaucrat operator =" << _name << ", "<< _grade << std::endl;
+    }
+    return (*this);
 }
 
 //여기에 1이하 150 이상이 들어오면 만들지 말아라 라는 조건이 필요할까?
 //Bureaucrat::Bureaucrat(std::string name, int grade) 여기서 다 걸리는데?
 Bureaucrat::Bureaucrat(const Bureaucrat& B)
-    : _name(B.getName()), _grade(B.getGrade())
+    :   _name(B.getName()), _grade(B.getGrade())
 {
-    //여기부분은 과연..
-    if (_grade > 150)
-        throw(GradeTooLowException());
-    else if (_grade < 1)
+    if (_grade < 1)
         throw(GradeTooHighException());
-    std::cout << "Bureaucrat(const Bureaucrat& B) name : " << _name << std::endl;
-}
-
-Bureaucrat& Bureaucrat::operator=(const Bureaucrat& B)
-{
-    if (this != &B)
-    {
-        //여기 부분을 어떻게 처리를 할까!
-        //const는 만들자 마자 대입을 하지 않으면 대입할 수 없음!
-        // _name = B.getName(); 
-        (std::string &)_name = B.getName();
-        _grade = B.getGrade();
-        std::cout << "operator=(const Bureaucrat& B) name : " << _name << std::endl;
-    }
-    return (*this);
+    else if (_grade > 150)
+        throw(GradeTooLowException()); 
+    std::cout << "Bureaucrat(const Bureaucrat& B) " << _name << ", "<< _grade << std::endl;
 }
 
 Bureaucrat::~Bureaucrat()
 {
-    std::cout << "~Bureaucrat() name : " << _name << std::endl;
+    std::cout << "~Bureaucrat() " << _name << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const std::string name, const int grade)
-    :   _name(name), _grade(grade)
+    : _name(name), _grade(grade)
 {
-    if (_grade > 150)
-        throw(GradeTooLowException());
-    else if (_grade < 1)
+    if (_grade < 1)
         throw(GradeTooHighException());
-    std::cout << "Bureaucrat(std::string name, int grade)" << name << std::endl;
+    else if (_grade > 150)
+        throw(GradeTooLowException());    
+    std::cout << "Bureaucrat(...) " << _name << ", "<< _grade << std::endl;
 }
 
 //const std::string _name 이라서
@@ -62,40 +62,37 @@ int Bureaucrat::getGrade() const
     return (_grade);
 }
 
-void Bureaucrat::gradeHigher(int i)
+void Bureaucrat::increGrade(int i) //(2 -> 1)
 {
-    
     if (_grade - i < 1)
         throw(GradeTooHighException());
     
-    std::cout << "_grade Higher " << _grade << " -> ";
+    std::cout << "grade Higher " << _grade << " -> ";
     _grade -= i;
     std::cout << _grade << std::endl;
 }
 
-void Bureaucrat::gradeLower(int i)
+void Bureaucrat::decreGrade(int i) //(1 -> 2)
 {
     if (_grade + i > 150)
         throw(GradeTooLowException());
-    
-    std::cout << "_grade Lower " << _grade << " -> ";
+    std::cout << "grade Lower " << _grade << " -> ";
     _grade += i;
     std::cout << _grade << std::endl;
 }
 
-const char *Bureaucrat::GradeTooHighException::what() const throw()
+const char * Bureaucrat::GradeTooHighException::what() const throw()
 {
-    return ("GradeTooHigh");
+    return("Too High");
 }
 
-const char *Bureaucrat::GradeTooLowException::what() const throw()
+const char * Bureaucrat::GradeTooLowException::what() const throw()
 {
-    return ("GradeTooLow");
+    return("Too Low");
 }
 
-std::ostream& operator<<(std::ostream& os, const Bureaucrat &B)
+std::ostream& operator<<(std::ostream& os, Bureaucrat& b)
 {
-    os << "<" << B.getName() << ">" << ", bureaucrat grade" << " <" << B.getGrade() << ">" << std::endl;
+    std::cout << "<" << b.getName() << ">, bureaucrat grade " << "<" << b.getGrade() << ">" << std::endl;
     return (os);
 }
-
