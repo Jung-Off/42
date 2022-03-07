@@ -30,7 +30,7 @@ class Form
 		Form();
 		Form& operator=(const Form& f);
 		Form(const Form& f);
-		~Form();
+		virtual ~Form();
 
 		Form(const std::string name, bool isSigned, const int sGrade, 
 			const int eGrade, const std::string type);
