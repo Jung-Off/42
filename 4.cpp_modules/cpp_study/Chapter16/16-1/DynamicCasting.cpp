@@ -35,6 +35,6 @@ int main()
     Truck *pTruck = dynamic_cast<Truck*>(pcar2); //컴파일 에러
 
     Truck* pTruck3 = new Truck(70, 150);
-    Car* pcar3 = dynamic_cast<Truck*>(pTruck3); //컴파일 ok
+    Car* pcar3 = dynamic_cast<Car*>(pTruck3); //컴파일 ok
     return 0;
 }

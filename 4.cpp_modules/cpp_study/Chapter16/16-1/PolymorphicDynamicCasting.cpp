@@ -4,7 +4,7 @@ using namespace std;
 class SoSimple      //Polymorphic 클래스
 {
     public:
-        virtual void ShowSimpleInfo()
+        virtual void ShowSimpleInfo()   // 가상함수
         {
             cout << "SoSimple Base Class" << endl;
         }
@@ -13,7 +13,7 @@ class SoSimple      //Polymorphic 클래스
 class SoComplex : public SoSimple
 {
     public:
-        void ShowSimpleInfo()
+        void ShowSimpleInfo() // 가상함수
         {
             cout << "SoComplex Derived Class " << endl;
         }

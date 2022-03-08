@@ -26,6 +26,6 @@ int main()
     if(cptr == NULL)
         cout << "형변환 실패" << endl;
     else
-        comPtr->ShowSimpleInfo();
+        cptr->ShowSimpleInfo();
     return 0;
 }
