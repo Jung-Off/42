@@ -42,4 +42,6 @@ int main()
     std::cout << "person data " << p_dserial->getName() << ", " << p_dserial->getTall() <<
     ", " << p_dserial->getWeight() << std::endl;
     std::cout << "p_serial address [" << p_dserial << "]" << std::endl;
+
+    //system("leaks Serialize");
 }
