@@ -4,16 +4,15 @@ Scalar::Scalar()
     {}
 
 Scalar::Scalar(const Scalar& s)
-    : _input(s.getInput()), _type(s._type), _num(s.getNum())
+    : _input(s.getInput()), _type(s._type)
     {}
 
 Scalar& Scalar::operator=(const Scalar& s)
 {
     if (this != &s)
     {
-        _type = s._type;
+        _type = s.getType();
         _input = getInput();
-        _num = getNum();
     }   
     return (*this);
 }
@@ -26,19 +25,18 @@ std::string Scalar::getInput() const
     return (_input);
 }
 
-double Scalar::getNum() const
+int Scalar::getType() const
 {
-    return (_num);
+    return (_type);
 }
 
 Scalar::Scalar(const std::string s)
     : _input(s)
-    {
-        _type = N;
-        if (_input.length() == 1 && !isdigit(_input.at(0)))
-            _type = C;
-        _num = atof(_input.c_str());
-    }
+{
+    _type = N;
+    if (_input.length() == 1 && !isdigit(_input.at(0)))
+        _type = C;
+}
 
 int Scalar::toInt() const
 {
@@ -62,14 +60,14 @@ int Scalar::toInt() const
 
 char Scalar::toChar() const
 {
-    char ret = 0.0;
+    char ret;
     if (_type == C)
     {
         try
         {
             if (_input.at(0) < 32 || _input.at(0) > 126) //printable char range is 32 ~ 126
                 throw NonDisplayException();
-            ret = _input.at(0);    
+            ret = _input.at(0);
         }
         catch(const std::exception& e)
         {
@@ -89,7 +87,9 @@ char Scalar::toChar() const
         }
         // 범위 넘어가는 것들
         if (ret < 32 || ret > 126)
+        {
             throw (NonDisplayException());
+        }
     }
     return (ret);
 }

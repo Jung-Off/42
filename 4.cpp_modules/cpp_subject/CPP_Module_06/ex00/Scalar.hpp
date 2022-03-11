@@ -10,7 +10,6 @@ class Scalar
     private:
         std::string _input;
         int         _type;
-        double      _num;
     public:
         enum { C, N };
         Scalar();
@@ -20,7 +19,7 @@ class Scalar
 
         Scalar(const std::string s);
         std::string getInput() const;
-        double getNum() const;
+        int getType() const;
 
         class NonDisplayException : public std::exception
         {
