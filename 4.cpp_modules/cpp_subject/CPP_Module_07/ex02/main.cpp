@@ -82,4 +82,33 @@ int main()
     {
         std::cerr << e.what() << '\n';
     }
+
+    std::cout << std::endl;
+    std::cout << "int arrary " << std::endl;
+    try
+    {
+        unsigned int i;
+        Array<int> a_int(5);
+        for (i = 0; i < a_int.size(); i++)
+        {
+            a_int[i] = i;
+            std::cout << a_int[i] << " ";
+        }
+        std::cout << std::endl;
+
+        Array<int> int_dup(a_int);
+        for (i = 0; i < int_dup.size(); i++)
+            std::cout << int_dup[i] << " ";
+        std::cout << std::endl;
+
+        Array<int> int_assgin(6);
+        int_assgin = a_int;
+        for (i = 0; i < int_assgin.size(); i++)
+            std::cout << int_assgin[i] << " ";
+        std::cout << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }
