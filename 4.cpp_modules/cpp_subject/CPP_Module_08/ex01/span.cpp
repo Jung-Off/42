@@ -54,10 +54,7 @@ int span::shortestSpan() const
     int temp = 0;
     for (copy_itr = copy.begin(); copy_itr != copy.end() - 1; copy_itr++)
     {
-        if (*copy_itr - *(copy_itr + 1) > 0)
-            temp = *copy_itr - *(copy_itr + 1);
-        else if(*copy_itr - *(copy_itr + 1) < 0)
-            temp = *(copy_itr + 1) - *copy_itr;
+        temp = *(copy_itr + 1) - *copy_itr;
         min = (min > temp ? temp : min);
     }
     return (min);
