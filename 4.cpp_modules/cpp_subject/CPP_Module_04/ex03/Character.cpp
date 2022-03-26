@@ -69,8 +69,8 @@ void Character::unequip(int idx)
         std::cout << "not invaild idx unequip" << std::endl;
     else
         _ablity[idx]->setType("");
-        //사용은 됨
-        //_ablity[idx] = NULL;
+        //사용은 됨 삭제하지 말라고 해서 이런식으로 해결
+        //기능은 있지만 이름만 없음
 }
 
 void Character::use(int idx, ICharacter& target)
