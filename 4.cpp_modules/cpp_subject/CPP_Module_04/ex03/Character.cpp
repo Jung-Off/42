@@ -13,6 +13,8 @@ Character::Character(const Character& a)
 {
     _index = a.getIndex();
     for (int i = 0; i < _index; i++)
+        //a의 ablity가 있을 때만 아래의 식 사용
+        //없으면 ->clone 접근할 수 없어
         _ablity[i] = a._ablity[i]->clone();
         //a 자신을 복사하는 게 클론! 클론해서 나오는 주소를 _ablity[i]에 넣어!
 }
@@ -67,6 +69,8 @@ void Character::unequip(int idx)
         std::cout << "not invaild idx unequip" << std::endl;
     else
         _ablity[idx]->setType("");
+        //사용은 됨
+        //_ablity[idx] = NULL;
 }
 
 void Character::use(int idx, ICharacter& target)
