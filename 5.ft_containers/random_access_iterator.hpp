@@ -123,7 +123,8 @@ namespace ft {
 
         pointer     operator->() { return (_ptr); } //address
 
-        // operator random_access_iterator<const T> () const { return (random_access_iterator<const T>(this->_ptr)); }
+        // 이게 의미하는 바는?
+        operator random_access_iterator<const T> () const { return (random_access_iterator<const T>(this->_ptr)); }
         // ===================================================================================================
     };
 

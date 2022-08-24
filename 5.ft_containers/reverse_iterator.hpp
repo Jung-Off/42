@@ -123,7 +123,7 @@ namespace ft {
                 return (*this);
             }
 
-            reverse_iterator& operator--(int) {
+            reverse_iterator operator--(int) {
                 reverse_iterator itr = (*this);
                 ++_iter;
                 return (itr);
@@ -135,7 +135,7 @@ namespace ft {
                 return (*this);
             }
 
-            reverse_iterator& operator++(int) {
+            reverse_iterator operator++(int) {
                 reverse_iterator itr = (*this);
                 --_iter;
                 return (itr);

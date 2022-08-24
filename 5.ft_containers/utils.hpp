@@ -111,8 +111,13 @@ namespace ft {
 	template <typename InputIt>
 	typename ft::iterator_traits<InputIt>::difference_type distance(InputIt first, InputIt last)
 	{
-		//******** distance의 iterator_traits는... 왜 필요한 걸 까?
 		typename ft::iterator_traits<InputIt>::difference_type n = 0;
+
+		// 포인터의 이터레이터 화! 를 위함!
+		// 포인터가 들어올지 이터레이터가 들어올지 모르는 상황에서 포인터를 이터레이터 처럼 사용하기 위해서
+		// 저거에 들어가면 이터레이터가 가지고 있는 typename들이 포인터에도 똑같이 생성!
+		// iterator_traits를 통해 포인터의 이터레이터화!
+
 		while (first != last)
 		{
 			++first;
@@ -124,6 +129,9 @@ namespace ft {
 // lexicographical compare ====================================================
 
 // https://junstar92.tistory.com/329
+
+// 3. lexicographical_compare을 쓰는이유?
+
 
 // 불변형 순차 알고리즘이란 주어진 범위에서 원소를 검색하거나 두 범위를 서로 비교하는 함수
 
@@ -176,6 +184,8 @@ namespace ft {
 // ============================================================================
 
 // is_input_iter ==============================================================
+
+// 2. 필요한 이유는?
 	
 // ============================================================================
 
