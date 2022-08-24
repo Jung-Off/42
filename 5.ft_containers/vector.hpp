@@ -368,67 +368,173 @@ namespace ft {
 			}
 		}
 
+
+
 		// insert,,
 		// 1. single element
-		iterator insert(iterator position, const value_type& val)
-		{
-			size_type pos = &*position - _start;
-			size_type rpos = _end - &*position;
+		// iterator insert(iterator position, const value_type& val)
+		// {
+		// 	size_type pos = &*position - _start;
+		// 	size_type rpos = _end - &*position;
 
-			if (this->size() == 0)
-				this->reserve(1);
-			else if (_end == _capa_end)
-				this->reserve(2 * this->size());
-			for (size_type i = 0; i < rpos; i++)
-			{
-				_alloc.construct(_end - i, *(_end - i - 1));
-				_alloc.destroy(_end - i - 1);
+		// 	if (this->size() == 0)
+		// 		this->reserve(1);
+		// 	else if (_end == _capa_end)
+		// 		this->reserve(2 * this->size());
+		// 	for (size_type i = 0; i < rpos; i++)
+		// 	{
+		// 		_alloc.construct(_end - i, *(_end - i - 1));
+		// 		_alloc.destroy(_end - i - 1);
+		// 	}
+		// 	_alloc.construct(_start + pos, val);
+		// 	_end++;
+		// 	return (iterator(_start + pos));
+		// }
+
+		// // 2.fill
+		// void insert(iterator position, size_type n, const value_type& val)
+		// {
+		// 	size_type next_size = this->size() + n;
+		// 	size_type pos = &*position - _start;
+		// 	size_type prev_capa = this->capacity();
+		// 	size_type alloced_size = 0;
+		// 	pointer new_start = ft_nullptr;
+		// 	pointer prev_capa_end = _capa_end;
+		// 	(void)val;
+		// 	(void)pos;
+		// 	(void)prev_capa_end;
+		// 	if (this->max_size() < next_size)
+		// 		throw std::length_error("ft::vector::insert: max_size() < this->size() + n");
+		// 	if (this->capacity() < next_size)
+		// 	{
+		// 		new_start = _alloc.allocate(next_size);
+		// 		_capa_end = new_start + next_size;
+		// 		alloced_size = next_size;
+		// 	}
+		// 	else
+		// 	{
+		// 		new_start = _alloc.allocate(this->capacity() * 2);
+		// 		_capa_end = new_start + this->capacity() * 2;
+		// 		alloced_size = this->capacity() * 2;
+		// 	}
+
+		// 	for (size_type i = 0; i <this->size(); ++i)
+		// 		_alloc.destroy(_start + i);
+		// 	_alloc.deallocate(_start, prev_capa);
+		// 	_end = new_start + n + this->size();
+		// 	_start = new_start;
+		// }
+
+		// // 3.range
+		// template<class InputIterator>
+		// void insert(iterator position, InputIterator first, InputIterator last,
+		// typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = ft_nullptr)
+		// {
+		// 	if (position > this->end() || position < this->begin())
+		// 			return;
+				
+		// 		size_type	num = ft::distance(first, last);
+		// 		size_type	next_size = this->size() + num;
+		// 		size_type	prev_capa = this->capacity();
+		// 		size_type	pos = &*position - _start;
+		// 		size_type	alloced_size = 0;
+		// 		pointer		new_start = ft_nullptr;
+		// 		pointer		prev_capa_ptr = _capa_end;
+
+		// 	(void)pos;
+		// 	(void)prev_capa_ptr;
+		// 	if (this->max_size() < next_size)
+		// 			throw std::length_error("ft::vector::insert: max_size() < this->size() + n");
+		// 	if (this->capacity() * 2 < next_size)
+		// 	{
+		// 		new_start = _alloc.allocate(next_size);
+		// 		_capa_end = new_start + next_size;
+		// 		alloced_size = next_size;
+		// 	}
+		// 	else
+		// 	{
+		// 		new_start = _alloc.allocate(this->capacity() * 2);
+		// 		_capa_end = new_start + this->capacity() * 2;
+		// 		alloced_size = this->capacity() * 2;
+		// 	}
+		// 	for (size_type i = 0; i < this->size(); ++i)
+		// 			_alloc.destroy(_start + i);
+		// 	_alloc.deallocate(_start, prev_capa);
+		// 	_end = new_start + num + this->size();
+		// 	_start = new_start;
+		// }
+
+//////////////////// 아래가 해결하는 방법
+
+		iterator insert(iterator position, const value_type& val) {
+				size_type	pos = &*position - _start;
+				size_type	rpos = _end - &*position;
+
+				if (this->size() == 0)
+					this->reserve(1);
+				else if (_end == _capa_end)
+					this->reserve(2 * this->size());
+				for (size_type i = 0; i < rpos; i++) {
+					_alloc.construct(_end - i, *(_end - i - 1));
+					_alloc.destroy(_end - i - 1);
+				}
+				_alloc.construct(_start + pos, val);
+				_end++;
+				return (iterator(_start + pos));
 			}
-			_alloc.construct(_start + pos, val);
-			_end++;
-			return (iterator(_start + pos));
-		}
 
-		// 2.fill
-		void insert(iterator position, size_type n, const value_type& val)
-		{
-			size_type next_size = this->size() + n;
-			size_type pos = &*position - _start;
-			size_type prev_capa = this->capacity();
-			size_type alloced_size = 0;
-			pointer new_start = ft_nullptr;
-			pointer prev_capa_end = _capa_end;
-			(void)val;
-			(void)pos;
-			(void)prev_capa_end;
-			if (this->max_size() < next_size)
-				throw std::length_error("ft::vector::insert: max_size() < this->size() + n");
-			if (this->capacity() < next_size)
-			{
-				new_start = _alloc.allocate(next_size);
-				_capa_end = new_start + next_size;
-				alloced_size = next_size;
+			void insert(iterator position, size_type n, const value_type& val) {
+				if (position > this->end() || position < this->begin())
+					return;
+				
+				size_type	next_size = this->size() + n;
+				size_type	pos = &*position - _start;
+				size_type	prev_capa = this->capacity();
+				size_type	alloced_size = 0;
+				pointer		new_start = ft_nullptr;
+				pointer		prev_capa_end = _capa_end;
+
+				if (this->max_size() < next_size)
+					throw std::length_error("ft::vector::insert: max_size() < this->size() + n");
+				if (this->capacity() < next_size) {
+					new_start = _alloc.allocate(next_size);
+					_capa_end = new_start + next_size;
+					alloced_size = next_size;
+				} else {
+					new_start = _alloc.allocate(this->capacity() * 2);
+					_capa_end = new_start + this->capacity() * 2;
+					alloced_size = this->capacity() * 2;
+				}
+				try {
+					for (size_type i = 0; i < pos; ++i)
+						_alloc.construct(new_start + i, *(_start + i));
+					for (size_type i = 0; i < n; ++i)
+						_alloc.construct(new_start + pos + i, val);
+					for (size_type i = 0; i < this->size() - pos; ++i)
+						_alloc.construct(new_start + pos + n + i, *(_start + pos + i));
+				} catch(...) {
+					for (size_type i = 0; i < pos; ++i)
+						_alloc.destroy(new_start + i);
+					for (size_type i = 0; i < n; ++i)
+						_alloc.destroy(new_start + pos + i);
+					for (size_type i = 0; i < this->size() - pos; ++i)
+						_alloc.destroy(new_start + pos + n + i);
+					_alloc.deallocate(new_start, alloced_size);
+					_capa_end = prev_capa_end;
+					throw;
+				}
+
+				for (size_type i = 0; i < this->size(); ++i)
+					_alloc.destroy(_start + i);
+				_alloc.deallocate(_start, prev_capa);
+				_end = new_start + n + this->size();
+				_start = new_start;
 			}
-			else
-			{
-				new_start = _alloc.allocate(this->capacity() * 2);
-				_capa_end = new_start + this->capacity() * 2;
-				alloced_size = this->capacity() * 2;
-			}
 
-			for (size_type i = 0; i <this->size(); ++i)
-				_alloc.destroy(_start + i);
-			_alloc.deallocate(_start, prev_capa);
-			_end = new_start + n + this->size();
-			_start = new_start;
-		}
-
-		// 3.range
-		template<class InputIterator>
-		void insert(iterator position, InputIterator first, InputIterator last,
-		typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = ft_nullptr)
-		{
-			if (position > this->end() || position < this->begin())
+			template <class InputIterator>
+			void insert(iterator position, InputIterator first, InputIterator last, 
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = ft_nullptr ) {
+				if (position > this->end() || position < this->begin())
 					return;
 				
 				size_type	num = ft::distance(first, last);
@@ -439,28 +545,44 @@ namespace ft {
 				pointer		new_start = ft_nullptr;
 				pointer		prev_capa_ptr = _capa_end;
 
-			(void)pos;
-			(void)prev_capa_ptr;
-			if (this->max_size() < next_size)
+				if (this->max_size() < next_size)
 					throw std::length_error("ft::vector::insert: max_size() < this->size() + n");
-			if (this->capacity() * 2 < next_size)
-			{
-				new_start = _alloc.allocate(next_size);
-				_capa_end = new_start + next_size;
-				alloced_size = next_size;
-			}
-			else
-			{
-				new_start = _alloc.allocate(this->capacity() * 2);
-				_capa_end = new_start + this->capacity() * 2;
-				alloced_size = this->capacity() * 2;
-			}
-			for (size_type i = 0; i < this->size(); ++i)
+				if (this->capacity() * 2 < next_size) {
+					new_start = _alloc.allocate(next_size);
+					_capa_end = new_start + next_size;
+					alloced_size = next_size;
+				} else {
+					new_start = _alloc.allocate(this->capacity() * 2);
+					_capa_end = new_start + this->capacity() * 2;
+					alloced_size = this->capacity() * 2;
+				}
+				try {
+					for (size_type i = 0; i < pos; ++i)
+						_alloc.construct(new_start + i, *(_start + i));
+					for (size_type i = 0; i < num; ++i)
+						_alloc.construct(new_start + pos + i, *(&*first++));
+					for (size_type i = 0; i < this->size() - pos; ++i)
+						_alloc.construct(new_start + pos + num + i, *(_start + pos + i));
+				} catch(...) {
+					for (size_type i = 0; i < pos; ++i)
+						_alloc.destroy(new_start + i);
+					for (size_type i = 0; i < num; ++i)
+						_alloc.destroy(new_start + pos + i);
+					for (size_type i = 0; i < this->size() - pos; ++i)
+						_alloc.destroy(new_start + pos + num + i);
+					_alloc.deallocate(new_start, alloced_size);
+					_capa_end = prev_capa_ptr;
+					throw;
+				}
+				for (size_type i = 0; i < this->size(); ++i)
 					_alloc.destroy(_start + i);
-			_alloc.deallocate(_start, prev_capa);
-			_end = new_start + num + this->size();
-			_start = new_start;
-		}
+				_alloc.deallocate(_start, prev_capa);
+				_end = new_start + num + this->size();
+				_start = new_start;
+			}
+
+
+	///////////////////////////////////////	
 
 		// 벡터의 뒤에 새로운 element를 추가한다.
 		// 늘어난 벡터의 크기가 capacity를 넘어갈 경우, 이전 capacity * 2의 크기로 늘어남
@@ -510,24 +632,23 @@ namespace ft {
 			return prev_first;
 		}
 
-		void swap(vector& other)
-		{
-			pointer		tmp_start = _start;
-			pointer		tmp_end = _end;
-			pointer		tmp_capa_end = _capa_end;
-			allocator_type tmp_alloc = _alloc;
+		void swap(vector& other) {
+				pointer			tmp_start = _start;
+				pointer			tmp_end = _end;
+				pointer			tmp_capa_end = _capa_end;
+				allocator_type	tmp_alloc = _alloc;
 
-			_start = other._start;
-			_end = other._end;
-			_capa_end = other._capa_end;
-			_alloc = other._alloc;
+				_start = other._start;
+				_end = other._end;
+				_capa_end = other._capa_end;
+				_alloc = other._alloc;
+				
+				other._start = tmp_start;
+				other._end = tmp_end;
+				other._capa_end = tmp_capa_end;
+				other._alloc = tmp_alloc;
+			}
 
-			other._start = tmp_start;
-			other._end = tmp_end;
-			other._capa_end = tmp_capa_end;
-			other._alloc = tmp_alloc;
-		}
-		
 		void clear()
 		{
 			while (_start != _end)
