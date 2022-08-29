@@ -1,42 +1,32 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include <memory> //allocator call
+#include <memory>
 #include "utils.hpp" //ft_nullptr, enable_if, is_integral
 #include "reverse_iterator.hpp"
 #include "random_access_iterator.hpp"
 
 namespace ft {
-    template <typename T, typename Allocator = std::allocator<T> >  
-    //std::allocator사용하라는 subject
+    template <typename T, typename Allocator = std::allocator<T> >
     class vector {
         public:
 		// Member types ======================================================================================
 
             typedef T                                           value_type;
-            // 컨테이너에 담을 변수 타입 저장
 
-            // * allocate는 템플릿으로 만들어야 하며, 템플릿 매개변수에는 할당하고자 하는 객체의 타입 T를 사용한다.
-            // * pointer(T*)와 reference(T&)라는 typedef를 제공해야한다.
             typedef Allocator										allocator_type;
             typedef typename allocator_type::reference				reference;
 			typedef typename allocator_type::const_reference		const_reference;
 			typedef typename allocator_type::pointer				pointer;
 			typedef typename allocator_type::const_pointer			const_pointer;
-            // allocator의 타입과 reference, pointer allocator_type에서 끄집어오기
-            
+
             typedef typename allocator_type::size_type				size_type;
 			typedef typename allocator_type::difference_type		difference_type;
-            // size_t, ptrdiff_t (두 포인터를 뺀 결과의 부호 있는 정수 유형)
 
-
-			// iterator 구현하기
             typedef ft::random_access_iterator<value_type>			iterator;
             typedef ft::random_access_iterator<const value_type>	const_iterator;
             typedef ft::reverse_iterator<iterator>					reverse_iterator;
             typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
-            // 위의 iterator를 받아오지 않고 T만 받아오면 reverse_iterator에서 random iterator에서 구현한 것을 한번더 구현을 해야한다.
-			// 그래서 편의상 iterator를 template으로 받아 버리자!
 
 			// random iterator
 			// reverse iterator >> 공부하기 대충은 ok
