@@ -44,7 +44,7 @@ class random_access_iterator : public ft::iterator<ft::random_access_iterator_ta
 // constructor & destructor =================================================================
 
         // default constructor
-        ramdom_access_iterator(void): _i(ft::nil) {}
+        random_access_iterator(void): _i(ft::nil) {}
 
         // fill constructor (pointer fill)
         random_access_iterator(T* pointer) : _i(pointer) {} 
@@ -71,7 +71,7 @@ class random_access_iterator : public ft::iterator<ft::random_access_iterator_ta
         iterator_type base(void) const { return _i; }
 
         // address get _i가 pointer니까
-        poiter operator->(void) const { return _i; }
+        pointer operator->(void) const { return _i; }
 
         // base와 operator->와 다른점
         // 오퍼레이터를 오버라이딩해야되서
@@ -167,7 +167,7 @@ class random_access_iterator : public ft::iterator<ft::random_access_iterator_ta
     template<typename T1, typename T2>
     typename random_access_iterator<T1>::difference_type operator-(const random_access_iterator<T1>& x,
                                                                     const random_access_iterator<T2>& y) {
-        return  x.base() - v.base();
+        return  x.base() - y.base();
     }
 
 // relational operators =================================================================

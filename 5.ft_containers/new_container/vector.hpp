@@ -39,63 +39,63 @@ namespace ft {
             typedef	typename allocator_type::const_reference				const_reference;
             typedef	typename allocator_type::pointer						pointer;
             typedef	typename allocator_type::const_pointer					const_pointer;
-            typedef	typename allocator_type::size_type						size_type;
-            typedef	typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
             typedef ft::random_access_iterator<value_type> iterator;
             typedef ft::random_access_iterator<const value_type> const_iterator;
             typedef ft::reverse_iterator<iterator> reverse_iterator;
             typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
+            typedef	typename allocator_type::size_type						size_type;
+            typedef	typename ft::iterator_traits<iterator>::difference_type	difference_type;
             /* constructor & destructor */
 
             // default constructor
             explicit vector(const allocator_type& alloc = allocator_type())
-            : __begin(ft::nil), __end(ft::nil), __cap(ft::nil), __alloc(alloc) {}
+            : _begin(ft::nil), _end(ft::nil), _cap(ft::nil), _alloc(alloc) {}
             
             // fill constructor
             explicit vector(size_type n, const value_type& value = value_type(),
             const allocator_type& alloc = allocator_type())
-            : __alloc(alloc) {
-                __init(n);
-                __construct(n, value);
+            : _alloc(alloc) {
+                _init(n);
+                _construct(n, value);
             }
 
             // range constructor
             template <class InputIterator>
             vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
             typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nil)
-            : __alloc(alloc) {
-                size_type n = std::distance(first, last);
-                __init(n);
-                __construct(n);
-                std::copy(first, last, __begin); // begin에 first부터 last까지 복사를 해준다.
+            : _alloc(alloc) {
+                size_type n = ft::distance(first, last);
+                _init(n);
+                _construct(n);
+                std::copy(first, last, _begin); // begin에 first부터 last까지 복사를 해준다.
             }
 
             // copy constructor
             vector(const vector& v)
-            : __alloc(v.__alloc) {
+            : _alloc(v._alloc) {
                 size_type n = v.size();
-                __init(v.capacity()); // 메모리 크기 똑같이
-                __construct(n);
-                std::copy(v.__begin, v.__end, __begin);
+                _init(v.capacity()); // 메모리 크기 똑같이
+                _construct(n);
+                std::copy(v._begin, v._end, _begin);
             }
 
             // destructor
             ~vector(void) {
-                if (__begin == ft::nil) { // allocator 조차 안되었을때
+                if (_begin == ft::nil) { // allocator 조차 안되었을때
                     return;
                 }
                 size_type pre_capacity = capacity();
-                __destruct(__begin); //여기까지 값없애 주고
-                __alloc.deallocate(__begin, pre_capacity); // 할당 공간 삭제
+                _destruct(_begin); //여기까지 값없애 주고
+                _alloc.deallocate(_begin, pre_capacity); // 할당 공간 삭제
             }
 
             // 연산자 =
             /* member function for util */
             vector& operator=(const vector& v) {
                 if (this != &v) {
-                    assign(v.__begin, v.__end); //assign
+                    assign(v._begin, v._end); //assign
                 }
                 return *this;
             }
@@ -104,16 +104,16 @@ namespace ft {
 
             // iterator로 typedef 된 random_access_iterator의 포인터 생성자 호출!
             iterator begin(void) {
-                return iterator(__begin);
+                return iterator(_begin);
             }
             const_iterator begin(void) const {
-                return const_iterator(__begin);
+                return const_iterator(_begin);
             }
             iterator end(void) {
-                return iterator(__end);
+                return iterator(_end);
             }
             const_iterator end(void) const {
-                return const_iterator(__end);
+                return const_iterator(_end);
             }
             reverse_iterator rbegin(void) {
                 return reverse_iterator(end());
@@ -132,11 +132,11 @@ namespace ft {
 
             // 배열처럼 접근하여 인덱스에 대한 참조 반환
             reference operator[](size_type n) {
-                return __begin[n];
+                return _begin[n];
             }
 
             const_reference operator[](size_type n) const {
-                return __begin[n];
+                return _begin[n];
             }
 
             // 벡터의 n위치에 있는 요소에 대한 참조를 반환, n은 값이 아니라 위치!
@@ -146,41 +146,41 @@ namespace ft {
                 if (n >= size()) {
                     throw std::out_of_range("index out of range");
                 }
-                return __begin[n];
+                return _begin[n];
             }
 
             const_reference at(size_type n) const {
                 if (n >= size()) {
                     throw std::out_of_range("index out of range");
                 }
-                return __begin[n];
+                return _begin[n];
             }
 
             reference front(void) {
-                return *__begin;
+                return *_begin;
             }
             const_reference front(void) const {
-                return *__begin;
+                return *_begin;
             }
             reference back(void) {
-                return *(__end - 1);
+                return *(_end - 1);
             }
             const_reference back(void) const {
-                return *(__end - 1);
+                return *(_end - 1);
             }
 
             // ?
             T* data(void) throw() {
-                return reinterpret_cast<T*>(__begin);
+                return reinterpret_cast<T*>(_begin);
             }
             const T* data(void) const throw() {
-                return reinterpret_cast<const T*>(__begin);
+                return reinterpret_cast<const T*>(_begin);
             }
 
             /* capacity */
 
             // pointer 차이를 size_t로 
-            size_type   size(void)  const   { return (__end - __begin); }
+            size_type   size(void)  const   { return (_end - _begin); }
 
             size_type   max_size()	const   { return _alloc.max_size(); }
 
@@ -189,20 +189,20 @@ namespace ft {
             void resize(size_type n, value_type value = value_type()) {
                 if (size() > n) {
                     size_type diff = size() - n;
-                    __destruct(diff);
+                    _destruct(diff);
                 }
                 else if (size() < n) {
                     size_type diff = n - size();
                     if (capacity() < n) {
                         reserve(n);
                     }
-                    __construct(diff, value);
+                    _construct(diff, value);
                 }
             }
             
             size_type	capacity()	const	{ return (_cap - _begin); }
 
-            bool empty(void) const { return __begin == __end; }
+            bool empty(void) const { return _begin == _end; }
 
             // 벡터의 용량(재할당 없이 벡터가 보유할 수 있는 총 요소 수)보다 크거나 같은 값으로 늘 new_cap한다.
 			// 현재 capacity() new_cap보다 크면 새 스토리지가 할당되고, 그렇지 않으면 함수가 아무 작업도 수행하지 않는다.
@@ -215,7 +215,7 @@ namespace ft {
                 }
                 size_type pre_size = size();
                 size_type pre_capacity = capacity();
-                pointer begin = __alloc.allocate(n);
+                pointer begin = _alloc.allocate(n);
 
                 // https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=hiko_seijuro&logNo=110008273000
                 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/e0bd2dd9-173d-4894-b39a-b5b08e96d70e/difference-between-stdcopy-and-stduninitializedcopy?forum=vcgeneral
@@ -225,12 +225,12 @@ namespace ft {
                 // 대상 범위에 기존 개체가 있으면 메모리가 손상될 수 있습니다.
 
                 // 메모리 할당을 객체 생성에서 분리할 수 있게 하는 STL의 저수준 구성요소들 중 하나이다.
-                std::uninitialized_copy(__begin, __end, begin);
-                __destruct(__begin);
-                __alloc.deallocate(__begin, pre_capacity);
-                __begin = begin;
-                __end = __begin + pre_size;
-                __cap = __begin + n;
+                std::uninitialized_copy(_begin, _end, begin);
+                _destruct(_begin);
+                _alloc.deallocate(_begin, pre_capacity);
+                _begin = begin;
+                _end = _begin + pre_size;
+                _cap = _begin + n;
             }
 
             /* modifiers */
@@ -238,13 +238,13 @@ namespace ft {
             template <class InputIterator>
             void assign(InputIterator first, InputIterator last,
                         typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nil) {
-                size_type n = std::distance(first, last);
+                size_type n = ft::distance(first, last);
                 if (capacity() < n) {
                     reserve(n);
                 }
-                // __begin 복사한 원소들을 저장할 곳의 시작점을 나타내는 반복자
-                std::copy(first, last, __begin);
-                __end = __begin + n;
+                // _begin 복사한 원소들을 저장할 곳의 시작점을 나타내는 반복자
+                std::copy(first, last, _begin);
+                _end = _begin + n;
             }
 
             void assign(size_type n, const value_type& value) {
@@ -253,8 +253,8 @@ namespace ft {
                 }
                 // 배열 초기화
                 // 변경하려는 원소의 범위 시작주소, 변경하려는 원소 갯수, 변경 값
-                std::fill_n(__begin, n, value);
-                __end = __begin + n;
+                std::fill_n(_begin, n, value);
+                _end = _begin + n;
             }
 
             // 벡터의 뒤에 새로운 element를 추가한다.
@@ -264,12 +264,12 @@ namespace ft {
                 if (capacity() < n) {
                     reserve(n);
                 }
-                __construct(1); // 객체 추가
-                *(__end - 1) = value;
+                _construct(1); // 객체 추가
+                *(_end - 1) = value;
             }
 
             void pop_back(void) {
-                __destruct(1); // 객체 소멸
+                _destruct(1); // 객체 소멸
             }
 
             // insert single, fill, range
@@ -278,13 +278,13 @@ namespace ft {
                 if (capacity() < size() + 1) {
                     reserve(size() + 1);
                 }
-                pointer ptr = __begin + diff;
-                __construct(1);
+                pointer ptr = _begin + diff;
+                _construct(1);
 
                 // https://runebook.dev/ko/docs/cpp/algorithm/copy_backward
                 // [first, last) 정의 된 범위에서 d_last 로 끝나는 다른 범위로 요소를 복사합니다 . 요소는 역순으로 복사되지만 (마지막 요소가 먼저 복사 됨) 상대 순서는 유지됩니다.
                 // 뒤로 미는 구나 뒤에서 부터 복사해야하니까 backward
-                std::copy_backward(ptr, __end - 1, __end);
+                std::copy_backward(ptr, _end - 1, _end);
                 *ptr = value;
                 return iterator(ptr);
             }
@@ -294,9 +294,9 @@ namespace ft {
                 if (capacity() < size() + n) {
                     reserve(size() + n);
                 }
-                pointer ptr = __begin + diff;
-                __construct(n);
-                std::copy_backward(ptr, __end - n, __end);
+                pointer ptr = _begin + diff;
+                _construct(n);
+                std::copy_backward(ptr, _end - n, _end);
                 for (size_type i = 0 ; i < n ; i++) {
                     ptr[i] = value;
                 }
@@ -305,14 +305,14 @@ namespace ft {
             template <class InputIterator>
             void insert(iterator position, InputIterator first, InputIterator last,
             typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nil) {
-                difference_type n = std::distance(first, last);
+                difference_type n = ft::distance(first, last);
                 difference_type diff = position - begin();
                 if (capacity() < size() + n) {
                     reserve(size() + n);
                 }
-                pointer ptr = __begin + diff;
-                __construct(n);
-                std::copy_backward(ptr, __end - n, __end);
+                pointer ptr = _begin + diff;
+                _construct(n);
+                std::copy_backward(ptr, _end - n, _end);
                 for (InputIterator i = first ; i != last ; i++, ptr++) {
                     *ptr = *i;
                 }
@@ -320,80 +320,80 @@ namespace ft {
 
             iterator erase(iterator position) {
                 difference_type diff = position - begin();
-                pointer ptr = __begin + diff;
+                pointer ptr = _begin + diff;
                 // 이런식으로 빼고 더하는 이유는? 포인터 위치 찾아줄려고 하는 구나
-                std::copy(ptr + 1, __end, ptr);
-                __destruct(1);
+                std::copy(ptr + 1, _end, ptr);
+                _destruct(1);
                 return iterator(ptr);
             }
 
             iterator erase(iterator first, iterator last) {
-                difference_type n = std::distance(first, last);
+                difference_type n = ft::distance(first, last);
                 std::copy(last, end(), first);
-                __destruct(n);
+                _destruct(n);
                 return first;
             } 
 
             void swap(vector& v) {
-                std::swap(__begin, v.__begin);
-                std::swap(__end, v.__end);
-                std::swap(__cap, v.__cap);
-                std::swap(__alloc, v.__alloc);
+                std::swap(_begin, v._begin);
+                std::swap(_end, v._end);
+                std::swap(_cap, v._cap);
+                std::swap(_alloc, v._alloc);
             }
 
             void clear(void) {
-                __destruct(__begin);
+                _destruct(_begin);
             }
 
             /* allocator */
             // 벡터와 연결된 할당자 객체의 복사본을 반환한다.
 		    // 진베 왈 : 외부에서 만들어 놓은 하나(이상)의 인자를 이미 만들어놓은 벡터의 allocator 안에 넣기 위함?
             allocator_type get_allocator(void) const {
-                return __alloc;
+                return _alloc;
             }
 
             private:
-                pointer __begin;
-                pointer __end;
-                pointer __cap;
-                allocator_type __alloc;
+                pointer _begin;
+                pointer _end;
+                pointer _cap;
+                allocator_type _alloc;
 
             /* initialize memory & iterating pointer */
-            void __init(size_type n) {
+            void _init(size_type n) {
                 if (n > max_size()) {
                     throw std::length_error("allocation size too big");
                 }
-                __begin = __alloc.allocate(n); // 공간만 할당
-                __end = __begin; 
-                __cap = __begin + n;
+                _begin = _alloc.allocate(n); // 공간만 할당
+                _end = _begin; 
+                _cap = _begin + n;
             }
 
             /* construct with specific value */
-            void __construct(size_type n, T value) {
-                for ( ; n > 0 ; __end++, n--) {
-                    __alloc.construct(__end); // 객체 추가
-                    *__end = value; // 초기화
+            void _construct(size_type n, T value) {
+                for ( ; n > 0 ; _end++, n--) {
+                    _alloc.construct(_end); // 객체 추가
+                    *_end = value; // 초기화
                 }
             }
 
             /* construct without value */
-            void __construct(size_type n) {
-                for ( ; n > 0 ; __end++, n--) {
-                    __alloc.construct(__end);
+            void _construct(size_type n) {
+                for ( ; n > 0 ; _end++, n--) {
+                    _alloc.construct(_end);
                 }
             }
 
             /* destruct with size from end */
-            void __destruct(size_type n) {
-                for ( ; n > 0 && __end-- ; n--) {
-                    __alloc.destroy(__end); // 객체 소멸 .. 공간은 남아있음
+            void _destruct(size_type n) {
+                for ( ; n > 0 && _end-- ; n--) {
+                    _alloc.destroy(_end); // 객체 소멸 .. 공간은 남아있음
                 }
             }
 
             /* destruct from end to pointer */
-            void __destruct(pointer until) {
-                for ( ; __end != until && __end-- ; ) {
-                    __alloc.destroy(__end);
+            void _destruct(pointer until) {
+                for ( ; _end != until && _end-- ; ) {
+                    _alloc.destroy(_end);
                 }
             }
     };

@@ -13,7 +13,7 @@ namespace ft {
 
         public:
                 // random access iterator 기반으로 만들어지기 떄문에! Iterator를 받아온다
-        typedef Iterator itertor_type;
+        typedef Iterator iterator_type;
         typedef typename ft::iterator_traits<iterator_type>::difference_type difference_type;
         typedef typename ft::iterator_traits<iterator_type>::value_type value_type;
         typedef typename ft::iterator_traits<iterator_type>::pointer pointer;

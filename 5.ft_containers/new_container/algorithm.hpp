@@ -2,6 +2,7 @@
 #define ALGORITHM_HPP
 
 #include <cstdint>
+#include "iterator_traits.hpp"
 
 // https://en.cppreference.com/w/cpp/algorithm/equal
 
@@ -87,6 +88,18 @@ namespace ft {
     }
 
 // ============================================================================
+
+    /* distance */
+    template < typename InputIt >
+	typename ft::iterator_traits<InputIt>::difference_type	distance(InputIt first, InputIt last)
+	{
+		typename ft::iterator_traits<InputIt>::difference_type	dist = 0;
+		while (first != last){
+			++first;
+			++dist;
+		}
+		return dist;
+	}
 
 } // namespace ft
 
