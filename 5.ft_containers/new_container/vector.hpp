@@ -8,6 +8,7 @@
 #include "reverse_iterator.hpp"
 #include "type_traits.hpp"
 
+
 namespace ft {
     
     /* vector */
@@ -42,7 +43,9 @@ namespace ft {
             typedef	typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
             typedef ft::random_access_iterator<value_type> iterator;
+            typedef ft::random_access_iterator<const value_type> const_iterator;
             typedef ft::reverse_iterator<iterator> reverse_iterator;
+            typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
             /* constructor & destructor */
 
@@ -103,20 +106,36 @@ namespace ft {
             iterator begin(void) {
                 return iterator(__begin);
             }
+            const_iterator begin(void) const {
+                return const_iterator(__begin);
+            }
             iterator end(void) {
                 return iterator(__end);
+            }
+            const_iterator end(void) const {
+                return const_iterator(__end);
             }
             reverse_iterator rbegin(void) {
                 return reverse_iterator(end());
             }
+            const_reverse_iterator rbegin(void) const {
+                return const_reverse_iterator(end());
+            }
             reverse_iterator rend(void) {
                 return reverse_iterator(begin());
+            }
+            const_reverse_iterator rend(void) const {
+                return const_reveres_iterator(begin());
             }
 
             /* element access */
 
             // 배열처럼 접근하여 인덱스에 대한 참조 반환
             reference operator[](size_type n) {
+                return __begin[n];
+            }
+
+            const_reference operator[](size_type n) const {
                 return __begin[n];
             }
 
@@ -130,18 +149,33 @@ namespace ft {
                 return __begin[n];
             }
 
+            const_reference at(size_type n) const {
+                if (n >= size()) {
+                    throw std::out_of_range("index out of range");
+                }
+                return __begin[n];
+            }
+
             reference front(void) {
                 return *__begin;
             }
-
+            const_reference front(void) const {
+                return *__begin;
+            }
             reference back(void) {
+                return *(__end - 1);
+            }
+            const_reference back(void) const {
                 return *(__end - 1);
             }
 
             // ?
             T* data(void) throw() {
                 return reinterpret_cast<T*>(__begin);
-            } 
+            }
+            const T* data(void) const throw() {
+                return reinterpret_cast<const T*>(__begin);
+            }
 
             /* capacity */
 
