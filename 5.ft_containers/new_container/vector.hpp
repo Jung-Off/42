@@ -57,8 +57,8 @@ namespace ft {
             explicit vector(size_type n, const value_type& value = value_type(),
             const allocator_type& alloc = allocator_type())
             : _alloc(alloc) {
-                _init(n);
-                _construct(n, value);
+                __init(n);
+                __construct(n, value);
             }
 
             // range constructor
@@ -67,8 +67,8 @@ namespace ft {
             typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nil)
             : _alloc(alloc) {
                 size_type n = ft::distance(first, last);
-                _init(n);
-                _construct(n);
+                __init(n);
+                __construct(n);
                 std::copy(first, last, _begin); // begin에 first부터 last까지 복사를 해준다.
             }
 
@@ -76,8 +76,8 @@ namespace ft {
             vector(const vector& v)
             : _alloc(v._alloc) {
                 size_type n = v.size();
-                _init(v.capacity()); // 메모리 크기 똑같이
-                _construct(n);
+                __init(v.capacity()); // 메모리 크기 똑같이
+                __construct(n);
                 std::copy(v._begin, v._end, _begin);
             }
 
@@ -87,7 +87,7 @@ namespace ft {
                     return;
                 }
                 size_type pre_capacity = capacity();
-                _destruct(_begin); //여기까지 값없애 주고
+                __destruct(_begin); //여기까지 값없애 주고
                 _alloc.deallocate(_begin, pre_capacity); // 할당 공간 삭제
             }
 
@@ -169,19 +169,30 @@ namespace ft {
                 return *(_end - 1);
             }
 
-            // ?
+            // ? 여기는 뭐 때문에 필요한걸까? 지워도 상관은 없을 거 같은데
+            // string을 char*로 받을 때 data를 썻을 때 c_str(char *)은 const가 붙어서  data
+            // const char * >> data
+            // char * >> c_str
+
+            // begin의 주소를 return
+            // 배열에 대한 주소?
+
+            // 실제 요소가 저장된 처음 주소를 반환
             T* data(void) throw() {
                 return reinterpret_cast<T*>(_begin);
             }
             const T* data(void) const throw() {
                 return reinterpret_cast<const T*>(_begin);
             }
+            // iterator도 pointer이다. casting을 안전하게 하기 위함
 
             /* capacity */
 
-            // pointer 차이를 size_t로 
+            // pointer 차이를 size_type(size_t)로
+            // ptr_diff 와 size_t 다르니까 이전에 캐스팅을 하였다.
             size_type   size(void)  const   { return (_end - _begin); }
 
+            // 할당의 최대 사이즈를 _alloc에서 뽑아내기
             size_type   max_size()	const   { return _alloc.max_size(); }
 
             // n이 현재 컨테이너 크기보다 작으면, 그 이상의 요소를 제거하고 크기를 축소
@@ -189,23 +200,24 @@ namespace ft {
             void resize(size_type n, value_type value = value_type()) {
                 if (size() > n) {
                     size_type diff = size() - n;
-                    _destruct(diff);
+                    __destruct(diff); // 객체 소멸
                 }
                 else if (size() < n) {
                     size_type diff = n - size();
                     if (capacity() < n) {
-                        reserve(n);
+                        reserve(n);     // new_cap 크면 새 스토리지 할당 작으면 수행x,
                     }
-                    _construct(diff, value);
+                    __construct(diff, value); // 객체추가
                 }
             }
             
-            size_type	capacity()	const	{ return (_cap - _begin); }
+            size_type	capacity()	const	{ return (_cap - _begin); } // 수용할 수 있는 공간
 
-            bool empty(void) const { return _begin == _end; }
+            bool empty(void) const { return _begin == _end; } // 비어있는지 확인
 
             // 벡터의 용량(재할당 없이 벡터가 보유할 수 있는 총 요소 수)보다 크거나 같은 값으로 늘 new_cap한다.
 			// 현재 capacity() new_cap보다 크면 새 스토리지가 할당되고, 그렇지 않으면 함수가 아무 작업도 수행하지 않는다.
+            // capacity를 늘려줘
             void reserve(size_type n) {
                 if (n <= capacity()) { // n <= size()
                     return;
@@ -215,18 +227,29 @@ namespace ft {
                 }
                 size_type pre_size = size();
                 size_type pre_capacity = capacity();
-                pointer begin = _alloc.allocate(n);
+                pointer begin = _alloc.allocate(n); // 공간 할당
 
                 // https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=hiko_seijuro&logNo=110008273000
                 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/e0bd2dd9-173d-4894-b39a-b5b08e96d70e/difference-between-stdcopy-and-stduninitializedcopy?forum=vcgeneral
                 
                 // std::copy는 operator=를 사용하여 대상 범위의 기존 개체를 덮어씁니다.
-                // std::uninitialized_copy는 new 배치를 사용하여 대상 범위에 새 개체를 만듭니다.
+                // std::uninitialized_copy는 new 배치를 사용하여 대상 범위에 새 개체를 만듭니다. (개체가 존재하지 않음)
                 // 대상 범위에 기존 개체가 있으면 메모리가 손상될 수 있습니다.
 
                 // 메모리 할당을 객체 생성에서 분리할 수 있게 하는 STL의 저수준 구성요소들 중 하나이다.
+                // 개체를 생성해서 begin으로 가리키는 듯?
+                // construct까지 해주는 듯?
+                
+
+                // int float 메모리할당이나 new이나
+
+                // custom 으로 animal 생성자로 >> brain(메모리 할당하는 공간)
+                // 메모리 할당만 받아서 copy를 해야 brain 까지
+
+                // 객체가 없었던 공간에 생성자를 호출해서 할당해놓은 공간에 copy를 한다.
                 std::uninitialized_copy(_begin, _end, begin);
-                _destruct(_begin);
+
+                __destruct(_begin);
                 _alloc.deallocate(_begin, pre_capacity);
                 _begin = begin;
                 _end = _begin + pre_size;
@@ -247,6 +270,8 @@ namespace ft {
                 _end = _begin + n;
             }
 
+            // assigin, insert, push_back
+            // stl과 다르다.
             void assign(size_type n, const value_type& value) {
                 if (capacity() < n) {
                     reserve(n);
@@ -258,28 +283,28 @@ namespace ft {
             }
 
             // 벡터의 뒤에 새로운 element를 추가한다.
-            // 늘어난 벡터의 크기가 capacity를 넘어갈 경우, 이전 capacity * 2의 크기로 늘어남
+            // 늘어난 벡터의 크기가 capacity를 넘어갈 경우, 이전 capacity * 2의 크기로 늘어남 (reserve에서)
             void push_back(const value_type& value) {
                 size_type n = size() + 1;
                 if (capacity() < n) {
                     reserve(n);
                 }
-                _construct(1); // 객체 추가
+                __construct(1); // 객체 추가
                 *(_end - 1) = value;
             }
 
             void pop_back(void) {
-                _destruct(1); // 객체 소멸
+                __destruct(1); // 객체 소멸
             }
 
-            // insert single, fill, range
+            // insert 추가하기! single, fill, range
             iterator insert(iterator position, const value_type& value) {
                 difference_type diff = position - begin();
                 if (capacity() < size() + 1) {
                     reserve(size() + 1);
                 }
                 pointer ptr = _begin + diff;
-                _construct(1);
+                __construct(1);
 
                 // https://runebook.dev/ko/docs/cpp/algorithm/copy_backward
                 // [first, last) 정의 된 범위에서 d_last 로 끝나는 다른 범위로 요소를 복사합니다 . 요소는 역순으로 복사되지만 (마지막 요소가 먼저 복사 됨) 상대 순서는 유지됩니다.
@@ -295,7 +320,7 @@ namespace ft {
                     reserve(size() + n);
                 }
                 pointer ptr = _begin + diff;
-                _construct(n);
+                __construct(n);
                 std::copy_backward(ptr, _end - n, _end);
                 for (size_type i = 0 ; i < n ; i++) {
                     ptr[i] = value;
@@ -311,7 +336,7 @@ namespace ft {
                     reserve(size() + n);
                 }
                 pointer ptr = _begin + diff;
-                _construct(n);
+                __construct(n);
                 std::copy_backward(ptr, _end - n, _end);
                 for (InputIterator i = first ; i != last ; i++, ptr++) {
                     *ptr = *i;
@@ -321,16 +346,17 @@ namespace ft {
             iterator erase(iterator position) {
                 difference_type diff = position - begin();
                 pointer ptr = _begin + diff;
-                // 이런식으로 빼고 더하는 이유는? 포인터 위치 찾아줄려고 하는 구나
+                // 이런식으로 빼고 더하는 이유는? 포인터 위치 찾아줄려고 하는 구나(differenc_type으로 pointer 연산하기 위해서)
+                // ptr이 가리키게 하는 것을 ptr + 1 뭐 이런식
                 std::copy(ptr + 1, _end, ptr);
-                _destruct(1);
+                __destruct(1);
                 return iterator(ptr);
             }
 
             iterator erase(iterator first, iterator last) {
                 difference_type n = ft::distance(first, last);
                 std::copy(last, end(), first);
-                _destruct(n);
+                __destruct(n);
                 return first;
             } 
 
@@ -342,12 +368,13 @@ namespace ft {
             }
 
             void clear(void) {
-                _destruct(_begin);
+                __destruct(_begin);
             }
 
             /* allocator */
             // 벡터와 연결된 할당자 객체의 복사본을 반환한다.
 		    // 진베 왈 : 외부에서 만들어 놓은 하나(이상)의 인자를 이미 만들어놓은 벡터의 allocator 안에 넣기 위함?
+            // allocator의 type을 이용하기 위해서
             allocator_type get_allocator(void) const {
                 return _alloc;
             }
@@ -359,7 +386,7 @@ namespace ft {
                 allocator_type _alloc;
 
             /* initialize memory & iterating pointer */
-            void _init(size_type n) {
+            void __init(size_type n) {
                 if (n > max_size()) {
                     throw std::length_error("allocation size too big");
                 }
@@ -369,7 +396,7 @@ namespace ft {
             }
 
             /* construct with specific value */
-            void _construct(size_type n, T value) {
+            void __construct(size_type n, T value) {
                 for ( ; n > 0 ; _end++, n--) {
                     _alloc.construct(_end); // 객체 추가
                     *_end = value; // 초기화
@@ -377,21 +404,21 @@ namespace ft {
             }
 
             /* construct without value */
-            void _construct(size_type n) {
+            void __construct(size_type n) {
                 for ( ; n > 0 ; _end++, n--) {
                     _alloc.construct(_end);
                 }
             }
 
             /* destruct with size from end */
-            void _destruct(size_type n) {
+            void __destruct(size_type n) {
                 for ( ; n > 0 && _end-- ; n--) {
                     _alloc.destroy(_end); // 객체 소멸 .. 공간은 남아있음
                 }
             }
 
             /* destruct from end to pointer */
-            void _destruct(pointer until) {
+            void __destruct(pointer until) {
                 for ( ; _end != until && _end-- ; ) {
                     _alloc.destroy(_end);
                 }
