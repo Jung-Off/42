@@ -90,6 +90,9 @@ namespace ft {
 // ============================================================================
 
     /* distance */
+    // iterator 를 std를 사용하면 distance를 <iterator> 이런식으로 해서 불러올 수 있는 거 같은데
+    // 이게 아니라면
+    // iterator 를 ft로 구현을 하면 distance를 구현해야한다.
     template < typename InputIt >
 	typename ft::iterator_traits<InputIt>::difference_type	distance(InputIt first, InputIt last)
 	{
