@@ -331,11 +331,11 @@ namespace ft {
             void insert(iterator position, InputIterator first, InputIterator last,
             typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nil) {
                 difference_type n = ft::distance(first, last);
-                difference_type diff = position - begin();
+                difference_type diff = position - begin(); // iterator로 사용하기 위한 begin()
                 if (capacity() < size() + n) {
                     reserve(size() + n);
                 }
-                pointer ptr = _begin + diff;
+                pointer ptr = _begin + diff; // pointer로 사용하기 위함 _begin
                 __construct(n);
                 std::copy_backward(ptr, _end - n, _end);
                 for (InputIterator i = first ; i != last ; i++, ptr++) {
