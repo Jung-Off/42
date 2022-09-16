@@ -2,6 +2,7 @@
 #define VECTOR_HPP
 
 #include <memory>
+#include <algorithm>
 #include "algorithm.hpp"
 #include "iterator_traits.hpp"
 #include "random_access_iterator.hpp"
@@ -326,22 +327,76 @@ namespace ft {
                     ptr[i] = value;
                 }
             }
+
+            //jaemjung iterator
+
+			template <class InputIterator>
+			void insert(iterator position, InputIterator first, InputIterator last, 
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = ft::nil) {
+				if (position > this->end() || position < this->begin())
+					return;
+				
+				size_type	num = ft::distance(first, last);
+				size_type	next_size = this->size() + num;
+				size_type	prev_capa = this->capacity();
+				size_type	pos = &*position - _begin;
+				size_type	alloced_size = 0;
+				pointer		new_start = ft::nil;
+				pointer		prev_capa_ptr = _cap;
+
+				if (this->max_size() < next_size)
+					throw std::length_error("ft::vector::insert: max_size() < this->size() + n");
+				if (this->capacity() * 2 < next_size) {
+					new_start = _alloc.allocate(next_size);
+					_cap = new_start + next_size;
+					alloced_size = next_size;
+				} else {
+					new_start = _alloc.allocate(this->capacity() * 2);
+					_cap = new_start + this->capacity() * 2;
+					alloced_size = this->capacity() * 2;
+				}
+                try {
+                    for (size_type i = 0; i < pos; ++i)
+                        _alloc.construct(new_start + i, *(_begin + i));
+                    for (size_type i = 0; i < num; ++i)
+                        _alloc.construct(new_start + pos + i, *(&*first++));
+                    for (size_type i = 0; i < this->size() - pos; ++i)
+                        _alloc.construct(new_start + pos + num + i, *(_begin + pos + i));
+                } catch(...) {
+                    for (size_type i = 0; i < pos; ++i)
+                        _alloc.destroy(new_start + i);
+                    for (size_type i = 0; i < num; ++i)
+                        _alloc.destroy(new_start + pos + i);
+                    for (size_type i = 0; i < this->size() - pos; ++i)
+                        _alloc.destroy(new_start + pos + num + i);
+                    _alloc.deallocate(new_start, alloced_size);
+                    _cap = prev_capa_ptr;
+                    throw;
+                }
+				for (size_type i = 0; i < this->size(); ++i)
+					_alloc.destroy(_begin + i);
+				_alloc.deallocate(_begin, prev_capa);
+				_end = new_start + num + this->size();
+				_begin = new_start;
+			}
             
-            template <class InputIterator>
-            void insert(iterator position, InputIterator first, InputIterator last,
-            typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nil) {
-                difference_type n = ft::distance(first, last);
-                difference_type diff = position - begin(); // iterator로 사용하기 위한 begin()
-                if (capacity() < size() + n) {
-                    reserve(size() + n);
-                }
-                pointer ptr = _begin + diff; // pointer로 사용하기 위함 _begin
-                __construct(n);
-                std::copy_backward(ptr, _end - n, _end);
-                for (InputIterator i = first ; i != last ; i++, ptr++) {
-                    *ptr = *i;
-                }
-            }
+            //jseo iterator
+
+            // template <class InputIterator>
+            // void insert(iterator position, InputIterator first, InputIterator last,
+            // typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nil) {
+            //     difference_type n = ft::distance(first, last);
+            //     difference_type diff = position - begin(); // iterator로 사용하기 위한 begin()
+            //     if (capacity() < size() + n) {
+            //         reserve(size() + n);
+            //     }
+            //     pointer ptr = _begin + diff; // pointer로 사용하기 위함 _begin
+            //     __construct(n);
+            //     std::copy_backward(ptr, _end - n, _end);
+            //     for (InputIterator i = first ; i != last ; i++, ptr++) {
+            //         *ptr = *i;
+            //     }
+            // }
 
             iterator erase(iterator position) {
                 difference_type diff = position - begin();
@@ -360,12 +415,53 @@ namespace ft {
                 return first;
             } 
 
+            //jseo
+
             void swap(vector& v) {
                 std::swap(_begin, v._begin);
                 std::swap(_end, v._end);
                 std::swap(_cap, v._cap);
                 std::swap(_alloc, v._alloc);
             }
+
+            //jinbe
+
+            // void swap (vector& x)
+            // {
+            //     pointer	tmp_start = x._begin;
+            //     pointer	tmp_end = x._end;
+            //     pointer	tmp_end_capa = x._cap;
+            //     allocator_type	tmp_alloc = x._alloc;
+
+            //     x._begin = this->_begin;
+            //     x._cap = this->_cap;
+            //     x._end = this->_end;
+            //     x._alloc = this->_alloc;
+
+            //     this->_begin = tmp_start;
+            //     this->_cap = tmp_end_capa;
+            //     this->_end = tmp_end;
+            //     this->_alloc = tmp_alloc;
+            // }
+
+            //jaemjung
+
+            // void swap(vector& other) {
+			// 	pointer			tmp_start = _begin;
+			// 	pointer			tmp_end = _end;
+			// 	pointer			tmp_capa_end = _cap;
+			// 	// allocator_type	tmp_alloc = _alloc;
+
+			// 	_begin = other._begin;
+			// 	_end = other._end;
+			// 	_cap = other._cap;
+			// 	// _alloc = other._alloc;
+				
+			// 	other._begin = tmp_start;
+			// 	other._end = tmp_end;
+			// 	other._cap = tmp_capa_end;
+			// 	// other._alloc = tmp_alloc;
+			// }
 
             void clear(void) {
                 __destruct(_begin);
@@ -468,11 +564,29 @@ namespace ft {
     /* non member function for util */
     // 벡터 두개를 바꾸기 위함
     // swap (x, y) 를 호출 하면 x.swap(y)가 호출이 된다.
-    template <typename T, class Allocator>
-    void swap(ft::vector<T, Allocator>& x,
-            ft::vector<T, Allocator>& y) {
-        x.swap(y);
-    }
+
+    //jseo
+
+    // template <class T, class Alloc>
+	// void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+	// {
+	// 	x.swap(y);
+	// }
+
+    //jinbe
+
+    // template <typename T, class Allocator>
+	// void swap (vector<T,Allocator>& x, vector<T,Allocator>& y)
+	// {
+	// 	x.swap(y);
+	// }
+
+    //jaemjung
+
+    template <class T, class Alloc>
+	void swap(vector<T, Alloc>& lhs, vector<T, Alloc>& rhs) {
+		lhs.swap(rhs);
+	}
 } // namespace ft
 
 #endif 
