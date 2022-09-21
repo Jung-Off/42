@@ -27,11 +27,10 @@ namespace ft {
 
 // ft_nullptr =================================================================
 
-    //const class ?
 	static class nullptr_t {
 		
         private:
-			void operator&() const; //주소 참조 x
+			void operator&() const; //주소 참조 x 하기 위해서
 
 		public:
 			template <class T>
@@ -50,9 +49,13 @@ namespace ft {
 /* integral_constant */
 template <typename T, T v>
 struct integral_constant {
-  typedef T value_type;
-  typedef integral_constant type;	// 이거 어디선가 쓰겠다 >> 결정된 타입이 나온다 컴파일시 타입을 알아낼수 있다
-
+  typedef T value_type;				// 밖에서 template을 써줘서 구체적으로 <, > 이렇게 안써줘도 template에 맞게 false, true_type을 찾아가는 듯?
+  typedef integral_constant type;	// 이거 어디에서 쓰나요? >> 결정된 타입이 나온다 컴파일시 타입을 알아낼수 있다
+									// true_type이냐 false_type이냐를 integral_constant으로 알 수 있는걸 type으로 
+									// 다시 이름 붙인 것!
+									// integral_constant가 true_type, false_type이런식으로 들어가
+									// ex)	integral_constant<bool, true> 
+									//		integral_constant<bool, false> 이게 type이다! 
   static const value_type value = v;
 };
 
@@ -105,6 +108,7 @@ template <>
 struct is_integral_base<std::uint64_t> : public true_type {};
 
 // int만구현한 이유! 다른자료형이 필요하지 않아서...
+// reference에 명시되어있음
 
 /* is_integral */
 template <typename T>

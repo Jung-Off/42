@@ -28,7 +28,6 @@ namespace ft {
     //     typedef Result result_type;
     //  };
 
-
     // const U로 받는 이유? >> key 값은 바뀌지 않으니까!
     // node를 삭제하지 않는 이상 U가 바뀔일이 없지 않을까?
     // std::allocator로 pair를 생성을 할 수 있구나?!
@@ -38,6 +37,7 @@ namespace ft {
             class Allocator = std::allocator<ft::pair<const U, V> > >
                                                 // const int, string
                                                 // int,         string
+                                                // 두개가 다른 template 형식
                                                 // map의 pair에서는 key, value니까 key를 const
     class map {
         public:
@@ -49,6 +49,24 @@ namespace ft {
             typedef Compare key_compare;
 
             typedef Allocator allocator_type;
+
+
+            // http://egloos.zum.com/sweeper/v/2966785
+            // int를 할당하는 뿐 아니라 int 다음 그 전을 가르킬 공간 까지 할당을 해주기 위함!
+            // int 만을 할당해서는 4바이트만 할당이 됨(실상은 2개의 포인터 + int 12 바이트! 가 필요)
+            // 해당 쳄플릿 매개변수 T 타입의 컨테이너 allocator는 T타입이 아닌 다른 타입에 대한 allocate
+            // 가 필요해 진다. >> (다른 타입이라함은 해당 컨테이너에서 요구되는 진정한 할당 타입!)
+            // typedef typename allocator_type::template rebind<value_type>::other type_allocator;
+            // 벡터의 템플릿이 이미 결정이 되어서 들어왔는데 그 안에 있는 것을 다른 유형으로 다시 생성을 한다
+
+            // 노드 하나의 타입이 노드로써 set<int>
+
+                // int
+            // int   int
+            // map < string, int >
+            // >> string 으로 받아 온 것을 rebind Node <pair<string, int> 타입으로 받을 때 
+
+            // string 보다 더 큰 (Node, pair) 타입을 이용해서 다른 형태의 allocator로 변환
 
             // 저번에 들어봤던거 같음 allocator를 바꾸기 위함? value 말고도 node를 할당해야 되니까!
             // std::allocator<ft::pair<const U, V> 이렇게 되면 pair만큼만 할당을 한다!
@@ -110,8 +128,8 @@ namespace ft {
         /* constructor & destructor */
         explicit map(const key_compare& comp = key_compare(),
                     const allocator_type& alloc = allocator_type())
-        // 신기한 방식으로 __tree를 만드네!?
             : __key_comp(comp), __value_comp(comp), __tree(__value_comp, alloc) {}
+        // 신기한 방식으로 __tree를 만드네!?
 
         template <class InputIterator>
         map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
@@ -139,9 +157,9 @@ namespace ft {
 
         /* iterators */
 
+        // 여기 const가 없는 이유?
         // rbtree에서 구현이 되어져 있어서 알아서 const없이도 잘 알아서 나온다
 
-        // 여기 const가 없는 이유?
         iterator begin(void) {
             return __tree.begin();
         }
@@ -182,17 +200,15 @@ namespace ft {
         /* element access */
         
         // map[aa] // 여기까지의 기능 그 이후의 (= a) 대입의 과정은 들어가 있지 않는다
-        mapped_type& operator[](const key_type& key) {
             // 1. mapped_type?!?! 으로 value를 어떻게 넣지!? >> 이 과정은 없음!
-            ft::pair<iterator, bool> p = insert(ft::make_pair(key, mapped_type()));
 
             // 트리 안에서 iterator를 뱉는것을 구현을 하면 되는데 귀찮아서 하나로 할려고 위와같은 타입의
             // insert만 활용을 하기 위해서 left value의 타입이 저러하다
             // 있으면 key 참조하는 p, 없으면 0을 추가하기위한 위치의 p 트리내부에서 이것을 판단하는게 bool
 
-            //**********//
             // p.first가 iterator이니까(iter가 first, second) ->second는 value 반환
-            // 아래의 at을 참고하세요!
+        mapped_type& operator[](const key_type& key) {
+            ft::pair<iterator, bool> p = insert(ft::make_pair(key, mapped_type()));
             return p.first->second;
         }
 

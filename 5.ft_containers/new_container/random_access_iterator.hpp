@@ -24,14 +24,15 @@ class random_access_iterator : public ft::iterator<ft::random_access_iterator_ta
 
     public:
         typedef T* iterator_type;       
+        
+        // 왜 T* 로 썻는지?
         // T로 되어있으면 iterator_traits가 > 특수화 되지 않아서 리턴값이 const로 나오지 않고 일반화 된 것으로 나온다
         // 우리가 의도한 것을 찾을 수 없다!
         // T*로 되어있으면 int가 들어가면 int* 로 넣어서 iterator_traits에서 특수화 된 것으로 찾게 끔 하여서
         // 그 안에서 자신의 타입을 찾을 수 있게 끔 만들어 놓았다!
         
-        // iterator_type를 사용하기 위함이다 const
+        // iterator_type을 사용하기 위함이다 const
 
-        // 왜 T* 로 썻는지
         typedef typename ft::iterator_traits<iterator_type>::value_type         value_type;
         typedef typename ft::iterator_traits<iterator_type>::difference_type    difference_type;
         typedef typename ft::iterator_traits<iterator_type>::pointer            pointer;
@@ -58,11 +59,10 @@ class random_access_iterator : public ft::iterator<ft::random_access_iterator_ta
 
 // member function for util =================================================================
 
-        // 타입이 U인 것을 대입연산자
+        // 타입이 U인 것을 대입연산자 // i 와 this 의 추가 여부
         template <typename U>
         random_access_iterator& operator=(const random_access_iterator<U>& i)
         {
-            // i 와 this 의 추가 여부
             _i = i.base();
             return *this;
         }
@@ -70,12 +70,12 @@ class random_access_iterator : public ft::iterator<ft::random_access_iterator_ta
         // getter
         iterator_type base(void) const { return _i; }
 
-        // address get _i가 pointer니까
+        // address  get _i가 pointer니까
         pointer operator->(void) const { return _i; }
 
         // base와 operator->와 다른점
         // 오퍼레이터를 오버라이딩해야되서
-        // 같은기능이지만 두개를 구현
+        // 같은 기능이지만 두개를 구현
 
         // value get
         reference operator*(void) const { return *_i; }
@@ -83,7 +83,7 @@ class random_access_iterator : public ft::iterator<ft::random_access_iterator_ta
         // [] 접근
         reference operator[](difference_type n) const { return _i[n]; }
         // 얼마나 떨어져 있는지를 알게 하는 type이다
-        // difference_type 주소값에서 얼마나 멀어졌는지 시작 주소에서 몇번째! 
+        // difference_type이란 주소값에서 얼마나 멀어졌는지 시작 주소에서 몇번째! 
 
 // increment & decrement =================================================================
 
@@ -126,7 +126,7 @@ class random_access_iterator : public ft::iterator<ft::random_access_iterator_ta
         }
 
         // add and this return
-        // 2. _ptr을 건드는거니까 (두 포인터를 뺀 결과의 부호 있는 정수 유형) difference_type으로 연산을 한다?!
+        // 2. _ptr을 건드는거니까 (두 포인터를 뺀 결과의 부호 있는 정수 유형) difference_type으로 연산을 한다
         // i += n
         random_access_iterator& operator+=(difference_type n) {
             _i += n;
@@ -151,8 +151,6 @@ class random_access_iterator : public ft::iterator<ft::random_access_iterator_ta
 
     // T가 다른것!
     // 4. n의 크기, iterator하나
-    // 여기의 것들은 어떤 의도로 구현이 되어있는지 모르겠음
-    // tester기를 위함으로 밖으로 뺴어 놓았다
 
     // 순서가 다르다!!!! n + i
     template <typename T>

@@ -7,7 +7,6 @@ namespace ft {
 
     template <typename T1, typename T2>
     struct pair {
-         // typedef
         typedef T1 first_type;
         typedef T2 second_type;
 
@@ -17,10 +16,15 @@ namespace ft {
 
         /* constructor & destructor */
         pair(void) : first(first_type()), second(second_type()) {}
+
         pair(const first_type& x, const second_type& y) : first(x), second(y) {}
+        
         template<typename U1, typename U2>
         pair(const pair<U1, U2>& p) : first(p.first), second(p.second) {}
 
+        // 구조체 소멸자!
+        // 기본 소멸자가 호출이 될거 같아서 작성을 안한 것 같지만 통일감을 주기 위해서!
+        ~pair(void) {}
         // assign operator
         pair& operator=(const pair& p) {
             if (this != &p) {

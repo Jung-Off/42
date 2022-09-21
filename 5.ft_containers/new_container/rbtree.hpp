@@ -109,6 +109,7 @@ namespace ft {
         while (!__is_left_child(ptr)) {
             ptr = ptr->__parent;
         }
+        // 부모를 반환해야 내 다음값!
         return ptr->__parent;
     }
 
@@ -255,6 +256,9 @@ namespace ft {
             operator __tree_iterator<const value_type, node_type>(void) const {
                 return __tree_iterator<const value_type, node_type>(__cur, __nil);
             }
+            // const 붙은 iterator 
+            // (위에가 없으면 const int라고 하면, int와는 다른! const int 라는 새로운 template 객체가 생성이된다!)
+            // tree iterator가 생성이 되어있는데 const int가 붙은 새로운 iterator를 >> 이미 있는 것으로 사용하기 위해서!
 
             // 인자가 두 개 일때!
             /* non member function for util */
@@ -297,9 +301,6 @@ namespace ft {
 
     };
 
-    // 여기 까지 하기! //
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-
     /* rbtree */
                 // pair                 value가 들어와도 key 비교
     template <typename T, class Key, class Comp, class Allocator>
@@ -324,7 +325,6 @@ namespace ft {
             typedef std::ptrdiff_t difference_type;
 
             /* constructor & destructor */
-            // ! 어떻게 만들어 지는지 과정 한번 보기!
             __rbtree(const compare_type& comp, const allocator_type& alloc) // comp,, alloc tree에서 생성하는 기본 생성자
                 : __comp(comp), __alloc(alloc), __size(size_type()) {
                 __nil = __alloc.allocate(1);            // 공간할당
@@ -333,7 +333,7 @@ namespace ft {
                 __nil->__parent = __nil;
                 __nil->__left = __nil;
                 __nil->__right = __nil;
-                __end = __construct_node(value_type()); // 이것을 이해해야겠군
+                __end = __construct_node(value_type());
                 __end->__is_black = true;
                 __begin = __end;
             }
@@ -361,10 +361,10 @@ namespace ft {
             //복사하는 이유?! 포인터라서?!
             __rbtree& operator=(const __rbtree& t) {
                 if (this != &t) {
-                __rbtree tmp(t);
-                swap(tmp);
+                    __rbtree tmp(t);    // tmp에 t 대입 t의 내용 바꾸면 안되서!
+                    swap(tmp);          // 현재랑 tmp랑 바꾸고 this에 tmp내용
                 }
-                return *this;
+                return *this;           // tmp소멸
             }
 
             /* iterators */
@@ -390,15 +390,10 @@ namespace ft {
                 return __size;
             }
 
-            //
             size_type max_size(void) const {
-                
                 return (__alloc.max_size());
-                // std::min<size_type>(std::numeric_limits<size_type>::max(),
-                                        // node_traits::max_size(node_allocator()));
             }
 
-            //
             bool empty(void) const {
                 return __size == 0;
             }
@@ -416,7 +411,7 @@ namespace ft {
             // map 이니까 key가 같은데 value가 달라
             // key가 없으면 넣는다! map의 기본 모토다!
             // key를 넣는거니까! key가 겹치면 안넣는거고
-            // value바꾸기 위해서는 접근해서 바꾸기!
+            // value바꾸기 위해서는 접근해서 바꾸기만 가능!
 
             iterator insert(iterator position, const value_type& value) {
                 node_pointer ptr = __search_parent(value, position.base());
@@ -442,11 +437,11 @@ namespace ft {
                 iterator tmp(position);
                 ++tmp;
                 if (position == begin()) {
-                    __begin = tmp.base();
+                    __begin = tmp.base(); // 시작점 바꿔주기!
                 }
                 --__size;
-                __remove_internal(position.base());
-                __destruct_node(position.base());
+                __remove_internal(position.base()); // 제거 알고리즘
+                __destruct_node(position.base()); // 노드제거
                 return tmp;
             }
 
@@ -693,56 +688,36 @@ namespace ft {
             // 삭제 후 RB트리 속성 위반 여부 확인
 
             // 40지우기!
-                                                //35
             void __remove_internal(node_pointer ptr) {
                 node_pointer recolor_node;
                 node_pointer fixup_node = ptr; // 올리는 과정에서 노드를 기억하기 위함!
                 bool original_color = __is_black_color(ptr);
 
                 // 노드 삭제
-                // 왼쪽자식이 없으면 오른쪽 자식
-                if (ptr->__left == __nil) {
+                if (ptr->__left == __nil) {                             // 왼쪽자식이 없으면 오른쪽 자식
                     recolor_node = ptr->__right;
-                    // trandplant 첫번째 자리 노드에 두번째 자리 노드
-                    __transplant(ptr, ptr->__right);
-                    // 오른쪽걸 ptr에
-                } else if (ptr->__right == __nil) {
+                    __transplant(ptr, ptr->__right);                    // trandplant 첫번째 자리 노드에 두번째 자리 노드
+                } else if (ptr->__right == __nil) {                     // 오른쪽걸 ptr에
                     recolor_node = ptr->__left;
                     __transplant(ptr, ptr->__left);
-                } else { // 35 지우기                                                        40지우기
-                    fixup_node = __get_min_node(ptr->__right, __nil); //40 succor          45
-                    // 35의 색은 40에게 물려줌
-                    // 35의 색이 날아가는게 아니라 40의 색이 삭제된다.                          black 45
-                    original_color = __is_black_color(fixup_node);
-                    // recolor노드로 할색!
-                    // 40을 대체할 노드에게 45에게 extra black부여                              // 오른쪽 nil
-                    recolor_node = fixup_node->__right;
-                    //45 red black >> black으로 하기
-
-                    //45를 붙이기 위함
-                
-                // 40                         
-                if (fixup_node->__parent == ptr) {
-                    recolor_node->__parent = fixup_node;
-                } else {
-                    //40 자리에 45를 붙임               45자리에 nil을 붙인다!
-                    __transplant(fixup_node, fixup_node->__right);
-                    //40에 오른쪽을 50                  45오른쪽 50
-                    fixup_node->__right = ptr->__right;
-                    //50의 부모를 40으로 만들어주기     50부모 45
-                    fixup_node->__right->__parent = fixup_node;
+                } else {                                                // 40지우기
+                    fixup_node = __get_min_node(ptr->__right, __nil);   //40 succor          45
+                    original_color = __is_black_color(fixup_node);      // black 45
+                    recolor_node = fixup_node->__right;                 // 45 오른쪽은 nil
+                    if (fixup_node->__parent == ptr) {                  // 40                         
+                        recolor_node->__parent = fixup_node;
+                }   else {
+                    __transplant(fixup_node, fixup_node->__right);      // 45자리에 nil을 붙인다!
+                    fixup_node->__right = ptr->__right;                 // 45오른쪽 50
+                    fixup_node->__right->__parent = fixup_node;         // 50부모 45
                 }
-
-                // 40에 20을 붙인다(왼쪽을 붙인다)      45랑 20 
-                    __transplant(ptr, fixup_node);
+                    __transplant(ptr, fixup_node);                      // 45랑 20 
                     fixup_node->__left = ptr->__left;
                     fixup_node->__left->__parent = fixup_node;
                     fixup_node->__is_black = __is_black_color(ptr);
                 }
-
-                // doubly black을 제거
-                if (original_color) {
-                    __remove_fixup(recolor_node); // 오른쪽 nil
+                if (original_color) {                                   // doubly black을 제거
+                    __remove_fixup(recolor_node);                       // 오른쪽 nil
                 }
             }
 
@@ -750,17 +725,16 @@ namespace ft {
                 while (ptr != __get_root() && __is_black_color(ptr)) {
                     if (__is_left_child(ptr)) {     
                         __remove_fixup_left(ptr);
-                    } else {    // nil 45의 오른쪽 자식
+                    } else {                                            // nil 45의 오른쪽 자식
                         __remove_fixup_right(ptr);
                     }
-                }
-                //red & black 일때만!
-                ptr->__is_black = true;
+                }                
+                ptr->__is_black = true;                                 //red & black 일때만!
             }
 
             void __remove_fixup_left(node_pointer& ptr) {
                 node_pointer sibling = ptr->__parent->__right; 
-                if (__is_red_color(sibling)) { // 형제이 red
+                if (__is_red_color(sibling)) {                          // 형제이 red
                     sibling->__is_black = true;
                     ptr->__parent->__is_black = false;
                     __rotate_left(ptr->__parent);
@@ -769,13 +743,13 @@ namespace ft {
                 if (__is_black_color(sibling->__left) && __is_black_color(sibling->__right)) { //형제의 왼쪽 블랙 && 형제의 오른쪽 블랙
                     sibling->__is_black = false;
                     ptr = ptr->__parent;
-                } else if (__is_black_color(sibling->__right)) { // 형제의 오른쪽만 블랙
+                } else if (__is_black_color(sibling->__right)) {        // 형제의 오른쪽만 블랙
                     sibling->__left->__is_black = true;
                     sibling->__is_black = false;
                     __rotate_right(sibling);
                     sibling = ptr->__parent->__right;
                 }
-                if (__is_red_color(sibling->__right)) { // 형제의 오른쪽 빨간색
+                if (__is_red_color(sibling->__right)) {                 // 형제의 오른쪽 빨간색
                     sibling->__is_black = __is_black_color(ptr->__parent);
                     ptr->__parent->__is_black = true;
                     sibling->__right->__is_black = true;
@@ -806,9 +780,9 @@ namespace ft {
                 // case 4 nil일때 여기로 와
                 if (__is_red_color(sibling->__left)) {
                     sibling->__is_black = __is_black_color(ptr->__parent); // 시블링 색 == 부모 색
-                    ptr->__parent->__is_black = true; // 부모
-                    sibling->__left->__is_black = true; // 형제의 왼쪽
-                    __rotate_right(ptr->__parent); // 45
+                    ptr->__parent->__is_black = true;                   // 부모
+                    sibling->__left->__is_black = true;                 // 형제의 왼쪽
+                    __rotate_right(ptr->__parent);                      // 45
                     ptr = __get_root();
                 }
             }
@@ -844,24 +818,24 @@ namespace ft {
                 ptr->__parent = child;
             }
 
-                                        // 45
+                                                                        // 45
             void __rotate_right(node_pointer ptr) {
-                node_pointer child = ptr->__left; // 20
-                ptr->__left = child->__right;   // 45의 왼쪽이 27이랑 연결
-                if (ptr->__left != __nil) {     // 20
-                    ptr->__left->__parent = ptr; // 27의 부모가 45이다
+                node_pointer child = ptr->__left;                       // 20
+                ptr->__left = child->__right;                           // 45의 왼쪽이 27이랑 연결
+                if (ptr->__left != __nil) {                             // 20
+                    ptr->__left->__parent = ptr;                        // 27의 부모가 45이다
                 }
-                node_pointer parent = ptr->__parent; //parentr가 end 45의 부모는 end
-                child->__parent = parent; //20부모가 end
+                node_pointer parent = ptr->__parent;                    //parentr가 end 45의 부모는 end
+                child->__parent = parent;                               //20부모가 end
                 if (parent == __end) {
-                    __set_root(child); //루트다!
-                } else if (__is_left_child(ptr)) { // ptr이왼쪽 자식이야
+                    __set_root(child);                                  //루트다!
+                } else if (__is_left_child(ptr)) {                      // ptr이왼쪽 자식이야
                     parent->__left = child; 
-                } else {        // 오른쪽 자식이다
+                } else {                                                // 오른쪽 자식이다
                     parent->__right = child;
                 }
-                child->__right = ptr; // ptr이 45 20의 오른쪽 45
-                ptr->__parent = child; // 45의 부모가 20이다!
+                child->__right = ptr;                                   // ptr이 45 20의 오른쪽 45
+                ptr->__parent = child;                                  // 45의 부모가 20이다!
             }
 
             /* lookup operations */

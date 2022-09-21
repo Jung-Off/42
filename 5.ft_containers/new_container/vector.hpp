@@ -19,23 +19,6 @@ namespace ft {
             typedef T value_type;
             typedef Allocator allocator_type;
 
-            // http://egloos.zum.com/sweeper/v/2966785
-            // int를 할당하는 뿐 아니라 int 다음 그 전을 가르킬 공간 까지 할당을 해주기 위함!
-            // int 만을 할당해서는 4바이트만 할당이 됨(실상은 2개의 포인터 + int 12 바이트! 가 필요)
-            // 해당 쳄플릿 매개변수 T 타입의 컨테이너 allocator는 T타입이 아닌 다른 타입에 대한 allocate
-            // 가 필요해 진다. >> (다른 타입이라함은 해당 컨테이너에서 요구되는 진정한 할당 타입!)
-            // typedef typename allocator_type::template rebind<value_type>::other type_allocator;
-            // 벡터의 템플릿이 이미 결정이 되어서 들어왔는데 그 안에 있는 것을 다른 유형으로 다시 생성을 한다
-
-            // 노드 하나의 타입이 노드로써 set<int>
-
-                // int
-            // int   int
-            // map < string, int >
-            // >> string 으로 받아 온 것을 rebind Node <pair<string, int> 타입으로 받을 때 
-
-            // string 보다 더 큰 (Node, pair) 타입을 이용해서 다른 형태의 allocator로 변환
-
             typedef	typename allocator_type::reference						reference;
             typedef	typename allocator_type::const_reference				const_reference;
             typedef	typename allocator_type::pointer						pointer;
@@ -48,6 +31,7 @@ namespace ft {
 
             typedef	typename allocator_type::size_type						size_type;
             typedef	typename ft::iterator_traits<iterator>::difference_type	difference_type;
+
             /* constructor & destructor */
 
             // default constructor
@@ -88,7 +72,7 @@ namespace ft {
                     return;
                 }
                 size_type pre_capacity = capacity();
-                __destruct(_begin); //여기까지 값없애 주고
+                __destruct(_begin); //여기까지 값 없애 주고
                 _alloc.deallocate(_begin, pre_capacity); // 할당 공간 삭제
             }
 
@@ -170,13 +154,13 @@ namespace ft {
                 return *(_end - 1);
             }
 
+
             // ? 여기는 뭐 때문에 필요한걸까? 지워도 상관은 없을 거 같은데
             // string을 char*로 받을 때 data를 썻을 때 c_str(char *)은 const가 붙어서  data
             // const char * >> data
             // char * >> c_str
 
-            // begin의 주소를 return
-            // 배열에 대한 주소?
+            // iterator도 pointer이다. casting을 안전하게 하기 위함
 
             // 실제 요소가 저장된 처음 주소를 반환
             T* data(void) throw() {
@@ -185,7 +169,6 @@ namespace ft {
             const T* data(void) const throw() {
                 return reinterpret_cast<const T*>(_begin);
             }
-            // iterator도 pointer이다. casting을 안전하게 하기 위함
 
             /* capacity */
 
@@ -248,6 +231,7 @@ namespace ft {
                 // 메모리 할당만 받아서 copy를 해야 brain 까지
 
                 // 객체가 없었던 공간에 생성자를 호출해서 할당해놓은 공간에 copy를 한다.
+                // construct하기 전에 사용가능
                 std::uninitialized_copy(_begin, _end, begin);
 
                 __destruct(_begin);
@@ -272,7 +256,7 @@ namespace ft {
             }
 
             // assigin, insert, push_back
-            // stl과 다르다.
+            // stl과 내부구조가 조금은 다르다
             void assign(size_type n, const value_type& value) {
                 if (capacity() < n) {
                     reserve(n);
@@ -309,7 +293,7 @@ namespace ft {
 
                 // https://runebook.dev/ko/docs/cpp/algorithm/copy_backward
                 // [first, last) 정의 된 범위에서 d_last 로 끝나는 다른 범위로 요소를 복사합니다 . 요소는 역순으로 복사되지만 (마지막 요소가 먼저 복사 됨) 상대 순서는 유지됩니다.
-                // 뒤로 미는 구나 뒤에서 부터 복사해야하니까 backward
+                // 뒤에서 부터 복사해야하니까 backward
                 std::copy_backward(ptr, _end - 1, _end);
                 *ptr = value;
                 return iterator(ptr);
@@ -328,7 +312,7 @@ namespace ft {
                 }
             }
 
-            //jaemjung iterator
+            //iterator >> tester 통과용!
 
 			template <class InputIterator>
 			void insert(iterator position, InputIterator first, InputIterator last, 
@@ -380,7 +364,7 @@ namespace ft {
 				_begin = new_start;
 			}
             
-            //jseo iterator
+            // 원래 iterator
 
             // template <class InputIterator>
             // void insert(iterator position, InputIterator first, InputIterator last,
@@ -415,7 +399,7 @@ namespace ft {
                 return first;
             } 
 
-            //jseo
+            //tester가 고장이 났다!
 
             void swap(vector& v) {
                 std::swap(_begin, v._begin);
@@ -423,45 +407,6 @@ namespace ft {
                 std::swap(_cap, v._cap);
                 std::swap(_alloc, v._alloc);
             }
-
-            //jinbe
-
-            // void swap (vector& x)
-            // {
-            //     pointer	tmp_start = x._begin;
-            //     pointer	tmp_end = x._end;
-            //     pointer	tmp_end_capa = x._cap;
-            //     allocator_type	tmp_alloc = x._alloc;
-
-            //     x._begin = this->_begin;
-            //     x._cap = this->_cap;
-            //     x._end = this->_end;
-            //     x._alloc = this->_alloc;
-
-            //     this->_begin = tmp_start;
-            //     this->_cap = tmp_end_capa;
-            //     this->_end = tmp_end;
-            //     this->_alloc = tmp_alloc;
-            // }
-
-            //jaemjung
-
-            // void swap(vector& other) {
-			// 	pointer			tmp_start = _begin;
-			// 	pointer			tmp_end = _end;
-			// 	pointer			tmp_capa_end = _cap;
-			// 	// allocator_type	tmp_alloc = _alloc;
-
-			// 	_begin = other._begin;
-			// 	_end = other._end;
-			// 	_cap = other._cap;
-			// 	// _alloc = other._alloc;
-				
-			// 	other._begin = tmp_start;
-			// 	other._end = tmp_end;
-			// 	other._cap = tmp_capa_end;
-			// 	// other._alloc = tmp_alloc;
-			// }
 
             void clear(void) {
                 __destruct(_begin);
@@ -565,28 +510,12 @@ namespace ft {
     // 벡터 두개를 바꾸기 위함
     // swap (x, y) 를 호출 하면 x.swap(y)가 호출이 된다.
 
-    //jseo
-
-    // template <class T, class Alloc>
-	// void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
-	// {
-	// 	x.swap(y);
-	// }
-
-    //jinbe
-
-    // template <typename T, class Allocator>
-	// void swap (vector<T,Allocator>& x, vector<T,Allocator>& y)
-	// {
-	// 	x.swap(y);
-	// }
-
-    //jaemjung
-
     template <class T, class Alloc>
-	void swap(vector<T, Alloc>& lhs, vector<T, Alloc>& rhs) {
-		lhs.swap(rhs);
+	void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+	{
+		x.swap(y);
 	}
+
 } // namespace ft
 
 #endif 

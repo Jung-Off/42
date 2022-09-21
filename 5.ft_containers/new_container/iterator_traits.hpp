@@ -18,7 +18,6 @@ namespace ft {
 
 // Iterator traits ============================================================
 
-    // 어떻게 사용이 되어지는지?
     template <class Iterator>
     struct iterator_traits {
         typedef typename Iterator::difference_type      difference_type;
@@ -32,7 +31,7 @@ namespace ft {
     template <typename T>
     struct iterator_traits<T*> { //template 문법이다 포인터가 들어가면 *을 찾아감
         // 포인터도 iterator처럼 사용하기 위해서 아래와 같은 특수화를 진행시킨다
-        // 포인터는 산술연산이 가능하므로, 바로 random_access_iterator_tag를 지정해준다
+        // 포인터는 산술연산이 가능하므로, 바로 random_access_iterator_tag로 지정해준다
         typedef ptrdiff_t                   difference_type;
         typedef T                           value_type;
         typedef T*                          pointer;

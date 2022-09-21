@@ -19,7 +19,7 @@ namespace ft {
         // container_type만을 받아서 생성하게 하는 생성자!
         explicit stack(const container_type& container = container_type())
             : c(container) {}
-        // stack은 list로도 만들 수 있는데 아래 연산자가 template<Tn>으로 끝나면
+        // stack은 list로도 만들 수 있는데 아래 operator가 template<Tn>으로 끝나면
         // stack<T, std::list<int> > 로 들어 왔을때는 그에 해당하는 template 연산자가 없어서 오류가 났다 정도?
 
         // copy constructor
