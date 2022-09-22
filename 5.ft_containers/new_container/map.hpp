@@ -118,8 +118,8 @@ namespace ft {
         };   
 
         //rbtree 내부의 것 이용하기
-        typedef typename ft::__rbtree<value_type, key_type, value_compare, allocator_type>::iterator iterator;
-        typedef typename ft::__rbtree<value_type, key_type, value_compare, allocator_type>::const_iterator const_iterator;
+        typedef typename ft::_rbtree<value_type, key_type, value_compare, allocator_type>::iterator iterator;
+        typedef typename ft::_rbtree<value_type, key_type, value_compare, allocator_type>::const_iterator const_iterator;
         
         //vector같이 이용하기
         typedef ft::reverse_iterator<iterator> reverse_iterator;
@@ -128,19 +128,19 @@ namespace ft {
         /* constructor & destructor */
         explicit map(const key_compare& comp = key_compare(),
                     const allocator_type& alloc = allocator_type())
-            : __key_comp(comp), __value_comp(comp), __tree(__value_comp, alloc) {}
-        // 신기한 방식으로 __tree를 만드네!?
+            : _key_comp(comp), _value_comp(comp), _tree(_value_comp, alloc) {}
+        // 신기한 방식으로 _tree를 만드네!?
 
         template <class InputIterator>
         map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
             const allocator_type& alloc = allocator_type(),
             typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nil)
-            : __key_comp(comp), __value_comp(comp), __tree(__value_comp, alloc) {
+            : _key_comp(comp), _value_comp(comp), _tree(_value_comp, alloc) {
             insert(first, last);
         }
 
         map(const map& m)
-            : __key_comp(m.__key_comp), __value_comp(m.__value_comp), __tree(m.__tree)
+            : _key_comp(m._key_comp), _value_comp(m._value_comp), _tree(m._tree)
             {}
 
         ~map(void) {}
@@ -148,9 +148,9 @@ namespace ft {
         /* member function for util */
         map& operator=(const map& m) {
             if (this != &m) {
-                __key_comp = m.__key_comp;
-                __value_comp = m.__value_comp;
-                __tree = m.__tree;
+                _key_comp = m._key_comp;
+                _value_comp = m._value_comp;
+                _tree = m._tree;
             }
             return *this;
         }
@@ -161,16 +161,16 @@ namespace ft {
         // rbtree에서 구현이 되어져 있어서 알아서 const없이도 잘 알아서 나온다
 
         iterator begin(void) {
-            return __tree.begin();
+            return _tree.begin();
         }
         const_iterator begin(void) const {
-            return __tree.begin();
+            return _tree.begin();
         }
         iterator end(void) {
-            return __tree.end();
+            return _tree.end();
         }
         const_iterator end(void) const {
-            return __tree.end();
+            return _tree.end();
         }
         reverse_iterator rbegin(void) {
             return reverse_iterator(end());
@@ -188,13 +188,13 @@ namespace ft {
 
         /* capacity */
         bool empty(void) const {
-            return __tree.empty();
+            return _tree.empty();
         }
         size_type size(void) const {
-            return __tree.size();
+            return _tree.size();
         }
         size_type max_size(void) const {
-            return __tree.max_size();
+            return _tree.max_size();
         }
 
         /* element access */
@@ -232,9 +232,9 @@ namespace ft {
 
         /* modifiers */
         
-        // __tree내부의 value 추가하는 insert함수 들어가기!
+        // _tree내부의 value 추가하는 insert함수 들어가기!
         ft::pair<iterator, bool> insert(const value_type& value) {
-            return __tree.insert(value);
+            return _tree.insert(value);
         }
 
         // with hint
@@ -242,43 +242,43 @@ namespace ft {
         // 이런 식으로 특정한 위치에 더 빠른 시간 내에 원소를 삽입할 수 있게 됨.
         // 마찬가지로 key값이 이미 존재할 경우 값은 삽입되지 않으며, 해당 위치의 이터레이터를 리턴함.
         iterator insert(iterator position, const value_type& value) {
-            return __tree.insert(position, value);
+            return _tree.insert(position, value);
         }
 
         // iterator로 insert로 추가
         // first 부터 last 사이에 있는 원소를 복사하여 map에 삽입함.
         template <class InputIterator>
         void insert(InputIterator first, InputIterator last) {
-            __tree.insert(first, last);
+            _tree.insert(first, last);
         }
 
-        // __tree내부에 iterator position 으로 작동하는 erase를 사용하기
+        // _tree내부에 iterator position 으로 작동하는 erase를 사용하기
         // position에 있는 원소 삭제
         void erase(iterator position) {
-            __tree.erase(position);
+            _tree.erase(position);
         }
 
-        // __tree내부에 key_type의 key로 작동하는 erase 부르기
+        // _tree내부에 key_type의 key로 작동하는 erase 부르기
         // 해당 키 값을 가진 원소 삭제, 삭제된 갯수가 리턴됨, 즉 삭제 되었으면 1, 아니면 0
         size_type erase(const key_type& key) {
-            return __tree.erase(key);
+            return _tree.erase(key);
         }
 
-        // __tree내부에 iterator로 erase호출!
+        // _tree내부에 iterator로 erase호출!
         // first와 last 사이의 모든 원소를 삭제함.
         void erase(iterator first, iterator last) {
-            __tree.erase(first, last);
+            _tree.erase(first, last);
         }
 
-        // __tree내부의 swap호출!
+        // _tree내부의 swap호출!
         // 현재 컨테이너와 m과 swap. 
         void swap(map& m) {
-            __tree.swap(m.__tree);
+            _tree.swap(m._tree);
         }
 
-        // __tree내부의 clear호출!
+        // _tree내부의 clear호출!
         void clear(void) {
-            __tree.clear();
+            _tree.clear();
         }
 
         /* observers */
@@ -287,23 +287,23 @@ namespace ft {
         // Compare type으로 된 key_compare
         // 내부 값을 정렬하는데 쓰인 key_compare 객체를 리턴함.
         key_compare key_comp(void) const {
-            return __key_comp;
+            return _key_comp;
         }
 
         // Compare type으로 된 value_compare
         value_compare value_comp(void) const {
-            return __value_comp;
+            return _value_comp;
         }
 
         /* lookup operations */
-        // __tree 내부의 find함수로 key가 있는 iterator 반환
+        // _tree 내부의 find함수로 key가 있는 iterator 반환
         // key값이 k(ey)인 원소를 찾아 해당 원소의 이터레이터를 리턴. 해당 원소가 없을 경우 end()가 리턴됨.
         iterator find(const key_type& key) {
-            return __tree.find(key);
+            return _tree.find(key);
         }
-        // __tree 내부의 find함수로 key가 있는 iterator 반환
+        // _tree 내부의 find함수로 key가 있는 iterator 반환
         const_iterator find(const key_type& key) const {
-            return __tree.find(key);
+            return _tree.find(key);
         }
 
         // k(ey)를 key로 가지는 원소의 개수를 리턴.
@@ -325,47 +325,47 @@ namespace ft {
         // 큰 값 중 가장 왼쪽에 있는 원소의 iterator값을 리턴한다.
         // 같은 값이 들어 갈 수 있나?
         iterator lower_bound(const key_type& key) {
-            return __tree.lower_bound(key);
+            return _tree.lower_bound(key);
         }
         const_iterator lower_bound(const key_type& key) const {
-            return __tree.lower_bound(key);
+            return _tree.lower_bound(key);
         }
         
         // upper_bound함수의 경우 컨테이너의 오른쪽 원소 중 기준 원소보다
         // 큰 값중 가장 왼쪽에 있는 원소의 iterator값을 리턴한다.
         iterator upper_bound(const key_type& key) {
-            return __tree.upper_bound(key);
+            return _tree.upper_bound(key);
         }
         const_iterator upper_bound(const key_type& key) const {
-            return __tree.upper_bound(key);
+            return _tree.upper_bound(key);
         }
 
         // 첫번째 iterator 는 lower_bound, 두번째 iterator 는 upper_bound 이다.
         // 컨테이너에 주어진 키를 가진 모든 요소를 ​​포함하는 범위를 반환합니다.
 
         ft::pair<iterator, iterator> equal_range(const key_type& key) {
-            return __tree.equal_range(key);
+            return _tree.equal_range(key);
         }
         ft::pair<const_iterator, const_iterator> equal_range(const key_type& key) const {
-            return __tree.equal_range(key);
+            return _tree.equal_range(key);
         }
 
         /* allocator */
         // tree내부의 get_allocator호출
         allocator_type get_allocator(void) const {
-            return __tree.get_allocator();
+            return _tree.get_allocator();
         }
 
         private:
             // 2번 질문 value_compare
 
             // Compare 타입 key_compare
-            key_compare __key_comp;
+            key_compare _key_comp;
 
             // Compare 타입 value_compare  class로 초기화
-            value_compare __value_comp;
+            value_compare _value_comp;
 
-            // 이건 만들어놓은 rbtree를 __tree라는 변수로 만들기!
+            // 이건 만들어놓은 rbtree를 _tree라는 변수로 만들기!
 
             // map pair로 넣는데
             // set은 단순 value로
@@ -377,7 +377,7 @@ namespace ft {
                         // pair         key     value_compare
                         //                      pair 전체가 들어와도 key를 비교하기 위함!
                         //                      key만 따로 비교를 하진 않고 거의 value 자체를 들고가서 비교를 하는 경우가 많으니까
-            ft::__rbtree<value_type, key_type, value_compare, allocator_type> __tree;
+            ft::_rbtree<value_type, key_type, value_compare, allocator_type> _tree;
             
             // key type을 받는 이유
             // map <std::string, int> a
