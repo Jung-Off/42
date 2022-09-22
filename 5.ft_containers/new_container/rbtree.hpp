@@ -1,6 +1,8 @@
 #ifndef RBTREE_HPP
 #define RBTREE_HPP
 
+#include "iterator_traits.hpp"
+
 namespace ft {
     /* tree_node */
     // 원하는 데이터 형을 저장할 struct를 __tree_node
@@ -157,7 +159,7 @@ namespace ft {
 
     /* tree_iterator */
     template <typename U, typename V>
-    class __tree_iterator {
+    class __tree_iterator : public ft::iterator<ft::bidirectional_iterator_tag, U> {
         public:
             // U, V 이렇게 나누는 이유?
             // 편하게 쓸라고  pair<key, value>
@@ -171,7 +173,7 @@ namespace ft {
             typedef typename ft::iterator_traits<iterator_type>::value_type node_type;
             typedef typename ft::iterator_traits<iterator_type>::pointer node_pointer;
             typedef typename ft::iterator_traits<iterator_type>::reference node_reference;
-            typedef typename ft::iterator_traits<iterator_type>::iterator_category iterator_category;
+            typedef bidirectional_iterator_tag iterator_category;
 
 
             /* constructor & destructor */
@@ -519,8 +521,8 @@ namespace ft {
 
             private:
                 node_pointer __nil;
-                node_pointer __begin;
-                node_pointer __end;
+                node_pointer __begin;   // root
+                node_pointer __end;     // end의 왼쪽 자식이 루트
                 compare_type __comp;
                 node_allocator __alloc;
                 size_type __size;
