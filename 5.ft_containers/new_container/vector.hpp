@@ -163,12 +163,12 @@ namespace ft {
             // iterator도 pointer이다. casting을 안전하게 하기 위함
 
             // 실제 요소가 저장된 처음 주소를 반환
-            T* data(void) throw() {
-                return reinterpret_cast<T*>(_begin);
-            }
-            const T* data(void) const throw() {
-                return reinterpret_cast<const T*>(_begin);
-            }
+            // T* data(void) throw() {
+            //     return reinterpret_cast<T*>(_begin);
+            // }
+            // const T* data(void) const throw() {
+            //     return reinterpret_cast<const T*>(_begin);
+            // }
 
             /* capacity */
 
