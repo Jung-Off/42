@@ -77,35 +77,53 @@ template <typename T>
 struct remove_cv<const volatile T> { typedef T type; };
 
 /* is_integral_base */
-template <typename>
-struct is_integral_base : public false_type {};
+	template <typename>
+	struct is_integral_base : public false_type {};
 
-template <>
-struct is_integral_base<bool> : public true_type {};
+	template <>
+	struct is_integral_base<bool> : public true_type {};
 
-template <>
-struct is_integral_base<std::int8_t> : public true_type {};
+	template <>
+	struct is_integral_base<char> : public true_type {};
 
-template <>
-struct is_integral_base<std::uint8_t> : public true_type {};
+	template <>
+	struct is_integral_base<char16_t> : public true_type {};
 
-template <>
-struct is_integral_base<std::int16_t> : public true_type {};
+	template <>
+	struct is_integral_base<char32_t> : public true_type {};
 
-template <>
-struct is_integral_base<std::uint16_t> : public true_type {};
+	template <>
+	struct is_integral_base<wchar_t> : public true_type {};
 
-template <>
-struct is_integral_base<std::int32_t> : public true_type {};
+	template <>
+	struct is_integral_base<signed char> : public true_type {};
 
-template <>
-struct is_integral_base<std::uint32_t> : public true_type {};
+	template <>
+	struct is_integral_base<short int> : public true_type {};
 
-template <>
-struct is_integral_base<std::int64_t> : public true_type {};
+	template <>
+	struct is_integral_base<int> : public true_type {};
 
-template <>
-struct is_integral_base<std::uint64_t> : public true_type {};
+	template <>
+	struct is_integral_base<long int> : public true_type {};
+
+	// template <>
+	// struct is_integral_base<long long int> : public true_type {};
+
+	template <>
+	struct is_integral_base<unsigned char> : public true_type {};
+
+	template <>
+	struct is_integral_base<unsigned short int> : public true_type {};
+
+	template <>
+	struct is_integral_base<unsigned int> : public true_type {};
+
+	template <>
+	struct is_integral_base<unsigned long int> : public true_type {};
+
+	// template <>
+	// struct is_integral_base<unsigned long long int> : public true_type {};
 
 // int만구현한 이유! 다른자료형이 필요하지 않아서...
 // reference에 명시되어있음
