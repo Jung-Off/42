@@ -1,0 +1,51 @@
+# # base image
+# FROM debian:buster
+
+# # #이미지 내부에 설치 
+# # # apt은 설치과정에서 쉘을 통한 사용자와의 interaction중요 script에서 사용하기 부적절
+# RUN apt-get update -y && apt upgrade -y
+# RUN apt-get install nginx -y
+# RUN apt-get install vim -y
+# RUN apt-get install -y openssl
+
+# # #nginx config
+# COPY conf/default /
+# RUN mv default /etc/nginx/sites-available/default
+#     # RUN chown -R www-data:www-data /var/www
+
+# RUN openssl genrsa -out server.key 4096
+# RUN openssl req -new -key server.key -subj "/C=KR/ST=Seoul/0=42Seoul/0U=Ji" -out server.csr
+# RUN openssl req -x509 -in server.csr -key server.key -out server.crt
+# RUN     mv server.crt /etc/ssl/certs/
+# RUN     mv server.csr server.key /etc/ssl/private
+#     # RUN     chmod 600 etc/ssl/certs/server.crt etc/ssl/private/server.key
+
+# CMD nginx -g 'daemon off;'
+
+# EXPOSE 443
+# # EXPOSE 443 80
+
+#베이스가 될 이미지
+FROM    debian:buster 
+
+#내가 원하는 대로 이미지 바꿈
+RUN     apt-get update -y && apt upgrade -y
+RUN     apt-get install nginx -y
+RUN     apt-get install -y openssl
+# RUN apt-get install vim -y
+
+COPY    conf/default /
+RUN     mv default /etc/nginx/sites-available/default
+RUN     chown -R www-data:www-data /var/www
+
+RUN     openssl genrsa -out server.key 4096 
+RUN     openssl req -new -key server.key -subj "/C=KR/ST=Seoul/O=42Seoul/OU=Ji" -out server.csr
+RUN     openssl req -x509 -in server.csr -key server.key -out server.crt
+RUN     mv server.crt /etc/ssl/certs/
+RUN     mv server.csr server.key /etc/ssl/private
+RUN     chmod 600 etc/ssl/certs/server.crt etc/ssl/private/server.key
+
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
+
+#이미지에서 노출할 포트 -> 어차피 nginx는 default로 80번 포트를 open하지만 명시적으로 적어줌
+EXPOSE  443
