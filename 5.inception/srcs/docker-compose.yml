@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: requirements/nginx
+    container_name: nginx
+    ports:
+      - 443:443
+    restart: always
+
+
+
+# cmd,, docker-compose up에 묶어서 실행까지 담겨있다
+# docker-compose --build 도커 파일을 빌드하고 싶을 때? 라는 말이 무엇일까요!?
