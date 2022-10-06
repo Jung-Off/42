@@ -47,15 +47,15 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      # device: /home/jji/data/mariadb
-      device: /Users/jji/42/5.inception/data/mariadb
+      device: /home/jji/data/mariadb
+      # device: /Users/jji/42/5.inception/data/mariadb
       o: bind
   wp_volume:
     driver: local
     driver_opts:
       type: none
-      # device: /home/jji/data/wordpress
-      device: /Users/jji/42/5.inception/data/wordpress
+      device: /home/jji/data/wordpress
+      # device: /Users/jji/42/5.inception/data/wordpress
       o: bind
 
 networks:

@@ -4,7 +4,7 @@ DB_LOCAL_PATH = /Users/jji/42/5.inception/data
 NAME	= inception
 
 #evaltion
-# DB_PATH	= /home/jji/data
+DB_PATH	= /home/jji/data
 
 BLUE	= \033[36m
 COLR	= \033[0m
@@ -12,10 +12,12 @@ COLR	= \033[0m
 all		:	$(NAME)
 
 $(NAME)	:
-	# mkdir -p $(DB_PATH)/mariadb/
-	# mkdir -p $(DB_PATH)/wordpress/
-	mkdir -p /Users/jji/42/5.inception/data/wordpress
-	mkdir -p /Users/jji/42/5.inception/data/mariadb
+	mkdir -p $(DB_PATH)/mariadb/
+	mkdir -p $(DB_PATH)/wordpress/
+
+	# mkdir -p /Users/jji/42/5.inception/data/wordpress
+	# mkdir -p /Users/jji/42/5.inception/data/mariadb
+	
 	# sudo echo "127.0.0.1	jji.42.fr" > /etc/hosts
 	docker-compose -f srcs/docker-compose.yml up --build
 
@@ -31,11 +33,11 @@ clean	: ## 컨테이너를 일괄정지 하고 모든 이미지와 연결된 볼
 	docker-compose -f srcs/docker-compose.yml down --rmi "all" --volumes
 
 fclean	: clean ## ⚠️로컬 볼륨 파일까지 전부 삭제
-	rm -rf /Users/jji/42/5.inception/data
-	# rm -rf /Users/jji/42/5.inception/data/mariadb/.setup
-	# rm -rf /Users/jji/42/5.inception/data/mariadb/*
-	# rm -rf /Users/jji/42/5.inception/data/wordpress/.setup
-	# rm -rf /Users/jji/42/5.inception/data/wordpress/*
+	rm -rf /Users/jji/data/42/5.inception/data
+	# rm -rf /Users/jji/data/42/5.inception/data/mariadb/.setup
+	# rm -rf /Users/jji/data/42/5.inception/data/mariadb/*
+	# rm -rf /Users/jji/data/42/5.inception/data/wordpress/.setup
+	# rm -rf /Users/jji/data/42/5.inception/data/wordpress/*
 
 re	: fclean all ## fclean 실행 후 다시 make 실행
 
