@@ -1,14 +1,66 @@
-version: '3.8'
+version: '3.0'
 
 services:
   nginx:
-    build: requirements/nginx
+    build: ./requirements/nginx/
     container_name: nginx
     ports:
       - 443:443
     restart: always
+    volumes:
+      - wp_volume:/var/www/html/wordpress
+    depends_on:
+      - wordpress
+    env_file:
+      - .env
+    networks:
+      - inception_net
+  mariadb:
+    build: ./requirements/mariadb/
+    image: mariadb
+    restart: always
+    expose:
+      - "3306"
+    volumes:
+      - db_volume:/var/lib/mysql/
+    env_file:
+      - .env
+    networks:
+      - inception_net
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress
+    restart: always
+    depends_on:
+      - mariadb
+    expose:
+      - "9000"
+    volumes:
+      - wp_volume:/var/www/html/wordpress
+    env_file:
+      - .env
+    networks:
+      - inception_net
 
+volumes:
+  db_volume:
+    driver: local
+    driver_opts:
+      type: none
+      # device: /home/jji/data/mariadb
+      device: /Users/jji/42/5.inception/data/mariadb
+      o: bind
+  wp_volume:
+    driver: local
+    driver_opts:
+      type: none
+      # device: /home/jji/data/wordpress
+      device: /Users/jji/42/5.inception/data/wordpress
+      o: bind
 
+networks:
+  inception_net:
+    driver: bridge
 
 # cmd,, docker-compose up에 묶어서 실행까지 담겨있다
 # docker-compose --build 도커 파일을 빌드하고 싶을 때? 라는 말이 무엇일까요!?
