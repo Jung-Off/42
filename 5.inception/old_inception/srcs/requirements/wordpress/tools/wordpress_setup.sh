@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sleep 30
+sleep 2
 chown -R www-data:www-data /var/www/
 
 if [ ! -f "/var/www/html/wordpress/index.php" ]; then
